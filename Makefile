@@ -29,10 +29,10 @@ OBJ= $(addprefix $(BIN)/, $(_OBJ))
 all: rl $(NAME)
 
 rl:
-	@if [ -x "$$HOME/homebrew/opt/readline" ] || [ -x "$$HOME/.brew/opt/readline" ]; then \
-		cd include/readline && ./configure && make ; \
-	else \
+	@if [ -f "inc/readline/libreadline.a" ] && [ -f "inc/readline/libhistory.a" ]; then \
 		echo "$(GREEN)Readline is already make$(WHITE)" ; \
+	else \
+		cd inc/readline && ./configure && make ; \
 	fi
 
 $(NAME): $(BIN) $(OBJ) # $@ prends la target et $^ prends la dependance du dessus
@@ -57,5 +57,8 @@ fclean: clean
 	@make -C $(MY_LIBDIR) fclean
 	@$(RM) $(NAME)
 	@echo "$(RED)Minishell object files and executable deleted$(WHITE)"
+
+rlclean: 
+	cd inc/readline && make distclean
 
 re:	fclean all
