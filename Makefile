@@ -5,18 +5,16 @@ CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 MY_LIB = ./libft/libft.a
 MY_LIBDIR = ./libft/
 
-PWD = $(shell pwd)
-RL_DIR			=	$(PWD)/inc/readline/
+RL_DIR			=	inc/readline/
 RL_H			=	libhistory.a
 RL_L			=	libreadline.a
 
-DEPS = $(PWD)/inc/minishell.h
+DEPS = inc/minishell.h
 MK = mkdir -p
 RM = rm -rf
-# BIN = $(PWD)/bin/
-BIN = ./bin/
+BIN = bin/
 SRC = main.c
-SDIR = $(PWD)/src/
+SDIR = src/
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
