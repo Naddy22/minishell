@@ -5,12 +5,18 @@ CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 MY_LIB = ./libft/libft.a
 MY_LIBDIR = ./libft/
 
-DEPS = ./inc/minishell.h
+PWD = $(shell pwd)
+RL_DIR			=	$(PWD)/inc/readline/
+RL_H			=	libhistory.a
+RL_L			=	libreadline.a
+
+DEPS = $(PWD)/inc/minishell.h
 MK = mkdir -p
 RM = rm -rf
-BIN = bin
+# BIN = $(PWD)/bin/
+BIN = ./bin/
 SRC = main.c
-SDIR = ./src/
+SDIR = $(PWD)/src/
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
@@ -24,7 +30,7 @@ WHITE=\033[0m# WHITE
 
 _OBJ = $(SRC:.c=.o) #les .c sont lu en .o
 
-OBJ= $(addprefix $(BIN)/, $(_OBJ))
+OBJ= $(addprefix $(BIN), $(_OBJ))
 
 all: rl $(NAME)
 
@@ -44,12 +50,12 @@ rl:
 			exit 2; \
 		fi \
 	fi 
-	@if [ -x "$$HOME/homebrew/opt/readline" ] || [ -x "$$HOME/.brew/opt/readline" ]; then \
+	@if [ -d "$$HOME/homebrew/opt/readline" ] || [ -d "$$HOME/.brew/opt/readline" ]; then \
 		echo "$(GREEN)Brew/readline is already installed$(WHITE)"; \
 	else \
 		brew install readline ; \
-		echo 'export CPPFLAGS="-I/Users/namoisan/homebrew/opt/readline/include"' >> /Users/namoisan/.zshrc; \
 		echo 'export LDFLAGS="-L/Users/namoisan/homebrew/opt/readline/lib"' >> /Users/namoisan/.zshrc; \
+		echo 'export CPPFLAGS="-I/Users/namoisan/homebrew/opt/readline/include"' >> /Users/namoisan/.zshrc; \
 	fi 
 	@if [ -f "inc/readline/libreadline.a" ] && [ -f "inc/readline/libhistory.a" ]; then \
 		echo "$(GREEN)Readline is already make$(WHITE)" ; \
@@ -59,15 +65,15 @@ rl:
 
 $(NAME): $(BIN) $(OBJ) # $@ prends la target et $^ prends la dependance du dessus
 	@make -C $(MY_LIBDIR)
-	@$(CC) -L inc/readline $(CFLAGS) $(OBJ) $(MY_LIB)  -l readline -l ncurses \
-	inc/readline/libhistory.a inc/readline/libreadline.a -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(MY_LIB) -L $(PWD)/inc/readline -l readline -l ncurses \
+	$(RL_DIR)$(RL_H) $(RL_DIR)$(RL_L) -o $(NAME)
 	@echo "$(GREEN)Minishell compilation OK$(WHITE)"
 
 $(BIN): #crée dossier bin
 	@$(MK) $(BIN)
 
-$(BIN)/%.o: ./src/%.c $(DEPS) # remplace les .c par .o avec -c . $< = dependance le plus a gauche
-	@$(CC) -c -o $@ $< -I$(MY_LIBDIR) $(CFLAGS)
+$(BIN)%.o: ./src/%.c $(DEPS) # remplace les .c par .o avec -c . $< = dependance le plus a gauche
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(MY_LIBDIR) -Iinc/
 
 .PHONY: all clean fclean re #.phony dit que ca se ne sont pas des fichiers
 
