@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-int init(char **envp)
+int	get_env(char **envp)
 {
 	int i;
 	char **tmp;
@@ -10,7 +10,7 @@ int init(char **envp)
 		i++;
 	tmp = ft_calloc(i + 1, sizeof(char *));
 	if (tmp == NULL)
-		return FAIL;
+		return (FAIL);
 	i = 0;
 	while (envp[i])
 	{
@@ -18,5 +18,12 @@ int init(char **envp)
 		printf("%s\n", tmp[i]);
 		i++;
 	}
+	return(SUCCESS);
+}
+
+int init(char **envp)
+{
+	if (get_env(envp) != SUCCESS)
+		return (FAIL);
 	return(SUCCESS);
 }
