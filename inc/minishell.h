@@ -11,4 +11,11 @@
 # include "readline/readline.h"
 # include "readline/history.h"
 
+# define TRUE 1
+# define FALSE 0
+# define SUCCESS 0
+# define FAIL 1
+
+int init(char **envp);
+
 #endif 

@@ -13,7 +13,7 @@ DEPS = inc/minishell.h
 MK = mkdir -p
 RM = rm -rf
 BIN = bin/
-SRC = main.c
+SRC = main.c init.c
 SDIR = src/
 
 # -- COLORS -- #
@@ -100,7 +100,7 @@ fclean: clean
 	@$(RM) $(NAME)
 	@echo "$(RED)Minishell object files and executable deleted$(WHITE)"
 
-rlclean: 
+rlclean: fclean
 	cd inc/readline && make distclean
 
 re:	fclean all

@@ -1,12 +1,26 @@
 #include "../inc/minishell.h"
 
-int main() 
+int main(int argc, char **argv, char **envp) 
 {
-	char *s  = "";
-	while (s) 
-	{
-		s = readline("> ");
-		printf("s = %s\n", s);
-		free(s);
-	}
+	(void)argc;
+	(void)argv;
+	init(envp);
+	// char *s  = "";
+	// while (s) 
+	// {
+	// 	s = readline("minishell> ");
+	// 	printf("s = %s\n", s);
+	// 	free(s);
+	// }
 }
+
+// int main() 
+// {
+// 	char *s  = "";
+// 	while (s) 
+// 	{
+// 		s = readline("minishell> ");
+// 		printf("s = %s\n", s);
+// 		free(s);
+// 	}
+// }
