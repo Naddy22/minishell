@@ -26,12 +26,6 @@ PURPLE=\033[0;35m# PURPLE
 CYAN=\033[0;36m# CYAN
 WHITE=\033[0m# WHITE
 
-ifeq ($(shell test -d /Users/$(USER)/.brew/opt/readline; echo $$?), 0)
-	BREW = .brew
-else ifeq ($(shell test -d /Users/$(USER)/homebrew/opt/readline; echo $$?), 0)
-	BREW = homebrew
-endif
-
 _OBJ = $(SRC:.c=.o) #les .c sont lu en .o
 
 OBJ= $(addprefix $(BIN), $(_OBJ))
@@ -57,15 +51,23 @@ rl:
 	@if [ -d "$$HOME/homebrew/opt/readline" ] || [ -d "$$HOME/.brew/opt/readline" ]; then \
 		echo "$(GREEN)Brew/readline is already installed$(WHITE)"; \
 	else \
-		brew install readline ; \
-		if [ -d "$$HOME/homebrew/opt/readline" ]; then \
-			echo 'export LDFLAGS="-L/Users/$(USER)/homebrew/opt/readline/lib"' >> /Users/$(USER)/.zshrc; \
-			echo 'export CPPFLAGS="-I/Users/$(USER)/homebrew/opt/readline/include"' >> /Users/$(USER)/.zshrc; \
-		elif [ -d "$$HOME/.brew/opt/readline" ]; then \
-			echo 'export LDFLAGS="-L/Users/$(USER)/.brew/opt/readline/lib"' >> /Users/$(USER)/.zshrc; \
-			echo 'export CPPFLAGS="-I/Users/$(USER)/.brew/opt/readline/include"' >> /Users/$(USER)/.zshrc; \
+		echo "$(RED)✗Readline not found$(WHITE)$(RED) ✗"; \
+		read -p "Do you want to install readline? y/n: "  brewchoice; \
+		printf "$(WHITE)"; \
+		if [ "$$brewchoice" = "y" ]; then \
+			brew install readline ; \
+			if [ -d "$$HOME/homebrew/opt/readline" ]; then \
+				echo 'export LDFLAGS="-L/Users/$(USER)/homebrew/opt/readline/lib"' >> /Users/$(USER)/.zshrc; \
+				echo 'export CPPFLAGS="-I/Users/$(USER)/homebrew/opt/readline/include"' >> /Users/$(USER)/.zshrc; \
+			elif [ -d "$$HOME/.brew/opt/readline" ]; then \
+				echo 'export LDFLAGS="-L/Users/$(USER)/.brew/opt/readline/lib"' >> /Users/$(USER)/.zshrc; \
+				echo 'export CPPFLAGS="-I/Users/$(USER)/.brew/opt/readline/include"' >> /Users/$(USER)/.zshrc; \
+			else \
+				echo "Export fail"; \
+			fi \
 		else \
-			echo "Export fail"; \
+			echo "Exit"; \
+			exit 2; \
 		fi \
 	fi 
 	@if [ -f "inc/readline/libreadline.a" ] && [ -f "inc/readline/libhistory.a" ]; then \
