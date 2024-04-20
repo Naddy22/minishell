@@ -6,11 +6,11 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:12 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/19 15:06:14 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/04/20 11:03:31 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/pipex.h"
+#include "../../../inc/pipex.h"
 
 void	execution(t_cmd cmd, char **argv, char **envp)
 {

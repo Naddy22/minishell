@@ -100,7 +100,7 @@ fclean: clean
 	@$(RM) $(NAME)
 	@echo "$(RED)Minishell object files and executable deleted$(WHITE)"
 
-rlclean: 
+rlclean: fclean
 	cd inc/readline && make distclean
 
 re:	fclean all
