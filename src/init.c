@@ -28,7 +28,7 @@ int init(char **envp)
 	return(SUCCESS);
 }
 
-//next step: gerer les $ en remplacant ce qu'il y a apres le $ si celui ci
+// next step: gerer les $ en remplacant ce qu'il y a apres le $ si celui ci
 // correspond à une variable d'environnement par ce qu'il y a apres le =
 // faire attention a bien comparer en regardant si la str (ex: USER) fini
 // par un = car parfois le debut peut être pareil.
