@@ -1,29 +1,28 @@
 #include "../inc/minishell.h"
 
-int	get_env(char **envp)
+int	get_env(t_data *data, char **envp)
 {
 	int i;
-	char **tmp;
 
 	i = 0;
 	while (envp[i])
 		i++;
-	tmp = ft_calloc(i + 1, sizeof(char *));
-	if (tmp == NULL)
+	data->cpy_env = ft_calloc(i + 1, sizeof(char *));
+	if (data->cpy_env == NULL)
 		return (FAIL);
 	i = 0;
 	while (envp[i])
 	{
-		tmp[i] = strdup(envp[i]);
-		printf("%s\n", tmp[i]);
+		data->cpy_env[i] = strdup(envp[i]);
+		printf("%s\n", data->cpy_env[i]);
 		i++;
 	}
 	return(SUCCESS);
 }
 
-int init(char **envp)
+int init(t_data *data, char **envp)
 {
-	if (get_env(envp) != SUCCESS)
+	if (get_env(data, envp) != SUCCESS)
 		return (FAIL);
 	return(SUCCESS);
 }

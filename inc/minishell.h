@@ -16,6 +16,11 @@
 # define SUCCESS 0
 # define FAIL 1
 
-int init(char **envp);
+typedef struct s_data
+{
+	char	**cpy_env;
+}			t_data;
+
+int init(t_data *data, char **envp);
 
 #endif 

@@ -2,9 +2,12 @@
 
 int main(int argc, char **argv, char **envp) 
 {
+	t_data data;
+
 	(void)argc;
 	(void)argv;
-	init(envp);
+	memset(&data, 0, sizeof(t_data));
+	init(&data, envp);
 	while (42)
 	{
 		
