@@ -8,8 +8,8 @@
 // # include <string.h>
 // # include <sys/wait.h>
 # include "../libft/libft.h"
-# include "readline/readline.h"
-# include "readline/history.h"
+//# include "readline/readline.h"
+//# include "readline/history.h"
 
 //Execution functions
 
