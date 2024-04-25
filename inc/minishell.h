@@ -23,4 +23,7 @@ typedef struct s_data
 
 int init(t_data *data, char **envp);
 
+//parsing
+int	read_user_cmd(t_data *data);
+
 #endif 
