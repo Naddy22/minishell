@@ -22,14 +22,8 @@ int	get_env(t_data *data, char **envp)
 
 int init(t_data *data, char **envp)
 {
+	ft_bzero(&data->parsing, sizeof(t_parsing));
 	if (get_env(data, envp) != SUCCESS)
 		return (FAIL);
 	return(SUCCESS);
 }
-
-// next step: gerer les $ en remplacant ce qu'il y a apres le $ si celui ci
-// correspond à une variable d'environnement par ce qu'il y a apres le =
-// faire attention a bien comparer en regardant si la str (ex: USER) fini
-// par un = car parfois le debut peut être pareil.
-// strjoin par la suite au texte deja commencé afin de remplacer tout en allouant
-// la bonne taille (si le env n'existe pas, ca join juste rien avec rien)

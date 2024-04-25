@@ -16,9 +16,15 @@
 # define SUCCESS 0
 # define FAIL 1
 
+typedef struct s_parsing
+{
+	char	*last_user_cmd;
+}			t_parsing;
+
 typedef struct s_data
 {
-	char	**cpy_env;
+	char		**cpy_env;
+	t_parsing	parsing;
 }			t_data;
 
 int init(t_data *data, char **envp);
