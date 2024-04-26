@@ -45,7 +45,10 @@ int	read_user_cmd(t_data *data)
 	else
 	{
 		if (not_empty(data, current_cmd, rl_buffer) != TRUE)
+		{
+			data->parsing.last_user_cmd = NULL;
 			return (FAIL);
+		}
 	}
 	ft_free_verif(rl_buffer);
 	ft_free_verif(current_cmd);
