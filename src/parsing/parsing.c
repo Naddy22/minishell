@@ -6,3 +6,4 @@
 // par un = car parfois le debut peut être pareil.
 // strjoin par la suite au texte deja commencé afin de remplacer tout en allouant
 // la bonne taille (si le env n'existe pas, ca join juste rien avec rien)
+

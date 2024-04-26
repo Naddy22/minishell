@@ -13,7 +13,7 @@ DEPS = inc/minishell.h
 MK = mkdir -p
 RM = rm -rf
 BIN = bin/
-SRC = main.c init.c src/reading_input.c
+SRC = main.c init.c src/reading_input.c error_utils.c
 SDIR = src/
 
 # -- COLORS -- #
