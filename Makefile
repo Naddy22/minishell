@@ -13,7 +13,7 @@ DEPS = inc/minishell.h
 MK = mkdir -p
 RM = rm -rf
 BIN = bin/
-SRC = main.c init.c src/reading_input.c error_utils.c
+SRC = main.c init.c reading_input.c parsing.c error_utils.c free_utils.c
 SDIR = src/
 
 # -- COLORS -- #
@@ -87,6 +87,9 @@ $(BIN): #crée dossier bin
 
 $(BIN)%.o: ./src/%.c $(DEPS) # remplace les .c par .o avec -c . $< = dependance le plus a gauche
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(MY_LIBDIR) -Iinc/
+
+$(BIN)%.o: ./src/parsing/%.c $(DEPS) #pour inclure les fichiers dans parsing
+	@$(CC) $(CFLAGS) -c $< -o $@ -Iinc/
 
 .PHONY: all clean fclean re #.phony dit que ca se ne sont pas des fichiers
 

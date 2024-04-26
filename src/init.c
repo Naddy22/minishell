@@ -14,7 +14,6 @@ int	get_env(t_data *data, char **envp)
 	while (envp[i])
 	{
 		data->cpy_env[i] = strdup(envp[i]);
-		printf("%s\n", data->cpy_env[i]);
 		i++;
 	}
 	return(SUCCESS);

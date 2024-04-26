@@ -27,12 +27,15 @@ typedef struct s_data
 	t_parsing	parsing;
 }				t_data;
 
-int init(t_data *data, char **envp);
+int	init(t_data *data, char **envp);
 
 //parsing
 int	read_user_cmd(t_data *data);
 
 //error_utils
 void	free_error(t_data *data, char *error);
+
+//free_utils
+void	free_all(t_data *data);
 
 #endif 

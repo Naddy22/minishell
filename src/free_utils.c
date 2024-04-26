@@ -1,7 +1,6 @@
 #include "../inc/minishell.h"
 
-void	free_error(t_data *data, char *error)
+void	free_all(t_data *data)
 {
 	ft_free_verif(data->parsing.last_user_cmd);
-	printf("%s\n", error);
 }

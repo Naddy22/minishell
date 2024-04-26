@@ -10,8 +10,8 @@ int main(int argc, char **argv, char **envp)
 	init(&data, envp);
 	while (42)
 	{
-		read_user_cmd(&data);
-		
+		if (read_user_cmd(&data) != SUCCESS)
+			continue ;
 	}
 }
 
