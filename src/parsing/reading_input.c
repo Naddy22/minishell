@@ -54,5 +54,7 @@ int	read_user_cmd(t_data *data)
 	ft_free_verif(current_cmd);
 	return (SUCCESS);
 }
-//next step : voir pour ajouter ft check dollard and replace
+//next step : 
+//voir pour changer ft free verif car ca ne remet pas vraiment à null
+//voir pour ajouter ft check dollard and replace
 
