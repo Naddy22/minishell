@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:12 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/25 17:45:05 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:55:59 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 void	execution(t_cmd cmd, char **argv, char **envp)
 {
 	cmd.cmd = ft_split(argv[cmd.pnb + 2], ' ');
-	cmd.path = get_path(envp, cmd.cmd[0]);
-	if (!cmd.path)
-		perror("Unable to find path for command. ");
+	
 	if (cmd.infile_ok == 0)
 	{
 		if (ft_strncmp(cmd.cmd[0], "cd", 2) == 0)
 			ft_cd(cmd.cmd, envp);
 		else if (ft_strncmp(cmd.cmd[0], "pwd", 3) == 0)
 			ft_pwd();
+		else if (ft_strncmp(cmd.cmd[0], "exit", 4) == 0)
+			ft_exit(cmd.cmd);
 		else
 		{
+			cmd.path = get_path(envp, cmd.cmd[0]);
+			if (!cmd.path)
+				perror("Unable to find path for command. ");
 			execve(cmd.path, cmd.cmd, NULL);
 			perror("Execution failed. ");
 			free_all(cmd);

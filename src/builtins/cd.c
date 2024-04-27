@@ -23,7 +23,7 @@ char    *get_home(char **envp)
 }
 
 /*
-	Check if envp is in struct or is given as is in argument. If in struct, change arg given to struct
+	Need to check (in exec) if cd has to be in child or parent (test whether bash does it in all case or only in some)
 */
 void	ft_cd(char **cmd, char **envp)
 {
@@ -34,7 +34,7 @@ void	ft_cd(char **cmd, char **envp)
 		path_to_go = get_home(envp);
 		if (chdir(path_to_go) != 0)
 		{
-			perror("Could not change to $HOME directory: ");
+			perror("cd");
 			exit(EXIT_FAILURE);
 		}
 		else
@@ -45,7 +45,7 @@ void	ft_cd(char **cmd, char **envp)
 		path_to_go = cmd[1];
 		if (chdir(path_to_go) != 0)
 		{
-			perror("Could not change directory: ");
+			perror("cd");
 			exit(EXIT_FAILURE);
 		}
 		else

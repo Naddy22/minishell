@@ -12,7 +12,7 @@ void	ft_pwd(void)
 	}
 	else
 	{
-		printf("%s\n", buf);
+		printf("%s\n", buf); //or putstr if write has to be use
 		exit(EXIT_SUCCESS);
 	}
 }

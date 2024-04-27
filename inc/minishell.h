@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include <unistd.h>
+# include <errno.h>
 # include <stdio.h> //obligatoire pour readline.h(FILE)
 // # include <sys/types.h>
 // # include <sys/stat.h>

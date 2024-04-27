@@ -6,13 +6,15 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:08 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/25 17:45:27 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:52:11 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 # include <fcntl.h>
+# include <stdlib.h>
+
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
@@ -52,4 +54,5 @@ void	parent(t_cmd *cmd);
 //MINISHELL RELATED
 void	ft_cd(char **cmd, char **envp);
 void	ft_pwd(void);
+void	ft_exit(char **cmd);
 #endif
