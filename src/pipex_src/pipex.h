@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:08 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/26 19:52:11 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:53:25 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,7 @@ void	parent(t_cmd *cmd);
 void	ft_cd(char **cmd, char **envp);
 void	ft_pwd(void);
 void	ft_exit(char **cmd);
+void	ft_echo(char **cmd);
+void	ft_env(char **envp);
+
 #endif

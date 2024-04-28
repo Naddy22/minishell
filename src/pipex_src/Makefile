@@ -6,7 +6,7 @@
 #    By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 14:34:28 by vboulang          #+#    #+#              #
-#    Updated: 2024/04/26 19:53:54 by vboulang         ###   ########.fr        #
+#    Updated: 2024/04/27 19:53:34 by vboulang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,9 @@ SRC			= 	pipex.c \
 				file_handling.c \
 				cd.c \
 				pwd.c \
-				exit.c
+				exit.c \
+				echo.c \
+				env.c
 
 SRC_BONUS	=	pipex_bonus.c \
 				path_bonus.c \

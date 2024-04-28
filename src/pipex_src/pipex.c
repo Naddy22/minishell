@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:12 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/26 19:55:59 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:55:09 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	execution(t_cmd cmd, char **argv, char **envp)
 			ft_pwd();
 		else if (ft_strncmp(cmd.cmd[0], "exit", 4) == 0)
 			ft_exit(cmd.cmd);
+		else if (ft_strncmp(cmd.cmd[0], "echo", 4) == 0)
+			ft_echo(cmd.cmd);
+		else if (ft_strncmp(cmd.cmd[0], "env", 3) == 0)
+			ft_env(envp);
 		else
 		{
 			cmd.path = get_path(envp, cmd.cmd[0]);

@@ -27,7 +27,6 @@ int	check_all_digit(char **cmd, int i)
 void	ft_exit(char **cmd)
 {
 	int	length;
-	int	c;
 
 	length = 0;
 	while (cmd[length])
