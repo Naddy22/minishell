@@ -6,17 +6,17 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:11:47 by namoisan          #+#    #+#             */
-/*   Updated: 2024/04/26 17:09:49 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:43:44 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_free_verif(void *ptr)
+void	ft_free_verif(void **ptr)
 {
-	if (ptr != NULL)
+	if (*ptr != NULL)
 	{
-		free(ptr);
-		ptr = NULL;
+		free(*ptr);
+		*ptr = NULL;
 	}
 }

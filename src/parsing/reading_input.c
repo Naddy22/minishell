@@ -4,24 +4,24 @@ static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 {
 	if (rl_buffer[0] == '\0') //=si juste fait 'entrée'
 	{
-		ft_free_verif(rl_buffer);
-		ft_free_verif(data->parsing.last_user_cmd);
+		ft_free_verif((void *)&rl_buffer);
+		ft_free_verif((void *)&data->parsing.last_user_cmd);
 		return (FALSE);
 	}
 	add_history(rl_buffer);
 	current_cmd = ft_strtrim(rl_buffer, " ");
 	if (current_cmd == NULL)
 	{
-		ft_free_verif(rl_buffer);
+		ft_free_verif((void *)&rl_buffer);
 		free_error(data, "strtrim failed");
 		rl_clear_history();
 		exit(EXIT_FAILURE);
 	}
 	if (current_cmd[0] == '\0')
 	{
-		ft_free_verif(rl_buffer);
-		ft_free_verif(current_cmd);
-		ft_free_verif(data->parsing.last_user_cmd);
+		ft_free_verif((void *)&rl_buffer);
+		ft_free_verif((void *)&current_cmd);
+		ft_free_verif((void *)&data->parsing.last_user_cmd);
 		return (FALSE);
 	}
 	data->parsing.last_user_cmd = strdup(current_cmd);
@@ -45,13 +45,10 @@ int	read_user_cmd(t_data *data)
 	else
 	{
 		if (not_empty(data, current_cmd, rl_buffer) != TRUE)
-		{
-			data->parsing.last_user_cmd = NULL;
 			return (FAIL);
-		}
 	}
-	ft_free_verif(rl_buffer);
-	ft_free_verif(current_cmd);
+	ft_free_verif((void *)&rl_buffer);
+	ft_free_verif((void *)&current_cmd);
 	return (SUCCESS);
 }
 //next step : 

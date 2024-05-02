@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 13:12:41 by namoisan          #+#    #+#             */
-/*   Updated: 2024/04/26 17:09:57 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:47:31 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ char			*fill_buffer(char *buf, int fd);
 void			ft_free_table(char **table);
 long long int	ft_atol(const char *str);
 void			ft_tabcpy(int *src, int*cpy, int size_max);
-void			ft_free_verif(void *ptr);
+void			ft_free_verif(void **ptr);
 #endif
