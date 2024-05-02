@@ -16,15 +16,28 @@
 # define SUCCESS 0
 # define FAIL 1
 
+# define PIPE 20
+
+
+typedef struct s_list
+{
+	char			*token;
+	int				token_type;
+	struct s_list	*next;
+}					t_list;
+
 typedef struct s_parsing
 {
 	char	*last_user_cmd;
+	size_t	i;
 }			t_parsing;
 
 typedef struct s_data
 {
 	char		**cpy_env;
 	t_parsing	parsing;
+	t_list		*tokens;
+	int			nb_pipes;
 }				t_data;
 
 
