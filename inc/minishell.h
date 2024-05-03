@@ -17,15 +17,15 @@
 # define FAIL 1
 
 # define WORD 20
-# define PIPE 21
-# define 
-# define
-# define
-# define
+# define L1_REDIR 21
+# define L2_REDIR 22
+# define R1_REDIR 23
+# define R2_REDIR 24
 
 typedef struct s_list
 {
-	char			*token; 
+	char			**token;
+	char			*brut_cmd;
 	int				token_type;
 	struct s_list	*next; // à utiliser pour separer les mots des tokens
 }					t_list;
@@ -40,7 +40,8 @@ typedef struct s_data
 {
 	char		**cpy_env;
 	t_parsing	parsing;
-	t_list		*tokens; //en créer autant qu'il y a de commandes
+	t_list		*tokens;
+	t_list		*last_token;
 	int			nb_pipes;
 }				t_data;
 

@@ -10,11 +10,20 @@ t_list	*calloc_new_token(t_data *data)
 	return (new_token);
 }
 
-void	create_token(t_data *data, int *i, int id)
+void	create_token(t_data *data, int *i, int *start, int id)
 {
-	char *new;
+	t_list *new;
 
-	new = calloc_new_token(data); //calloc nouveau token 
+	new = calloc_new_token(data); //calloc nouveau token
+	new->token_type = id;
+	data->last_token = new;
+	ft_lstadd_back(&data->tokens, new);
+	if (id == WORD)
+	{
+		*start = *i;
+		return ;
+	}
+	(*i)++;
 }
 
 void	create_token_pipe_redir()
