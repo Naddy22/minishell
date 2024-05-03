@@ -16,19 +16,23 @@
 # define SUCCESS 0
 # define FAIL 1
 
-# define PIPE 20
-
+# define WORD 20
+# define PIPE 21
+# define 
+# define
+# define
+# define
 
 typedef struct s_list
 {
-	char			*token;
+	char			*token; 
 	int				token_type;
-	struct s_list	*next;
+	struct s_list	*next; // à utiliser pour separer les mots des tokens
 }					t_list;
 
 typedef struct s_parsing
 {
-	char	*last_user_cmd;
+	char	*last_user_cmd; // commande brut du USER
 	size_t	i;
 }			t_parsing;
 
@@ -36,7 +40,7 @@ typedef struct s_data
 {
 	char		**cpy_env;
 	t_parsing	parsing;
-	t_list		*tokens;
+	t_list		*tokens; //en créer autant qu'il y a de commandes
 	int			nb_pipes;
 }				t_data;
 

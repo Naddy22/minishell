@@ -13,9 +13,8 @@ static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 	if (current_cmd == NULL)
 	{
 		ft_free_verif((void *)&rl_buffer);
-		free_error(data, "strtrim failed");
 		rl_clear_history();
-		exit(EXIT_FAILURE);
+		free_error(data, "strtrim failed");
 	}
 	if (current_cmd[0] == '\0')
 	{
