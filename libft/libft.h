@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 13:12:41 by namoisan          #+#    #+#             */
-/*   Updated: 2024/05/03 15:25:02 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:25:02 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "../inc/minishell.h"
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
+//typedef struct s_list
+//{
+//	void			*content;
+//	struct s_list	*next;
+//}	t_list;
 
 // libft
 int				ft_isalpha(int c);
@@ -60,7 +61,7 @@ void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
-// list chainé
+// liste chainée
 void			ft_lstadd_back(t_list **lst, t_list *new);
 
 // ft_printf

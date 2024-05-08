@@ -12,6 +12,11 @@ int main(int argc, char **argv, char **envp)
 	{
 		if (read_user_cmd(&data) != SUCCESS)
 			continue ;
+		parsing(&data);
+		// printf("%s\n", data.last_token->brut_cmd);
+		printf("%s\n", data.tokens->brut_cmd);
+		free_all(&data);
+		free_tokenlist(&data.tokens);
 	}
 }
 

@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+typedef struct s_list	t_list;
+
 // # include <unistd.h>
 # include <stdio.h> //obligatoire pour readline.h(FILE)
 // # include <sys/types.h>
@@ -27,7 +29,7 @@ typedef struct s_list
 	char			**token;
 	char			*brut_cmd;
 	int				token_type;
-	struct s_list	*next; // à utiliser pour separer les mots des tokens
+	struct s_list	*next; // à utiliser pour aller vers la prochaine commande
 }					t_list;
 
 typedef struct s_parsing
@@ -59,12 +61,17 @@ typedef struct s_data
 int	init(t_data *data, char **envp);
 
 //parsing
+void	parsing(t_data *data);
 int	read_user_cmd(t_data *data);
+
+//token_utils
+void	create_token(t_data *data, size_t *i, int *start, int id);
 
 //error_utils
 void	free_error(t_data *data, char *error);
 
 //free_utils
 void	free_all(t_data *data);
+void	free_tokenlist(t_list **list);
 
 #endif 

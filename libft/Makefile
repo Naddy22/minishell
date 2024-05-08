@@ -12,7 +12,7 @@ ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa
 ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c\
 get_next_line.c ft_printf_check_pourcent.c ft_printf_putchar.c ft_printf_putnbr_base.c \
 ft_printf_putnbr_unsigned.c ft_printf_putnbr.c ft_printf_putstr.c ft_printf.c ft_atol.c \
-ft_tabcpy.c ft_free_verif.c
+ft_tabcpy.c ft_free_verif.c ft_lstadd_back.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# BLACK
@@ -28,10 +28,10 @@ _OBJ = $(SRC:.c=.o) #les .c sont lu en .o
 SDIR = ./src/
 OBJ = $(addprefix $(BIN)/, $(notdir $(_OBJ)))
 $(BIN)/%.o: ./src/%.c libft.h # remplace les .c par .o avec -c . $< = dependance le plus a gauche
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ -I../inc/
 all: $(NAME)
 $(NAME): $(BIN) $(OBJ) # $@ prends la target et $^ prends la dependance du dessus
-	@$(AR) $(NAME) $(OBJ)
+	@$(AR) $(NAME) $(OBJ) 
 	@echo "$(GREEN)Libft compilation OK$(WHITE)"
 $(BIN):
 	@$(MK) $(BIN)

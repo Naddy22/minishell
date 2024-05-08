@@ -10,7 +10,7 @@ t_list	*calloc_new_token(t_data *data)
 	return (new_token);
 }
 
-void	create_token(t_data *data, int *i, int *start, int id)
+void	create_token(t_data *data, size_t *i, int *start, int id)
 {
 	t_list *new;
 
