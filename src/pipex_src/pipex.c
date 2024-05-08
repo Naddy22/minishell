@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:12 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/03 15:59:49 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:46:10 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	execution(t_cmd cmd, char **argv, char **envp)
 		else if (ft_strncmp(cmd.cmd[0], "unset", 5) == 0)
 			ft_unset(cmd.cmd, envp);
 		else if (ft_strncmp(cmd.cmd[0], "export", 6) == 0)
-			ft_export(cmd.cmd, envp);
+			ft_export(cmd.cmd, envp, NULL);
 		else
 		{
 			cmd.path = get_path(envp, cmd.cmd[0]);

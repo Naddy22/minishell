@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:08 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/03 14:55:18 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:46:29 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	ft_exit(char **cmd);
 void	ft_echo(char **cmd);
 void	ft_env(char **envp);
 void	ft_unset(char **cmd, char **envp);
-void	ft_export(char **cmd, char **envp);
+void	ft_export(char **cmd, char **envp, char **envp2);
 
 #endif
