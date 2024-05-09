@@ -58,7 +58,7 @@ void	ft_unset(char **cmd, char **envp)
 			envp = remove_elem(cmd[i], envp);
 			i++;
 		}
-		print_envp(envp);
+		print_envp(envp); //for test purposes only
 	}
 	exit(EXIT_SUCCESS);
 }
