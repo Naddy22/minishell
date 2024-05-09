@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-char    *get_home(char **envp)
+char	*get_home(char **envp)
 {
 	int		i;
 	int		home_not_found;
@@ -23,7 +23,8 @@ char    *get_home(char **envp)
 }
 
 /*
-	Need to check (in exec) if cd has to be in child or parent (test whether bash does it in all case or only in some)
+	Need to check (in exec) if cd has to be in child or parent 
+	(test whether bash does it in all case or only in some)
 */
 void	ft_cd(char **cmd, char **envp)
 {
@@ -38,7 +39,7 @@ void	ft_cd(char **cmd, char **envp)
 			exit(EXIT_FAILURE);
 		}
 		else
-			write(1, "SUCCESS", 7); /////to change to actual modification of env PWD		
+			write(1, "SUCCESS", 7); //change to actual modification of env PWD
 	}
 	else if (cmd[1])
 	{
@@ -49,7 +50,7 @@ void	ft_cd(char **cmd, char **envp)
 			exit(EXIT_FAILURE);
 		}
 		else
-			write(1, "SUCCESS", 7); /////to change to actual modification of env PWD		
+			write(1, "SUCCESS", 7); //change to actual modification of env PWD
 	}
 	exit(EXIT_SUCCESS);
 }

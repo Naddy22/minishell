@@ -6,23 +6,24 @@
 */
 void	print_envp(char **envp)
 {
-	int i = 0;
-	
+	int	i;
+
+	i = 0;
 	while (envp[i])
 	{
 		dprintf(2, "%s\n", envp[i]);
 		i++;
-	} 
+	}
 }
 
-char **remove_elem(char *elem, char **envp)
+char	**remove_elem(char *elem, char **envp)
 {
 	char	**new_env;
 	int		size;
 	int		i;
 	int		j;
 	char	**envp_elem;
-	
+
 	i = 0;
 	j = 0;
 	size = 0;
@@ -58,7 +59,7 @@ void	ft_unset(char **cmd, char **envp)
 			envp = remove_elem(cmd[i], envp);
 			i++;
 		}
-		print_envp(envp); //for test purposes only
+		print_envp(envp); //TODO to remove. For test purposes only
 	}
 	exit(EXIT_SUCCESS);
 }

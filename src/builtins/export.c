@@ -5,7 +5,7 @@
 */
 int	get_size(char **strs)
 {
-	int size;
+	int	size;
 
 	size = 0;
 	if (!strs)
@@ -17,16 +17,16 @@ int	get_size(char **strs)
 
 char	**deep_cpy(char **envp, char **envp2)
 {
-	int i;
-	int j;
-	int size;
-	char **envext;
+	int		i;
+	int		j;
+	int		size;
+	char	**envext;
 
 	i = 0;
 	j = 0;
 	size = get_size(envp) + get_size(envp2);
 	envext = ft_calloc(size + 1, sizeof(char *));
-	while(envp[i])
+	while (envp[i])
 	{
 		envext[i] = ft_calloc(ft_strlen(envp[i]) + 1, sizeof(char));
 		ft_strlcpy(envext[i], envp[i], ft_strlen(envp[i]) + 1);
@@ -56,9 +56,10 @@ char	**ordering_env(char **envext)
 	while (envext[i])
 	{
 		j = i + 1;
-		while(envext[j])
+		while (envext[j])
 		{
-			if (ft_strncmp(ft_split(envext[i],'=')[0], ft_split(envext[j], '=')[0], ft_strlen(envext[i])) > 0)
+			if (ft_strncmp(ft_split(envext[i], '=')[0],
+				ft_split(envext[j], '=')[0], ft_strlen(envext[i])) > 0)
 			{
 				swp = envext[i];
 				envext[i] = envext[j];
@@ -71,15 +72,15 @@ char	**ordering_env(char **envext)
 	return (envext);
 }
 
-void	print_export(char **envp, char **envp2) //NEED TO SORT
+void	print_export(char **envp, char **envp2)
 {
-	int	i;
-	char **split;
-	char **envext;
+	int		i;
+	char	**split;
+	char	**envext;
 
 	envext = ordering_env(deep_cpy(envp, envp2));
 	i = 0;
-	while(envext[i])
+	while (envext[i])
 	{
 		if (ft_strchr(envext[i], '='))
 		{
@@ -93,8 +94,7 @@ void	print_export(char **envp, char **envp2) //NEED TO SORT
 	}
 }
 
-
-char **add_elem(char *elem, char **envp) ///to change to effectively add element
+char	**add_elem(char *elem, char **envp)
 {
 	char	**new_env;
 	int		size;
@@ -114,11 +114,10 @@ char **add_elem(char *elem, char **envp) ///to change to effectively add element
 	return (new_env);
 }
 
-
 void	ft_export(char **cmd, char **envp, char **envp2)
 {
-	int	length;
-	int	i;
+	int		length;
+	int		i;
 	char	**new_env;
 
 	i = 1;

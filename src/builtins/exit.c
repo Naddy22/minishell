@@ -10,7 +10,8 @@ int	check_all_digit(char **cmd, int i)
 		if (!ft_isdigit(cmd[i][c]))
 		{
 			printf("exit\n");
-			//perror("exit"); or strerror... printf message: numeric argument required
+			//perror("exit"); or strerror... 
+			//printf message: numeric argument required
 			return (1);
 		}
 		c++;
@@ -36,7 +37,8 @@ void	ft_exit(char **cmd)
 		if (check_all_digit(cmd, 1) == 1)
 		{
 			printf("exit\n");
-			//perror("exit"); or strerror... printf message: numeric argument required
+			//perror("exit"); or strerror... 
+			//printf message: numeric argument required
 			exit(255);
 		}
 		if (cmd[2])
