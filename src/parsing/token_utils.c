@@ -26,13 +26,13 @@ void	create_token(t_data *data, size_t *i, int *start, int id)
 	(*i)++;
 }
 
-void	create_token_pipe_redir(t_data *data, size_t *i, int *start)
-{
-	char *str;
+// void	create_token_pipe_redir(t_data *data, size_t *i, int *start)
+// {
+// 	char *str;
 
-	str = data->parsing.last_user_cmd;
-	if (str[*i] == '|')
-		data->nb_pipes++;
+// 	str = data->parsing.last_user_cmd;
+// 	if (str[*i] == '|')
+// 		data->nb_pipes++;
 	
 
-}
+// }
