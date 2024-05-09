@@ -2,22 +2,22 @@
 
 void	free_tokenlist(t_list **list)
 {
-	t_list *tmp;
+	t_list	*current;
+	t_list	*next;
 
-	if (*list == NULL)
-		return ;
-	while (*list)
+	current = *list;
+	while (current != NULL)
 	{
-		tmp = (*list)->next;
-		ft_free_verif((void *)(*list)->token);
-		ft_free_verif((void *)(*list));
-		*list = tmp;
+		next = current->next;
+		ft_free_verif((void **)&current->token);
+		ft_free_verif((void **)&current);
+		current = next;
 	}
+	*list = NULL;
 }
 
 void	free_all(t_data *data)
 {
 	ft_free_verif((void *)&data->parsing.last_user_cmd);
+	free_tokenlist(data->tokens);
 }
-
-//voir demain pour regler le segfault apres free

@@ -23,10 +23,11 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 		return ;
 	create_token(data, i, start_token, WORD);
 }
-//int	get_char(t_data *data, char *str, int *i, int *start)
-//{
+int	get_char(t_data *data, char *str, int *i, int *start)
+{
 
-//}
+}
+
 void	add_str_to_token(t_data *data, size_t *i, int *start)
 {
 	char *token;
@@ -41,6 +42,8 @@ void	add_str_to_token(t_data *data, size_t *i, int *start)
 	data->last_token->brut_cmd = ft_strjoin(token, tmp);
 	ft_free_verif((void *)&token);
 	ft_free_verif((void *)&tmp);
+	if (data->last_token->brut_cmd == NULL)
+		free_error(data, "Error malloc substr in str to token");
 }
 
 void	parsing(t_data *data)
@@ -56,11 +59,6 @@ void	parsing(t_data *data)
 		while (ft_isalpha(data->parsing.last_user_cmd[data->parsing.i]) || \
 		data->parsing.last_user_cmd[data->parsing.i] == ' ')
 			data->parsing.i++;
-		// if (data->parsing.last_user_cmd[data->parsing.i] == '\0')
-		// {
-		// 	data->parsing.i--;
-		// 	add_str_to_token(data, &data->parsing.i, &start);
-		// }
 		add_str_to_token(data, &data->parsing.i, &start);
 		data->parsing.i++;
 	}
