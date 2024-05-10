@@ -16,8 +16,8 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 	{
 		if (cmd[*i] == ' ')
 			(*i)++;
-//		else
-//			create_token_pipe_redir();
+		else
+			create_token_pipe_redir();
 	}
 	if (cmd[*i] == '\0')
 		return ;
@@ -69,20 +69,6 @@ void	parsing(t_data *data)
 	find_token(data, &data->parsing.i, &start);
 	while (data->parsing.last_user_cmd[data->parsing.i] != '\0')
 	{
-		while (ft_isalpha(data->parsing.last_user_cmd[data->parsing.i]) || \
-		data->parsing.last_user_cmd[data->parsing.i] == ' ')
-			data->parsing.i++;
-		add_str_to_token(data, &data->parsing.i, &start);
-		data->parsing.i++;
+		get_char(data, data->parsing.last_user_cmd, &data->parsing.i, &start);
 	}
 }
-
-//parsing:
-//-chercher les token: 
-//tant que < > |  ‘ ‘ , si ‘ ‘ incrémenté et si les autres créer token pour ce qu’il faut (*), verifier si c’est pas la fin de la cmd sinon return. En sortant de la boucle j’en conclu que c’est juste des mots donc cree token pour les mots. Je créer un autre token pour mettre la valeur à \0. voir pour mettre un flag expend.
-
-
-
-
-//*: creer token en incluent le bon id dans la structure afin de différencier les mots et les autres types de caratere(genre pipe)
-//pour creer token: calloc un nouvelle espace et le raccrocher aux tokens d’avant si deja existant

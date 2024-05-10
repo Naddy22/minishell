@@ -25,6 +25,8 @@ typedef struct s_list	t_list;
 # define R2_REDIR 24
 # define PIPE 25
 
+
+
 typedef struct s_list
 {
 	char			**token;
