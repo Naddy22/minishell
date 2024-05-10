@@ -23,13 +23,32 @@ int	check_n_flag(char *arg)
 	return (ok);
 }
 
+void	print_args(char *cmd, int *add_next_line)
+{
+	int	ok_n_flag;
+
+	ok_n_flag = 0;
+	if (check_n_flag(cmd))
+	{
+		if (!ok_n_flag)
+			*add_next_line = 0;
+		else
+			printf("%s", cmd);
+	}
+	else
+	{
+		ok_n_flag = 1;
+		printf("%s", cmd);
+	}
+	if (cmd && ok_n_flag)
+		printf(" ");
+}
+
 void	ft_echo(char **cmd)
 {
 	int	l;
 	int	add_next_line;
-	int	ok_n_flag;
 
-	ok_n_flag = 0;
 	add_next_line = 1;
 	l = 0;
 	while (cmd[l])
@@ -44,21 +63,8 @@ void	ft_echo(char **cmd)
 		l = 1;
 		while (cmd[l])
 		{
-			if (check_n_flag(cmd[l]))
-			{
-				if (!ok_n_flag)
-					add_next_line = 0;
-				else
-					printf("%s", cmd[l]);
-			}
-			else
-			{
-				ok_n_flag = 1;
-				printf("%s", cmd[l]);
-			}
+			print_args(cmd[l], &add_next_line);
 			l++;
-			if (cmd[l] && ok_n_flag)
-				printf(" ");
 		}
 		if (add_next_line)
 			printf("\n");

@@ -19,6 +19,12 @@ int	check_all_digit(char **cmd, int i)
 	return (0);
 }
 
+void	exit_with_status(int status)
+{
+	printf("exit\n");
+	exit(status);
+}
+
 /*
 	1. verifier si seul ou avec code
 		2.1 ecrire code pour seul
@@ -44,17 +50,11 @@ void	ft_exit(char **cmd)
 		if (cmd[2])
 		{
 			printf("exit\n");
-			//error message: Too many arguments
+			//error message: Too many arguments (error code 1)
 		}
 		else
-		{
-			printf("exit\n");
-			exit(ft_atoi(cmd[1]));
-		}
+			exit_with_status(ft_atoi(cmd[1]));
 	}
 	else
-	{
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
+		exit_with_status(EXIT_SUCCESS);
 }

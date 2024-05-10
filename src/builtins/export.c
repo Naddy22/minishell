@@ -19,13 +19,11 @@ char	**deep_cpy(char **envp, char **envp2)
 {
 	int		i;
 	int		j;
-	int		size;
 	char	**envext;
 
 	i = 0;
 	j = 0;
-	size = get_size(envp) + get_size(envp2);
-	envext = ft_calloc(size + 1, sizeof(char *));
+	envext = ft_calloc(get_size(envp) + get_size(envp2) + 1, sizeof(char *));
 	while (envp[i])
 	{
 		envext[i] = ft_calloc(ft_strlen(envp[i]) + 1, sizeof(char));
