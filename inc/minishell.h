@@ -23,6 +23,7 @@ typedef struct s_list	t_list;
 # define L2_REDIR 22
 # define R1_REDIR 23
 # define R2_REDIR 24
+# define PIPE 25
 
 typedef struct s_list
 {

@@ -23,10 +23,23 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 		return ;
 	create_token(data, i, start_token, WORD);
 }
-// int	get_char(t_data *data, char *str, int *i, int *start)
-// {
+int	get_char(t_data *data, char *str, int *i, int *start)
+{
+	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || str[*i] == ' ')
+	{
 
-// }
+	}
+	else if (str[*i] == '$')
+	{
+
+	}
+	else if (str[*i] == '\'' || str[*i] == '"')
+	{
+
+	}
+	else
+		(*i)++;
+}
 
 void	add_str_to_token(t_data *data, size_t *i, int *start)
 {
@@ -52,7 +65,7 @@ void	parsing(t_data *data)
 
 	start = 0;
 	data->parsing.i = 0;
-	data->nb_pipes = 0;
+	data->nb_pipes = 0; 
 	find_token(data, &data->parsing.i, &start);
 	while (data->parsing.last_user_cmd[data->parsing.i] != '\0')
 	{

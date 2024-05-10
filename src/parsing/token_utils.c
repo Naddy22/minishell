@@ -26,13 +26,22 @@ void	create_token(t_data *data, size_t *i, int *start, int id)
 	(*i)++;
 }
 
-// void	create_token_pipe_redir(t_data *data, size_t *i, int *start)
-// {
-// 	char *str;
+void	create_token_pipe_redir(t_data *data, size_t *i, int *start)
+{
+	char *str;
 
-// 	str = data->parsing.last_user_cmd;
-// 	if (str[*i] == '|')
-// 		data->nb_pipes++;
-	
-
-// }
+	str = data->parsing.last_user_cmd;
+	if (str[*i] == '|')
+	{
+		data->nb_pipes++; 
+		create_token(data, i, start, PIPE);
+	}
+	if (str[*i] == '>' && str[*i + 1] == '>')
+		create_token(data, i, start, R2_REDIR);
+	else if (str[*i] == '<' && str[*i + 1] == '<')
+		create_token(data, i, start, L2_REDIR);
+	else if (str[*i] == '>')
+		create_token(data, i, start, R1_REDIR);
+	else if (str[*i] == '<')
+		create_token(data, i, start, L1_REDIR);
+}
