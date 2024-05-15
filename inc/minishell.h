@@ -69,9 +69,10 @@ int	read_user_cmd(t_data *data);
 
 //token_utils
 void	create_token(t_data *data, size_t *i, int *start, int id);
+void	create_token_pipe_redir(t_data *data, size_t *i, int *start);
 
 //error_utils
-void	free_error(t_data *data, char *error);
+void	free_error(t_data *data, char *error, int status);
 
 //free_utils
 void	free_all(t_data *data);

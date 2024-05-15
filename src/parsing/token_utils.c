@@ -6,7 +6,7 @@ t_list	*calloc_new_token(t_data *data)
 
 	new_token = (t_list *)ft_calloc(1, sizeof(t_list));
 	if (!new_token)
-		free_error(data, "malloc error in calloc_new_token");
+		free_error(data, "malloc error in calloc_new_token", EXIT_FAILURE);
 	return (new_token);
 }
 

@@ -17,12 +17,18 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 		if (cmd[*i] == ' ')
 			(*i)++;
 		else
-			create_token_pipe_redir();
+			create_token_pipe_redir(data, i, start_token);
 	}
 	if (cmd[*i] == '\0')
 		return ;
 	create_token(data, i, start_token, WORD);
 }
+
+void	process_end_token(t_data *data, size_t *i, int *start)
+{
+	
+}
+
 int	get_char(t_data *data, char *str, int *i, int *start)
 {
 	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || str[*i] == ' ')
@@ -51,12 +57,12 @@ void	add_str_to_token(t_data *data, size_t *i, int *start)
 	token = data->last_token->brut_cmd;
 	tmp = ft_substr(str, *start, *i - *start);
 	if (tmp == NULL)
-		free_error(data, "Error malloc substr in str to token");
+		free_error(data, "Error malloc substr in str to token",EXIT_FAILURE);
 	data->last_token->brut_cmd = ft_strjoin(token, tmp);
 	ft_free_verif((void *)&token);
 	ft_free_verif((void *)&tmp);
 	if (data->last_token->brut_cmd == NULL)
-		free_error(data, "Error malloc substr in str to token");
+		free_error(data, "Error malloc substr in str to token",EXIT_FAILURE);
 }
 
 void	parsing(t_data *data)

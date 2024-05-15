@@ -1,9 +1,8 @@
 #include "../inc/minishell.h"
 
-void	free_error(t_data *data, char *error)
+void	free_error(t_data *data, char *error, int status)
 {
-	ft_free_verif((void *)&data->parsing.last_user_cmd);
-	free_tokenlist(&data->tokens);
+	free_all(&data->parsing.last_user_cmd);
 	printf("%s\n", error);
-	exit(EXIT_FAILURE);
+	exit(status);
 }
