@@ -24,20 +24,34 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 	create_token(data, i, start_token, WORD);
 }
 
-void	process_end_token(t_data *data, size_t *i, int *start)
+void	process_end_of_token(t_data *data, size_t *i, int *start)
 {
-	
+	char *str;
+
+	str = data->parsing.last_user_cmd;
+	if (data->last_token->token_type == WORD)
+		add_str_to_token;
+	if (str[*i] == ' ')
+		(*i)++;
+	else if (str[*i] == '\0')
+		return ;
+	else
+		create_token_pipe_redir(data, i, start);
 }
 
 int	get_char(t_data *data, char *str, int *i, int *start)
 {
 	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || str[*i] == ' ')
 	{
-
+		process_end_of_token(data, i, start);
+		if (str[*i] == '\0')
+			return ;
+		find_token(data, i, start);
 	}
 	else if (str[*i] == '$')
 	{
-
+		process_end_of_token(data, i, start);
+		h
 	}
 	else if (str[*i] == '\'' || str[*i] == '"')
 	{
@@ -75,6 +89,7 @@ void	parsing(t_data *data)
 	find_token(data, &data->parsing.i, &start);
 	while (data->parsing.last_user_cmd[data->parsing.i] != '\0')
 	{
-		get_char(data, data->parsing.last_user_cmd, &data->parsing.i, &start);
+		if (get_char(data, data->parsing.last_user_cmd, &data->parsing.i, &start))
+			return ;
 	}
 }
