@@ -12,6 +12,7 @@ typedef struct s_list	t_list;
 # include "../libft/libft.h"
 # include "readline/readline.h"
 # include "readline/history.h"
+# include <errno.h>
 
 # define TRUE 1
 # define FALSE 0
