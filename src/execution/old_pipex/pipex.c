@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 14:34:12 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/20 11:03:31 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:09:12 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 		initialize_struct(&cmd);
 		if (access(argv[1], R_OK) == -1)
 		{
-			perror("Can't open file. ");
+			perror("Open ");
 			cmd.infile_ok = 1;
 		}
 		pipex(cmd, argv, envp);
