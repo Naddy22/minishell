@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-t_list	*calloc_new_token(t_data *data)
+t_list	*calloc_new_token(void)
 {
 	t_list *new_token;
 
@@ -14,7 +14,7 @@ void	create_token(t_data *data, size_t *i, int *start, int id)
 {
 	t_list *new;
 
-	new = calloc_new_token(data); //calloc nouveau token
+	new = calloc_new_token(); //calloc nouveau token
 	new->token_type = id;
 	data->last_token = new;
 	ft_lstadd_back(&data->tokens, new);

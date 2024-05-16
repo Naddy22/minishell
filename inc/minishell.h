@@ -30,7 +30,7 @@ typedef struct s_list	t_list;
 
 typedef struct s_list
 {
-	char			**token;
+	char			**cmd;
 	char			*brut_cmd;
 	int				token_type;
 	struct s_list	*next; // à utiliser pour aller vers la prochaine commande
@@ -73,10 +73,13 @@ void	create_token(t_data *data, size_t *i, int *start, int id);
 void	create_token_pipe_redir(t_data *data, size_t *i, int *start);
 
 //error_utils
-void	free_error(t_data *data, char *error, int status);
+void	free_error(t_data *data, char *error);
 
 //free_utils
 void	free_all(t_data *data);
 void	free_tokenlist(t_list **list);
+
+//dollar_expansion
+int	add_dollar_expansion(t_data *data, size_t *i, int *start);
 
 #endif 

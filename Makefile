@@ -13,7 +13,8 @@ DEPS = inc/minishell.h
 MK = mkdir -p
 RM = rm -rf
 BIN = bin/
-SRC = main.c init.c reading_input.c parsing.c token_utils.c error_utils.c free_utils.c
+SRC = main.c init.c reading_input.c parsing.c token_utils.c error_utils.c free_utils.c \
+dollar_expansion.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

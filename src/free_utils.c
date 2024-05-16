@@ -9,7 +9,7 @@ void	free_tokenlist(t_list **list)
 	while (current != NULL)
 	{
 		next = current->next;
-		ft_free_verif((void **)&current->token);
+		ft_free_verif((void **)&current->brut_cmd);
 		ft_free_verif((void **)&current);
 		current = next;
 	}
