@@ -119,7 +119,7 @@ void	ft_export(char **cmd, char **envp, char **envp2)
 	char	**new_env;
 
 	i = 1;
-	length = get_size(cmd);
+	length = get_size(cmd); //TODO ajouter cas ou variable modifiee. Modifier pour unset aussi
 	if (length == 1)
 		print_export(envp, envp2);
 	else if (length >= 2)
