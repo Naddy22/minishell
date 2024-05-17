@@ -80,6 +80,6 @@ void	free_all(t_data *data);
 void	free_tokenlist(t_list **list);
 
 //dollar_expansion
-int	add_dollar_expansion(t_data *data, size_t *i, int *start);
+int	handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 #endif 

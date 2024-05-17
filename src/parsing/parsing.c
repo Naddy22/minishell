@@ -62,11 +62,11 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 	else if (str[*i] == '$')
 	{
 		process_end_of_token(data, i, start);
-		add_dollar_expansion(data, i, start);
+		handle_dollar_expansion(data, i, start);
 		*start = *i;
 	}
-	// else if (str[*i] == '\'' || str[*i] == '"')
-	// 	handle_quotes();
+	else if (str[*i] == '\'' || str[*i] == '"')
+		handle_quotes(data, i, start);
 	else
 		(*i)++;
 		return (TRUE);

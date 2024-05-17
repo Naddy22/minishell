@@ -65,7 +65,7 @@ void	add_exit_status_to_token(t_data *data, size_t *i)
 	(*i)++;
 }
 
-int	add_dollar_expansion(t_data *data, size_t *i, int *start)
+int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 {
 	char *var_name;
 	char *result;
