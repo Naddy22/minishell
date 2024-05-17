@@ -3,8 +3,6 @@
 
 typedef struct s_list	t_list;
 
-typedef struct s_list	t_list;
-
 # include <unistd.h>
 # include <stdio.h> //obligatoire pour readline.h(FILE)
 // # include <sys/types.h>
@@ -27,7 +25,6 @@ typedef struct s_list	t_list;
 # define R1_REDIR 23
 # define R2_REDIR 24
 # define PIPE 25
-
 
 
 typedef struct s_list
