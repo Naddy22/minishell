@@ -6,11 +6,11 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:40:48 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/20 11:03:26 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:09:12 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/pipex.h"
+#include "../../inc/minishell.h"
 
 char	*test_path(char **paths, char *str)
 {

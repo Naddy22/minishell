@@ -1,20 +1,23 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-MY_LIB = ./libft/libft.a
-MY_LIBDIR = ./libft/
+MY_LIB		=	./libft/libft.a
+MY_LIBDIR	=	./libft/
 
-RL_DIR			=	inc/readline/
-RL_H			=	libhistory.a
-RL_L			=	libreadline.a
+RL_DIR		=	inc/readline/
+RL_H		=	libhistory.a
+RL_L		=	libreadline.a
 
-DEPS = inc/minishell.h
-MK = mkdir -p
-RM = rm -rf
-BIN = bin/
-SRC = main.c
-SDIR = src/
+DEPS		=	inc/minishell.h
+MK			=	mkdir -p
+RM			=	rm -rf
+BIN			=	bin/
+SRC			=	main.c			\
+				exec.c			\
+				file_handling.c	\
+				path.c
+SDIR 		=	src/
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
@@ -87,6 +90,9 @@ $(BIN): #crée dossier bin
 
 $(BIN)%.o: ./src/%.c $(DEPS) # remplace les .c par .o avec -c . $< = dependance le plus a gauche
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(MY_LIBDIR) -Iinc/
+
+$(BIN)%.o: ./src/execution/%.c $(DEPS) #pour inclure les fichiers dans parsing
+	@$(CC) $(CFLAGS) -c $< -o $@ -Iinc/
 
 .PHONY: all clean fclean re #.phony dit que ca se ne sont pas des fichiers
 

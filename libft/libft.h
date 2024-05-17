@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 13:12:41 by namoisan          #+#    #+#             */
-/*   Updated: 2024/02/22 13:16:05 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:35:53 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+//libft bonus
+typedef struct s_libftlist
+{
+	void				*content;
+	struct s_libftlist	*next;
+}	t_libftlist;
+
+t_libftlist		*ft_lstnew(void *content);
+void			ft_lstadd_front(t_libftlist **lst, t_libftlist *new);
+int				ft_lstsize(t_libftlist *lst);
+t_libftlist		*ft_lstlast(t_libftlist *lst);
+void			ft_lstadd_back(t_libftlist **lst, t_libftlist *new);
+void			ft_lstdelone(t_libftlist *lst, void (*del)(void *));
+void			ft_lstclear(t_libftlist **lst, void (*del)(void *));
+void			ft_lstiter(t_libftlist *lst, void (*f)(void *));
+t_libftlist		*ft_lstmap(t_libftlist *lst, void *(*f)(void *),
+					void (*del)(void *));
 
 // libft
 int				ft_isalpha(int c);

@@ -5,18 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/11 14:01:47 by vboulang          #+#    #+#             */
-/*   Updated: 2024/04/20 11:03:41 by vboulang         ###   ########.fr       */
+/*   Created: 2024/01/11 14:17:07 by vboulang          #+#    #+#             */
+/*   Updated: 2024/05/17 15:56:34 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/pipex.h"
+#include "../../inc/minishell.h"
 
-void	parent(t_cmd *cmd)
+int	to_open(t_cmd *mini, char **argv)
 {
-	cmd->infile_ok = 0;
-	if (change_parent_input(cmd->fd[0]) == -1)
-		perror("Could not change input file descriptor. ");
+	int	fd;
+
+	if (mini->pnb == 0)
+		fd = open(argv[1], O_RDONLY);
+	else
+		fd = open("out", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		//fd = open(argv[mini->max + 3], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	return (fd);
 }
 
 int	change_parent_input(int fd)
@@ -27,13 +32,9 @@ int	change_parent_input(int fd)
 	return (0);
 }
 
-int	to_open(t_cmd cmd, char **argv)
+void	parent(t_cmd *mini)
 {
-	int	fd;
-
-	if (cmd.pnb == 0)
-		fd = open(argv[1], O_RDONLY);
-	else
-		fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	return (fd);
+	//cmd->infile_ok = 0; // pipex chunk
+	if (change_parent_input(mini->fd[mini->pnb][0]) == -1)
+		perror("Could not change input file descriptor. ");
 }
