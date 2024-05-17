@@ -1,0 +1,14 @@
+#include "../libft.h"
+
+void	ft_lstadd_back(t_libftlist **lst, t_libftlist *new)
+{
+	t_libftlist	*temp;
+
+	if (*lst)
+	{
+		temp = ft_lstlast(*lst);
+		temp->next = new;
+	}
+	else
+		*lst = new;
+}

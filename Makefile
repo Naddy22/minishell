@@ -16,7 +16,14 @@ BIN			=	bin/
 SRC			=	main.c			\
 				exec.c			\
 				file_handling.c	\
-				path.c
+				path.c			\
+				init.c			\
+				reading_input.c	\
+				parsing.c		\
+				token_utils.c	\
+				error_utils.c	\
+				free_utils.c	\
+				dollar_expansion.c
 SDIR 		=	src/
 
 # -- COLORS -- #
@@ -90,6 +97,9 @@ $(BIN): #crée dossier bin
 
 $(BIN)%.o: ./src/%.c $(DEPS) # remplace les .c par .o avec -c . $< = dependance le plus a gauche
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(MY_LIBDIR) -Iinc/
+
+$(BIN)%.o: ./src/parsing/%.c $(DEPS) #pour inclure les fichiers dans parsing
+	@$(CC) $(CFLAGS) -c $< -o $@ -Iinc/
 
 $(BIN)%.o: ./src/execution/%.c $(DEPS) #pour inclure les fichiers dans parsing
 	@$(CC) $(CFLAGS) -c $< -o $@ -Iinc/

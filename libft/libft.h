@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 13:12:41 by namoisan          #+#    #+#             */
-/*   Updated: 2024/05/17 11:35:53 by vboulang         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -17,6 +6,31 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "../inc/minishell.h"
+
+//typedef struct s_list
+//{
+//	void			*content;
+//	struct s_list	*next;
+//}	t_list;
+
+//libft bonus
+typedef struct s_libftlist
+{
+	void				*content;
+	struct s_libftlist	*next;
+}	t_libftlist;
+
+t_libftlist		*ft_lstnew(void *content);
+void			ft_lstadd_front(t_libftlist **lst, t_libftlist *new);
+int				ft_lstsize(t_libftlist *lst);
+t_libftlist		*ft_lstlast(t_libftlist *lst);
+void			ft_lstadd_back(t_libftlist **lst, t_libftlist *new);
+void			ft_lstdelone(t_libftlist *lst, void (*del)(void *));
+void			ft_lstclear(t_libftlist **lst, void (*del)(void *));
+void			ft_lstiter(t_libftlist *lst, void (*f)(void *));
+t_libftlist		*ft_lstmap(t_libftlist *lst, void *(*f)(void *),
+					void (*del)(void *));
 
 //libft bonus
 typedef struct s_libftlist
@@ -72,6 +86,8 @@ void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
+// liste chainée
+void			ft_lstadd_back(t_list **lst, t_list *new);
 
 // ft_printf
 int				ft_printf(const char *str, ...);
@@ -98,4 +114,5 @@ char			*fill_buffer(char *buf, int fd);
 void			ft_free_table(char **table);
 long long int	ft_atol(const char *str);
 void			ft_tabcpy(int *src, int*cpy, int size_max);
+void			ft_free_verif(void **ptr);
 #endif

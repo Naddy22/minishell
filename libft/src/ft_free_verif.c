@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_free_verif.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 15:21:14 by namoisan          #+#    #+#             */
-/*   Updated: 2024/05/17 16:46:57 by vboulang         ###   ########.fr       */
+/*   Created: 2024/04/26 15:11:47 by namoisan          #+#    #+#             */
+/*   Updated: 2024/05/02 11:43:44 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_free_verif(void **ptr)
 {
-	t_list	*current;
-
-	current = *lst;
-	if (*lst == NULL)
+	if (*ptr != NULL)
 	{
-		*lst = new;
-		return ;
-	}
-	else
-	{
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new;
+		free(*ptr);
+		*ptr = NULL;
 	}
 }
