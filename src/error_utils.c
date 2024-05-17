@@ -2,6 +2,13 @@
 
 void	free_error(t_data *data, char *error)
 {
-	ft_free_verif((void *)&data->parsing.last_user_cmd);
+	free_all(data);
 	printf("%s\n", error);
 }
+
+
+// void	free_error(t_data *data)
+// {
+// 	free_all(&data->parsing.last_user_cmd);
+// 	strerror(errno);
+// }
