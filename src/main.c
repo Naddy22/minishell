@@ -20,14 +20,3 @@ int main(int argc, char **argv, char **envp)
 	}
 	// return (dernier code erreur);
 }
-
-// int main() 
-// {
-// 	char *s  = "";
-// 	while (s) 
-// 	{
-// 		s = readline("minishell> ");
-// 		printf("s = %s\n", s);
-// 		free(s);
-// 	}
-// }

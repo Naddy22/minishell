@@ -49,6 +49,7 @@ typedef struct s_data
 	t_list		*tokens;
 	t_list		*last_token;
 	int			nb_pipes;
+	int			exit_status;
 }				t_data;
 
 

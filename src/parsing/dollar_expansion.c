@@ -42,9 +42,27 @@ int	add_dollar_value_to_str(t_data *data, const char *value)
 		}
 		ft_free_verif((void **)&data->last_token->brut_cmd);
 		data->last_token->brut_cmd = new;
-		ft_free_verif((void **)&new);
 	}
 	return (SUCCESS);
+}
+
+void	add_exit_status_to_token(t_data *data, size_t *i)
+{
+	char	*status_char;
+	char	*current;
+	char	*new;
+
+	current = data->last_token->brut_cmd;
+	status_char = ft_itoa(data->exit_status);
+	if (status_char == NULL)
+		perror("Malloc : ");
+	new = ft_strjoin(current, status_char);
+	if (new == NULL)
+		perror("Malloc : ");
+	ft_free_verif((void **)&(data->last_token->brut_cmd));
+	data->last_token->brut_cmd = new;
+	ft_free_verif((void **)&status_char);
+	(*i)++;
 }
 
 int	add_dollar_expansion(t_data *data, size_t *i, int *start)
@@ -55,21 +73,23 @@ int	add_dollar_expansion(t_data *data, size_t *i, int *start)
 
 	*start = ++(*i);
 	str = data->parsing.last_user_cmd;
-	while((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
-		(*i)++;
-	var_name = ft_substr(str, *start, *i - *start);
-	if (var_name == NULL)
+	if(str[*i] == '?')
+		add_exit_status_to_token(data, i);
+	else
 	{
-		perror("Malloc : ");
-		return (FAIL);
+		while((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
+			(*i)++;
+		var_name = ft_substr(str, *start, *i - *start);
+		if (var_name == NULL)
+		{
+			perror("Malloc : ");
+			return (FAIL);
+		}
+		result = get_env_value(data->cpy_env, var_name);
+		if (result == NULL)
+			result = "";
+		ft_free_verif((void **)&var_name);
+		add_dollar_value_to_str(data, result);
 	}
-	result = get_env_value(data->cpy_env, var_name);
-	if (result == NULL)
-		result = "";
-	ft_free_verif((void **)&var_name);
-	add_dollar_value_to_str(data, result);
 	return (SUCCESS);
 }
-
-
-//regler abort quand je met un $USER ou autre

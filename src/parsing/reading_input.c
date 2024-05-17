@@ -50,33 +50,3 @@ int	read_user_cmd(t_data *data)
 	ft_free_verif((void *)&current_cmd);
 	return (SUCCESS);
 }
-//next step : 
-//voir pour changer ft free verif car ca ne remet pas vraiment à null
-//voir pour ajouter ft check dollard and replace
-
-// int	check_dollars_and_replace(t_data *data)
-// {
-// 	int i;
-// 	int	start;
-// 	char *tmp[2];
-
-// 	while (data->parsing.last_user_cmd[i] != '\0')
-// 	{
-// 		if (data->parsing.last_user_cmd[i] == '$')
-// 		{
-// 			i++;
-// 			if (data->parsing.last_user_cmd[i] == ' ' || data->parsing.last_user_cmd[i] == '\0')
-// 				i++;
-// 			// if (data->parsing.last_user_cmd[i] == '?')
-// 				//voir pour que ca remplace par le msg d'erreur de la cmd precedente
-// 			else
-// 			{
-// 				start = i - 1;
-// 				while (data->parsing.last_user_cmd[i] != ' ')
-// 					i++;
-				 
-// 			}
-// 		}
-// 		i++;
-// 	}
-// }

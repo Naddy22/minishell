@@ -28,10 +28,10 @@ void	add_str_to_token(t_data *data, size_t *i, int *start)
 	tmp = ft_substr(str, *start, *i - *start);
 	if (tmp == NULL)
 		perror("Malloc : ");
-	if (data->last_token->brut_cmd == NULL)
-		data->last_token->brut_cmd = ft_strdup(tmp);
-	else
-		data->last_token->brut_cmd = ft_strjoin(token, tmp);
+	// if (data->last_token->brut_cmd == NULL)
+	// 	data->last_token->brut_cmd = ft_strdup(tmp);
+	// else
+	data->last_token->brut_cmd = ft_strjoin(token, tmp);
 	ft_free_verif((void *)&token);
 	ft_free_verif((void *)&tmp);
 	if (data->last_token->brut_cmd == NULL)
