@@ -15,6 +15,7 @@ static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 		ft_free_verif((void *)&rl_buffer);
 		rl_clear_history();
 		perror("Malloc : ");
+		return (FALSE);
 	}
 	if (current_cmd[0] == '\0')
 	{
