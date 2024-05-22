@@ -15,7 +15,11 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 	if (cmd[*i] == '\0')
 		return ;
 	create_token(data, i, start_token, WORD);
+	data->last_token->brut_cmd = (char *)ft_calloc(1, sizeof(char));
+	if (data->last_token->brut_cmd == NULL)
+		perror("Malloc : ");
 }
+
 
 void	add_str_to_token(t_data *data, size_t *i, int *start)
 {
@@ -62,14 +66,14 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 	else if (str[*i] == '$')
 	{
 		process_end_of_token(data, i, start);
-		add_dollar_expansion(data, i, start);
+		handle_dollar_expansion(data, i, start);
 		*start = *i;
 	}
-	// else if (str[*i] == '\'' || str[*i] == '"')
-	// 	handle_quotes();
+	else if (str[*i] == '\'' || str[*i] == '"')
+		handle_quotes(data, i, start);
 	else
 		(*i)++;
-		return (TRUE);
+	return (TRUE);
 }
 
 

@@ -1,5 +1,34 @@
 #include "../inc/minishell.h"
 
+void test_print_token_list(t_list *tokens)
+{
+	t_list *current = tokens;
+	int i;
+
+	i = 0;
+	while (current != NULL)
+	{
+		if (current->brut_cmd == NULL)
+		{
+			if (current->token_type == L1_REDIR)
+				printf("Token %d: <\n", i);
+			else if (current->token_type == L2_REDIR)
+				printf("Token %d: <<\n", i);
+			else if (current->token_type == R1_REDIR)
+				printf("Token %d: >\n", i);
+			else if (current->token_type == R2_REDIR)
+				printf("Token %d: >>\n", i);
+			else if (current->token_type == PIPE)
+				printf("Token %d: |\n", i);
+		}
+		else
+			printf("Token %d: %s\n", i, current->brut_cmd);
+		current = current->next;
+		i++;
+	}
+}
+
+
 int main(int argc, char **argv, char **envp) 
 {
 	t_data data;
@@ -13,8 +42,7 @@ int main(int argc, char **argv, char **envp)
 		if (read_user_cmd(&data) != SUCCESS)
 			continue ;
 		parsing(&data);
-		printf("last : %s\n", data.last_token->brut_cmd);
-		printf("final : %s\n", data.tokens->brut_cmd);
+		test_print_token_list(data.tokens);
 		free_all(&data);
 		free_tokenlist(&data.tokens);
 	}

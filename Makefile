@@ -9,24 +9,12 @@ RL_DIR		=	inc/readline/
 RL_H		=	libhistory.a
 RL_L		=	libreadline.a
 
-DEPS		=	inc/minishell.h
-MK			=	mkdir -p
-RM			=	rm -rf
-BIN			=	bin/
-SRC			=	main.c			\
-				exec.c			\
-				file_handling.c	\
-				path.c			\
-				init.c			\
-				reading_input.c	\
-				parsing.c		\
-				token_utils.c	\
-				error_utils.c	\
-				free_utils.c	\
-				ft_lstadd_back.c \
-				dollar_expansion.c
-				
-SDIR 		=	src/
+DEPS = inc/minishell.h
+MK = mkdir -p
+RM = rm -rf
+BIN = bin/
+SRC = main.c init.c reading_input.c parsing.c token_utils.c error_utils.c free_utils.c \
+dollar_expansion.c quotes.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
