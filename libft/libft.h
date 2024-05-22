@@ -6,7 +6,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../inc/minishell.h"
+// # include "../inc/minishell.h"
 
 //typedef struct s_list
 //{
@@ -25,25 +25,7 @@ t_libftlist		*ft_lstnew(void *content);
 void			ft_lstadd_front(t_libftlist **lst, t_libftlist *new);
 int				ft_lstsize(t_libftlist *lst);
 t_libftlist		*ft_lstlast(t_libftlist *lst);
-void			ft_lstadd_back(t_libftlist **lst, t_libftlist *new);
-void			ft_lstdelone(t_libftlist *lst, void (*del)(void *));
-void			ft_lstclear(t_libftlist **lst, void (*del)(void *));
-void			ft_lstiter(t_libftlist *lst, void (*f)(void *));
-t_libftlist		*ft_lstmap(t_libftlist *lst, void *(*f)(void *),
-					void (*del)(void *));
-
-//libft bonus
-typedef struct s_libftlist
-{
-	void				*content;
-	struct s_libftlist	*next;
-}	t_libftlist;
-
-t_libftlist		*ft_lstnew(void *content);
-void			ft_lstadd_front(t_libftlist **lst, t_libftlist *new);
-int				ft_lstsize(t_libftlist *lst);
-t_libftlist		*ft_lstlast(t_libftlist *lst);
-void			ft_lstadd_back(t_libftlist **lst, t_libftlist *new);
+void			ft_liblstadd_back(t_libftlist **lst, t_libftlist *new);
 void			ft_lstdelone(t_libftlist *lst, void (*del)(void *));
 void			ft_lstclear(t_libftlist **lst, void (*del)(void *));
 void			ft_lstiter(t_libftlist *lst, void (*f)(void *));
@@ -87,7 +69,6 @@ void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 // liste chainée
-void			ft_lstadd_back(t_list **lst, t_list *new);
 
 // ft_printf
 int				ft_printf(const char *str, ...);

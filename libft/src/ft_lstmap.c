@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:02:54 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/17 11:33:21 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:19:52 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_libftlist	*ft_lstmap(t_libftlist *lst, void *(*f)(void *), void (*del)(void *)
 			ft_lstclear(&new_lst, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&new_lst, new_element);
+		ft_liblstadd_back(&new_lst, new_element);
 		tmp = tmp->next;
 	}
 	return (new_lst);

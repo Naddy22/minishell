@@ -23,7 +23,9 @@ SRC			=	main.c			\
 				token_utils.c	\
 				error_utils.c	\
 				free_utils.c	\
+				ft_lstadd_back.c \
 				dollar_expansion.c
+				
 SDIR 		=	src/
 
 # -- COLORS -- #

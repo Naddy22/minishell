@@ -6,11 +6,11 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:21:14 by namoisan          #+#    #+#             */
-/*   Updated: 2024/05/17 16:46:57 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:14:43 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../inc/minishell.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

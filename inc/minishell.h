@@ -52,18 +52,19 @@ typedef struct s_data
 	int			exit_status;
 }				t_data;
 
-
-// enum token{
-// 	STR,
-// 	TOKEN_NULL,
-// 	PIPE,
-// 	APPEND_INPUT,
-// 	APPEND_OUTPUT,
-// 	HEREDOC_IN,
-// 	HEREDOC_OUT
-// }
+//Execution functions
+typedef struct s_cmd
+{
+	struct	s_list *cmdlst;
+	int		max;
+	int		**fd;
+	int		pnb;
+}	t_cmd;
 
 int	init(t_data *data, char **envp);
+
+// liste chainée
+void			ft_lstadd_back(t_list **lst, t_list *new);
 
 //parsing
 void	parsing(t_data *data);
@@ -83,22 +84,6 @@ void	free_tokenlist(t_list **list);
 //dollar_expansion
 int	add_dollar_expansion(t_data *data, size_t *i, int *start);
 
-typedef struct s_list
-{
-	char			**cmd;
-	char			*brut_cmd;
-	int				token_type;
-	struct s_list	*next; // à utiliser pour aller vers la prochaine commande
-}	t_list;
-
-//Execution functions
-typedef struct s_cmd
-{
-	struct	s_list *cmdlst;
-	int		max;
-	int		**fd;
-	int		pnb;
-}	t_cmd;
 
 //functions imported from pipex//
 //in file_handling.c
