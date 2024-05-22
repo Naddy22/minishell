@@ -26,8 +26,17 @@ int	handle_simple_quote(t_data *data, size_t *i, int *start)
 		}
 		(*i)++;
 	}
-	add_str_to_token(data, i, start);
-	(*i)++;
+	if (add_str_to_token(data, i, start) != SUCCESS)
+		return (FAIL);
+	return (SUCCESS);
+}
+
+int	handle_dollar_in_dquote(t_data *data, size_t *i, int *start)
+{
+	if (add_str_to_token(data, i, start) != SUCCESS)
+		return (FAIL);
+	if (handle_dollar_expansion(data, i, start) != SUCCESS)
+		return (FAIL);
 	*start = *i;
 	return (SUCCESS);
 }
@@ -48,27 +57,34 @@ int	handle_double_quote(t_data *data, size_t *i, int *start)
 		}
 		else if (str[*i] == '$')
 		{
-			add_str_to_token(data, i, start);
-			handle_dollar_expansion(data, i, start);
-			*start = *i;
+			handle_dollar_in_dquote(data, i, start);
 			continue ;
 		}
 		(*i)++;
 	}
-	add_str_to_token(data, i, start);
-	(*i)++;
-	*start = *i;
+	if (add_str_to_token(data, i, start) != SUCCESS)
+		return (FAIL);
 	return (SUCCESS);
 }
 
-void	handle_quotes(t_data *data, size_t *i, int *start)
+int	handle_quotes(t_data *data, size_t *i, int *start)
 {
 	char *str;
 
 	str = data->parsing.last_user_cmd;
-	add_str_to_token(data, i, start);
+	if (add_str_to_token(data, i, start) != SUCCESS)
+		return (FAIL);
 	if (str[*i] == '\'')
-		handle_simple_quote(data, i, start);
+	{
+		if (handle_simple_quote(data, i, start) != SUCCESS)
+			return (FAIL);
+	}
 	if (str[*i] == '"')
-		handle_double_quote(data, i, start);
+	{
+		if (handle_double_quote(data, i, start) != SUCCESS)
+			return (FAIL);
+	}
+	(*i)++;
+	*start = *i;
+	return (SUCCESS);
 }

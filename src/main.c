@@ -41,10 +41,13 @@ int main(int argc, char **argv, char **envp)
 	{
 		if (read_user_cmd(&data) != SUCCESS)
 			continue ;
-		parsing(&data);
+		if (parsing(&data) != SUCCESS)
+		{
+			free_all(&data);
+			continue ;
+		}
 		test_print_token_list(data.tokens);
 		free_all(&data);
-		free_tokenlist(&data.tokens);
 	}
 	// return (dernier code erreur);
 }

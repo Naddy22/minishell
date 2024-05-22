@@ -5,30 +5,34 @@ t_list	*calloc_new_token(void)
 	t_list *new_token;
 
 	new_token = (t_list *)ft_calloc(1, sizeof(t_list));
-	if (!new_token)
-		perror("Malloc : ");
 	return (new_token);
 }
 
-void	create_token(t_data *data, size_t *i, int *start, int id)
+int	create_token(t_data *data, size_t *i, int *start, int id)
 {
 	t_list *new;
 
 	new = calloc_new_token(); //calloc nouveau token
+	if (new == NULL)
+	{
+		perror("Malloc : ");
+		return(FAIL);
+	}
 	new->token_type = id;
 	data->last_token = new;
 	ft_lstadd_back(&data->tokens, new);
 	if (id == WORD)
 	{
 		*start = *i;
-		return ;
+		return (SUCCESS);
 	}
 	if (id == L2_REDIR || id == R2_REDIR)
 		(*i)++;
 	(*i)++;
+	return (SUCCESS);
 }
 
-void	create_token_pipe_redir(t_data *data, size_t *i, int *start)
+int	create_token_pipe_redir(t_data *data, size_t *i, int *start)
 {
 	char *str;
 
@@ -36,14 +40,22 @@ void	create_token_pipe_redir(t_data *data, size_t *i, int *start)
 	if (str[*i] == '|')
 	{
 		data->nb_pipes++; 
-		create_token(data, i, start, PIPE);
+		return (create_token(data, i, start, PIPE));
 	}
 	if (str[*i] == '>' && str[*i + 1] == '>')
-		create_token(data, i, start, R2_REDIR);
+		return (create_token(data, i, start, R2_REDIR));
 	else if (str[*i] == '<' && str[*i + 1] == '<')
-		create_token(data, i, start, L2_REDIR);
+		return (create_token(data, i, start, L2_REDIR));
 	else if (str[*i] == '>' && str[*i + 1] != '>')
-		create_token(data, i, start, R1_REDIR);
+		return (create_token(data, i, start, R1_REDIR));
 	else if (str[*i] == '<' && str[*i + 1] != '<')
-		create_token(data, i, start, L1_REDIR);
+		return (create_token(data, i, start, L1_REDIR));
+	return (SUCCESS);
+}
+
+int ft_isspace(char c)
+{
+	if (c == ' ' || c == '\t') 
+		return (TRUE);
+	return (FALSE); 
 }

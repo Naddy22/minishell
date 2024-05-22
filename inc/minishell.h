@@ -65,13 +65,14 @@ typedef struct s_data
 int	init(t_data *data, char **envp);
 
 //parsing
-void	parsing(t_data *data);
-int	read_user_cmd(t_data *data);
-void	add_str_to_token(t_data *data, size_t *i, int *start);
+int		parsing(t_data *data);
+int		read_user_cmd(t_data *data);
+int		add_str_to_token(t_data *data, size_t *i, int *start);
 
 //token_utils
-void	create_token(t_data *data, size_t *i, int *start, int id);
-void	create_token_pipe_redir(t_data *data, size_t *i, int *start);
+int		create_token(t_data *data, size_t *i, int *start, int id);
+int		create_token_pipe_redir(t_data *data, size_t *i, int *start);
+int		ft_isspace(char c);
 
 //error_utils
 void	free_error(t_data *data, char *error);
@@ -84,6 +85,6 @@ void	free_tokenlist(t_list **list);
 int	handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //quotes
-void	handle_quotes(t_data *data, size_t *i, int *start);
+int	handle_quotes(t_data *data, size_t *i, int *start);
 
 #endif 

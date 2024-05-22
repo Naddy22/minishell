@@ -5,9 +5,9 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 	char *cmd;
 
 	cmd = data->parsing.last_user_cmd;
-	while (cmd[*i] == '<' || cmd[*i] == '>' || cmd[*i] == '|' || cmd[*i] == ' ')
+	while (cmd[*i] == '<' || cmd[*i] == '>' || cmd[*i] == '|' || ft_isspace(cmd[*i]))
 	{
-		if (cmd[*i] == ' ')
+		if (ft_isspace(cmd[*i]) == TRUE)
 			(*i)++;
 		else
 			create_token_pipe_redir(data, i, start_token);
@@ -21,7 +21,7 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 }
 
 
-void	add_str_to_token(t_data *data, size_t *i, int *start)
+int	add_str_to_token(t_data *data, size_t *i, int *start)
 {
 	char *token;
 	char *tmp;
@@ -31,12 +31,19 @@ void	add_str_to_token(t_data *data, size_t *i, int *start)
 	token = data->last_token->brut_cmd;
 	tmp = ft_substr(str, *start, *i - *start);
 	if (tmp == NULL)
+	{
 		perror("Malloc : ");
+		return (FAIL);
+	}
 	data->last_token->brut_cmd = ft_strjoin(token, tmp);
 	ft_free_verif((void *)&token);
 	ft_free_verif((void *)&tmp);
 	if (data->last_token->brut_cmd == NULL)
+	{
 		perror("Malloc : ");
+		return (FAIL);
+	}
+	return (SUCCESS);
 }
 
 void	process_end_of_token(t_data *data, size_t *i, int *start)
@@ -46,7 +53,7 @@ void	process_end_of_token(t_data *data, size_t *i, int *start)
 	str = data->parsing.last_user_cmd;
 	if (data->last_token->token_type == WORD)
 		add_str_to_token(data, i, start);
-	if (str[*i] == ' ')
+	if (ft_isspace(str[*i]) == TRUE)
 		(*i)++;
 	else if (str[*i] == '\0')
 		return ;
@@ -56,7 +63,7 @@ void	process_end_of_token(t_data *data, size_t *i, int *start)
 
 int	get_char(t_data *data, char *str, size_t *i, int *start)
 {
-	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || str[*i] == ' ')
+	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || ft_isspace(str[*i]))
 	{
 		process_end_of_token(data, i, start);
 		if (str[*i] == '\0')
@@ -77,7 +84,7 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 }
 
 
-void	parsing(t_data *data)
+int	parsing(t_data *data)
 {
 	int start;
 
@@ -88,7 +95,10 @@ void	parsing(t_data *data)
 	while (data->parsing.last_user_cmd[data->parsing.i] != '\0')
 	{
 		if (!get_char(data, data->parsing.last_user_cmd, &data->parsing.i, &start))
-			return ;
+			break ;
 	}
 	process_end_of_token(data, &data->parsing.i, &start);
+	return (SUCCESS);
 }
+// FAIT: gerer erreur quote, dollar et token
+// TODO : gerer erreur dans parsing
