@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:40:48 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/17 11:09:12 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:45:05 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*test_path(char **paths, char *str)
 	return (NULL);
 }
 
-char	*get_path(char **envp, char *str)
+char	*get_path(t_data *mini, char *str)
 {
 	int		i;
 	int		path_not_found;
@@ -41,14 +41,14 @@ char	*get_path(char **envp, char *str)
 
 	i = 0;
 	path_not_found = 1;
-	while (envp[i] && path_not_found)
+	while (mini->cpy_env[i] && path_not_found)
 	{
-		if (!ft_strnstr(envp[i], "PATH", 4))
+		if (!ft_strnstr(mini->cpy_env[i], "PATH", 4))
 			i++;
 		else
 			path_not_found = 0;
 	}
-	paths_to_split = ft_split(envp[i], '=');
+	paths_to_split = ft_split(mini->cpy_env[i], '=');
 	paths = ft_split(paths_to_split[1], ':');
 	correct_path = test_path(paths, str);
 	if (!correct_path)

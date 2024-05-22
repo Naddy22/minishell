@@ -34,8 +34,8 @@ int main(int argc, char **argv, char **envp)
 	t_data data;
 
 	(void)argc;
-	(void)argv;
-	memset(&data, 0, sizeof(t_data));
+	(void)argv; //TODO make an error message if args
+	ft_memset(&data, 0, sizeof(t_data));
 	init(&data, envp); // verifier si succes sinon quitte completement (exit failure)
 	while (42)
 	{
@@ -43,6 +43,7 @@ int main(int argc, char **argv, char **envp)
 			continue ;
 		parsing(&data);
 		test_print_token_list(data.tokens);
+		ft_pipe(&data, argv);
 		free_all(&data);
 		free_tokenlist(&data.tokens);
 	}

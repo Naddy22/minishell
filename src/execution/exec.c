@@ -24,7 +24,7 @@ int	ft_size(t_list *lst)
 	return (len);
 }
 
-void	execution(t_cmd *mini, char **envp)
+void	execution(t_data *mini)
 {
 	char	*path;
 	int		i;
@@ -42,7 +42,7 @@ void	execution(t_cmd *mini, char **envp)
 	dprintf(2, "after: %d %s\n", i, cmd->cmd[0]);
 	//cmd.cmd = ft_split(argv[mini->pnb + 2], ' '); //pipex way to do
 	//path = get_path(envp, cmd.cmd[0]);
-	path = get_path(envp, cmd->cmd[0]);
+	path = get_path(mini, cmd->cmd[0]);
 	if (!path)
 		perror("Access ");
 	// if (cmd.infile_ok == 0)
@@ -55,11 +55,11 @@ void	execution(t_cmd *mini, char **envp)
 	//exit(EXIT_SUCCESS);
 }
 
-void	child(t_cmd *mini, char **argv, char **envp)
+void	child(t_data *mini, char **argv)
 {
 	int	fd_file;
 
-	if (mini->pnb == mini->max)
+	if (mini->pnb == mini->nb_pipes)
 	{
 		fd_file = to_open(mini, argv);
 		if (fd_file == -1)
@@ -81,15 +81,15 @@ void	child(t_cmd *mini, char **argv, char **envp)
 	}
 	close(mini->fd[mini->pnb][0]);
 	close(mini->fd[mini->pnb][1]);
-	execution(mini, envp);
+	execution(mini);
 }
 
-void	to_execute(t_cmd *mini, char **argv, char **envp)
+void	to_execute(t_data *mini, char **argv)
 {
 	int	pid;
 	int	status;
 
-	while (mini->pnb <= mini->max)
+	while (mini->pnb <= mini->nb_pipes)
 	{
 		pipe(mini->fd[mini->pnb]);
 		pid = fork();
@@ -99,7 +99,7 @@ void	to_execute(t_cmd *mini, char **argv, char **envp)
 			close(mini->fd[mini->pnb][0]);
 		}
 		if (pid == 0)
-			child(mini, argv, envp);
+			child(mini, argv);
 		else
 			parent(mini); //
 		close(mini->fd[mini->pnb][1]);
@@ -111,7 +111,7 @@ void	to_execute(t_cmd *mini, char **argv, char **envp)
 	}
 }
 
-void	ft_pipe(t_cmd *mini, char **argv, char **envp)
+void	ft_pipe(t_data *mini, char **argv)
 {
 	int	fd_file;
 
@@ -120,5 +120,5 @@ void	ft_pipe(t_cmd *mini, char **argv, char **envp)
 		perror("Open ");
 	if (change_parent_input(fd_file) == -1)
 		perror("Dup2 ");
-	to_execute(mini, argv, envp);
+	to_execute(mini, argv);
 }

@@ -44,22 +44,17 @@ typedef struct s_parsing
 
 typedef struct s_data
 {
-	char		**cpy_env;
-	t_parsing	parsing;
-	t_list		*tokens;
-	t_list		*last_token;
-	int			nb_pipes;
-	int			exit_status;
+	struct	s_list *cmdlst; // to be change
+	char		**cpy_env; //init in parsing
+	t_parsing	parsing; //init in parsing
+	t_list		*tokens; //init in parsing
+	t_list		*last_token; //init in parsing
+	int			nb_pipes;	//init in parsing
+	int			exit_status; //init in parsing
+	int			**fd; //need initiation
+	int			pnb; //init in parsing
 }				t_data;
 
-//Execution functions
-typedef struct s_cmd
-{
-	struct	s_list *cmdlst;
-	int		max;
-	int		**fd;
-	int		pnb;
-}	t_cmd;
 
 int	init(t_data *data, char **envp);
 
@@ -91,19 +86,19 @@ void	handle_quotes(t_data *data, size_t *i, int *start);
 
 //functions imported from pipex//
 //in file_handling.c
-int		to_open(t_cmd *mini, char **argv);
+int		to_open(t_data *mini, char **argv);
 int		change_parent_input(int fd);
-void	parent(t_cmd *mini);
+void	parent(t_data *mini);
 
 //in path.c
 char	*test_path(char **paths, char *str);
-char	*get_path(char **envp, char *str);
+char	*get_path(t_data *mini, char *str);
 
 //in exec.c
 int		ft_size(t_list *lst);
-void	execution(t_cmd *mini, char **envp);
-void	child(t_cmd *mini, char **argv, char **envp);
-void	to_execute(t_cmd *mini, char **argv, char **envp);
-void	ft_pipe(t_cmd *mini, char **argv, char **envp);
+void	execution(t_data *mini);
+void	child(t_data *mini, char **argv) ;
+void	to_execute(t_data *mini, char **argv);
+void	ft_pipe(t_data *mini, char **argv);
 
 #endif 

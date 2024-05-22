@@ -24,7 +24,7 @@ static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 		ft_free_verif((void *)&data->parsing.last_user_cmd);
 		return (FALSE);
 	}
-	data->parsing.last_user_cmd = strdup(current_cmd);
+	data->parsing.last_user_cmd = ft_strdup(current_cmd);
 	return (TRUE);
 }
 
