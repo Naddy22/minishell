@@ -1,14 +1,5 @@
 #include "../../inc/minishell.h"
 
-/*
-
-Creer fichiers
-lier les fd aux child des commandes
-executer les commandes en sequence dans un while 
-wait que tous aient fini (en dehors de la boucle)
-
-*/
-
 int	ft_size(t_list *lst)
 {
 	int		len;
@@ -32,16 +23,14 @@ void	execution(t_data *mini)
 
 	cmd = mini->cmdlst;
 	i = mini->pnb;
-	dprintf(2, "before: %d %s\n", i, cmd->cmd[0]);
-	while(i > 0)
+	//dprintf(2, "before: %d %s\n", i, cmd->cmd[0]);
+	while (i > 0)
 	{
-		dprintf(2, "in :%d %s\n", i, cmd->cmd[0]);
+		//dprintf(2, "in :%d %s\n", i, cmd->cmd[0]);
 		cmd = cmd->next;
 		i--;
 	}
-	dprintf(2, "after: %d %s\n", i, cmd->cmd[0]);
-	//cmd.cmd = ft_split(argv[mini->pnb + 2], ' '); //pipex way to do
-	//path = get_path(envp, cmd.cmd[0]);
+	//dprintf(2, "after: %d %s\n", i, cmd->cmd[0]);
 	path = get_path(mini, cmd->cmd[0]);
 	if (!path)
 		perror("Access ");
@@ -64,7 +53,7 @@ void	child(t_data *mini)
 		fd_file = to_open(mini);
 		if (fd_file == -1)
 		{
-			perror("Open "); 
+			perror("Open ");
 			close(fd_file);
 			close(mini->fd[0]);
 			close(mini->fd[1]);

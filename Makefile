@@ -25,7 +25,13 @@ SRC			=	main.c \
 				ft_lstadd_back.c \
 				exec.c \
 				file_handling.c \
-				path.c
+				path.c \
+				cd.c \
+				echo.c \
+				env.c \
+				exit.c \
+				pwd.c \
+				unset.c 
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
@@ -102,7 +108,10 @@ $(BIN)%.o: ./src/%.c $(DEPS) # remplace les .c par .o avec -c . $< = dependance 
 $(BIN)%.o: ./src/parsing/%.c $(DEPS) #pour inclure les fichiers dans parsing
 	@$(CC) $(CFLAGS) -c $< -o $@ -Iinc/
 
-$(BIN)%.o: ./src/execution/%.c $(DEPS) #pour inclure les fichiers dans parsing
+$(BIN)%.o: ./src/execution/%.c $(DEPS) #pour inclure les fichiers dans execution
+	@$(CC) $(CFLAGS) -c $< -o $@ -Iinc/
+
+$(BIN)%.o: ./src/builtins/%.c $(DEPS) #pour inclure les fichiers dans builtins
 	@$(CC) $(CFLAGS) -c $< -o $@ -Iinc/
 
 .PHONY: all clean fclean re #.phony dit que ca se ne sont pas des fichiers

@@ -1,8 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-typedef struct s_list	t_list;
-
 # include <unistd.h>
 # include <stdio.h> //obligatoire pour readline.h(FILE)
 // # include <sys/types.h>
@@ -27,6 +25,8 @@ typedef struct s_list	t_list;
 # define R2_REDIR 24
 # define PIPE 25
 
+typedef struct s_list	t_list;
+
 typedef struct s_list
 {
 	char			**cmd;
@@ -43,7 +43,7 @@ typedef struct s_parsing
 
 typedef struct s_data
 {
-	struct	s_list *cmdlst; // to be change
+	struct s_list	*cmdlst; // to be change
 	char			**cpy_env; //init in parsing
 	t_parsing		parsing; //init in parsing
 	t_list			*tokens; //init in parsing
@@ -52,16 +52,16 @@ typedef struct s_data
 	int				fd[2]; //need initiation to place in cmd struct
 	int				exit_status; //init in parsing
 	int				pnb; //init in parsing
-}				t_data;
+}					t_data;
 
-int	init(t_data *data, char **envp);
+int		init(t_data *data, char **envp);
 
 // liste chainée
-void			ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
 //parsing
 void	parsing(t_data *data);
-int	read_user_cmd(t_data *data);
+int		read_user_cmd(t_data *data);
 void	add_str_to_token(t_data *data, size_t *i, int *start);
 
 //token_utils
@@ -76,11 +76,10 @@ void	free_all(t_data *data);
 void	free_tokenlist(t_list **list);
 
 //dollar_expansion
-int	handle_dollar_expansion(t_data *data, size_t *i, int *start);
+int		handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //quotes
 void	handle_quotes(t_data *data, size_t *i, int *start);
-
 
 //functions imported from pipex//
 //in file_handling.c
@@ -95,7 +94,7 @@ char	*get_path(t_data *mini, char *str);
 //in exec.c
 int		ft_size(t_list *lst);
 void	execution(t_data *mini);
-void	child(t_data *mini) ;
+void	child(t_data *mini);
 void	to_execute(t_data *mini);
 void	ft_pipe(t_data *mini);
 
