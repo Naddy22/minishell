@@ -33,8 +33,12 @@ int main(int argc, char **argv, char **envp)
 {
 	t_data data;
 
-	(void)argc;
-	(void)argv; //TODO make an error message if args
+	(void)argv;
+	if (argc != 1)
+	{
+		printf("Error: too many arguments. Number accepted: 0.");
+		return(FAIL);
+	}
 	ft_memset(&data, 0, sizeof(t_data));
 	init(&data, envp); // verifier si succes sinon quitte completement (exit failure)
 	while (42)
@@ -43,7 +47,7 @@ int main(int argc, char **argv, char **envp)
 			continue ;
 		parsing(&data);
 		test_print_token_list(data.tokens);
-		ft_pipe(&data, argv);
+		ft_pipe(&data);
 		free_all(&data);
 		free_tokenlist(&data.tokens);
 	}

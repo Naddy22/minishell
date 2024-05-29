@@ -55,19 +55,19 @@ void	execution(t_data *mini)
 	//exit(EXIT_SUCCESS);
 }
 
-void	child(t_data *mini, char **argv)
+void	child(t_data *mini)
 {
 	int	fd_file;
 
 	if (mini->pnb == mini->nb_pipes)
 	{
-		fd_file = to_open(mini, argv);
+		fd_file = to_open(mini);
 		if (fd_file == -1)
 		{
 			perror("Open "); 
 			close(fd_file);
-			close(mini->fd[mini->pnb][0]);
-			close(mini->fd[mini->pnb][1]);
+			close(mini->fd[0]);
+			close(mini->fd[1]);
 			exit(EXIT_FAILURE);
 		}
 		else if (dup2(fd_file, STDOUT_FILENO) == -1)
@@ -76,33 +76,33 @@ void	child(t_data *mini, char **argv)
 	}
 	else
 	{
-		if (dup2(mini->fd[mini->pnb][1], STDOUT_FILENO) == -1)
+		if (dup2(mini->fd[1], STDOUT_FILENO) == -1)
 			perror("Dup2 ");
 	}
-	close(mini->fd[mini->pnb][0]);
-	close(mini->fd[mini->pnb][1]);
+	close(mini->fd[0]);
+	close(mini->fd[1]);
 	execution(mini);
 }
 
-void	to_execute(t_data *mini, char **argv)
+void	to_execute(t_data *mini)
 {
 	int	pid;
 	int	status;
 
 	while (mini->pnb <= mini->nb_pipes)
 	{
-		pipe(mini->fd[mini->pnb]);
+		pipe(mini->fd);
 		pid = fork();
 		if (pid == -1)
 		{
 			perror("Fork ");
-			close(mini->fd[mini->pnb][0]);
+			close(mini->fd[0]);
 		}
 		if (pid == 0)
-			child(mini, argv);
+			child(mini);
 		else
 			parent(mini); //
-		close(mini->fd[mini->pnb][1]);
+		close(mini->fd[1]);
 		waitpid(pid, &status, 0); //do not wait here
 		if (WEXITSTATUS(status) == 1)
 			dprintf(2, "to free and exit");
@@ -111,14 +111,14 @@ void	to_execute(t_data *mini, char **argv)
 	}
 }
 
-void	ft_pipe(t_data *mini, char **argv)
+void	ft_pipe(t_data *mini)
 {
 	int	fd_file;
 
-	fd_file = to_open(mini, argv);
+	fd_file = to_open(mini); //TODO change function for redirection when implemented --redir in struct by cmd
 	if (fd_file == -1)
 		perror("Open ");
 	if (change_parent_input(fd_file) == -1)
 		perror("Dup2 ");
-	to_execute(mini, argv);
+	to_execute(mini);
 }
