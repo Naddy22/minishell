@@ -47,7 +47,7 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 	if (ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
 		ft_unset(cmd->cmd, mini->cpy_env);
 	if (ft_strncmp(cmd->cmd[0], "export", 6) == 0)
-		ft_export(cmd->cmd, mini->cpy_env, mini->custom_env)
+		ft_export(cmd->cmd, mini->cpy_env, mini->custom_env);
 
 }
 

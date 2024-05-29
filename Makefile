@@ -31,7 +31,8 @@ SRC			=	main.c \
 				env.c \
 				exit.c \
 				pwd.c \
-				unset.c 
+				unset.c \
+				export.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
