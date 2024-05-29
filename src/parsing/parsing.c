@@ -128,5 +128,3 @@ int	parsing(t_data *data)
 		return (FAIL);
 	return (SUCCESS);
 }
-// FAIT: gerer erreur quote, dollar et token
-// TODO : gerer erreur dans parsing
