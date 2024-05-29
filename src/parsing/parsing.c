@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-void	find_token(t_data *data, size_t *i, int *start_token)
+int	find_token(t_data *data, size_t *i, int *start_token)
 {
 	char *cmd;
 
@@ -10,16 +10,23 @@ void	find_token(t_data *data, size_t *i, int *start_token)
 		if (ft_isspace(cmd[*i]) == TRUE)
 			(*i)++;
 		else
-			create_token_pipe_redir(data, i, start_token);
+		{
+			if (create_token_pipe_redir(data, i, start_token) != SUCCESS)
+				return (FAIL);
+		}
 	}
 	if (cmd[*i] == '\0')
-		return ;
-	create_token(data, i, start_token, WORD);
+		return SUCCESS;
+	if (create_token(data, i, start_token, WORD) != SUCCESS)
+		return (FAIL);
 	data->last_token->brut_cmd = (char *)ft_calloc(1, sizeof(char));
 	if (data->last_token->brut_cmd == NULL)
+	{
 		perror("Malloc : ");
+		return (FAIL);
+	}
+	return (SUCCESS);
 }
-
 
 int	add_str_to_token(t_data *data, size_t *i, int *start)
 {
@@ -46,58 +53,79 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 	return (SUCCESS);
 }
 
-void	process_end_of_token(t_data *data, size_t *i, int *start)
+int	process_end_of_token(t_data *data, size_t *i, int *start)
 {
 	char *str;
 
 	str = data->parsing.last_user_cmd;
 	if (data->last_token->token_type == WORD)
-		add_str_to_token(data, i, start);
+	{
+		if (add_str_to_token(data, i, start) != SUCCESS)
+			return (FAIL);
+	}
 	if (ft_isspace(str[*i]) == TRUE)
 		(*i)++;
 	else if (str[*i] == '\0')
-		return ;
+		return (SUCCESS);
 	else
-		create_token_pipe_redir(data, i, start);
+	{
+		if (create_token_pipe_redir(data, i, start) != SUCCESS)
+			return (FAIL);
+	}
+	return (SUCCESS);
 }
 
 int	get_char(t_data *data, char *str, size_t *i, int *start)
 {
 	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || ft_isspace(str[*i]))
 	{
-		process_end_of_token(data, i, start);
+		if (process_end_of_token(data, i, start) != SUCCESS)
+			return (FAIL);
 		if (str[*i] == '\0')
-			return (FALSE);
-		find_token(data, i, start);
+			return (STOP);
+		if (find_token(data, i, start) != SUCCESS)
+			return (FAIL);
 	}
 	else if (str[*i] == '$')
 	{
-		process_end_of_token(data, i, start);
-		handle_dollar_expansion(data, i, start);
+		if (process_end_of_token(data, i, start) != SUCCESS)
+			return (FAIL);
+		if (handle_dollar_expansion(data, i, start) != SUCCESS)
+			return (FAIL);
 		*start = *i;
 	}
 	else if (str[*i] == '\'' || str[*i] == '"')
-		handle_quotes(data, i, start);
+	{
+		if (handle_quotes(data, i, start) != SUCCESS)
+			return (FAIL);
+	}
 	else
 		(*i)++;
-	return (TRUE);
+	return (SUCCESS);
 }
-
 
 int	parsing(t_data *data)
 {
-	int start;
+	int	start;
+	char	*brut_cmd;
 
 	start = 0;
+	brut_cmd = data->parsing.last_user_cmd;
 	data->parsing.i = 0;
 	data->nb_pipes = 0; 
-	find_token(data, &data->parsing.i, &start);
-	while (data->parsing.last_user_cmd[data->parsing.i] != '\0')
+	if (find_token(data, &data->parsing.i, &start) != SUCCESS)
+		return (FAIL);
+	while (brut_cmd[data->parsing.i] != '\0')
 	{
-		if (!get_char(data, data->parsing.last_user_cmd, &data->parsing.i, &start))
+		if (get_char(data, brut_cmd, &data->parsing.i, &start) == STOP)
 			break ;
+		else if (get_char(data, brut_cmd, &data->parsing.i, &start) == SUCCESS)
+			continue ;
+		else
+			return (FAIL);
 	}
-	process_end_of_token(data, &data->parsing.i, &start);
+	if (process_end_of_token(data, &data->parsing.i, &start) != SUCCESS)
+		return (FAIL);
 	return (SUCCESS);
 }
 // FAIT: gerer erreur quote, dollar et token

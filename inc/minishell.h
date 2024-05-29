@@ -18,6 +18,7 @@ typedef struct s_list	t_list;
 # define FALSE 0
 # define SUCCESS 0
 # define FAIL 1
+# define STOP 10
 
 # define WORD 20
 # define L1_REDIR 21
@@ -26,10 +27,14 @@ typedef struct s_list	t_list;
 # define R2_REDIR 24
 # define PIPE 25
 
+typedef struct s_command
+{
+	char				**cmd;
+	struct s_command	*next;
+}						t_command;
 
 typedef struct s_list
 {
-	char			**cmd;
 	char			*brut_cmd;
 	int				token_type;
 	struct s_list	*next; // à utiliser pour aller vers la prochaine commande
@@ -47,6 +52,7 @@ typedef struct s_data
 	t_parsing	parsing;
 	t_list		*tokens;
 	t_list		*last_token;
+	t_command	*command;
 	int			nb_pipes;
 	int			exit_status;
 }				t_data;
@@ -62,7 +68,7 @@ typedef struct s_data
 // 	HEREDOC_OUT
 // }
 
-int	init(t_data *data, char **envp);
+int		init(t_data *data, char **envp);
 
 //parsing
 int		parsing(t_data *data);
@@ -82,9 +88,9 @@ void	free_all(t_data *data);
 void	free_tokenlist(t_list **list);
 
 //dollar_expansion
-int	handle_dollar_expansion(t_data *data, size_t *i, int *start);
+int		handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //quotes
-int	handle_quotes(t_data *data, size_t *i, int *start);
+int		handle_quotes(t_data *data, size_t *i, int *start);
 
 #endif 
