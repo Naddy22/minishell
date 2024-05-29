@@ -1,6 +1,26 @@
-#include "../../inc/minishell.h"
+//#include "../../inc/minishell.h"
+#include "pipex.h"
 
-char    *get_home(char **envp)
+void	change_env(char *path_to_go, char **envp)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strnstr(envp[i], "PWD", 3))
+			i++;
+		else
+		{
+			str = ft_strjoin("PWD=", path_to_go);
+			envp[i] = str;
+			i++;
+		}
+	}
+}
+
+char	*get_home(char **envp)
 {
 	int		i;
 	int		home_not_found;
@@ -23,7 +43,8 @@ char    *get_home(char **envp)
 }
 
 /*
-	Need to check (in exec) if cd has to be in child or parent (test whether bash does it in all case or only in some)
+	Need to check (in exec) if cd has to be in child or parent 
+	(test whether bash does it in all case or only in some)
 */
 void	ft_cd(char **cmd, char **envp)
 {
@@ -38,7 +59,8 @@ void	ft_cd(char **cmd, char **envp)
 			exit(EXIT_FAILURE);
 		}
 		else
-			write(1, "SUCCESS", 7); /////to change to actual modification of env PWD		
+			change_env(path_to_go, &(*envp));
+			//write(1, "SUCCESS", 7); change to actual modification of env PWD
 	}
 	else if (cmd[1])
 	{
@@ -49,7 +71,9 @@ void	ft_cd(char **cmd, char **envp)
 			exit(EXIT_FAILURE);
 		}
 		else
-			write(1, "SUCCESS", 7); /////to change to actual modification of env PWD		
+			change_env(path_to_go, &(*envp));
+			//write(1, "SUCCESS", 7); //change to actual modification of env PWD
 	}
-	exit(EXIT_SUCCESS);
+	ft_pwd(); //to remove. Testing purposes only
+	exit(EXIT_SUCCESS); //change or remove if needed. Not in a child: do not exit. in a child, exit
 }
