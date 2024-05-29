@@ -15,23 +15,11 @@ int	ft_size(t_list *lst)
 	return (len);
 }
 
-void	execution(t_data *mini)
+void	ft_execve(t_data *mini, t_command *cmd)
 {
-	char	*path;
-	int		i;
-	t_list	*cmd;
+	char		*path;
 
-	cmd = mini->cmdlst;
-	i = mini->pnb;
-	//dprintf(2, "before: %d %s\n", i, cmd->cmd[0]);
-	while (i > 0)
-	{
-		//dprintf(2, "in :%d %s\n", i, cmd->cmd[0]);
-		cmd = cmd->next;
-		i--;
-	}
-	//dprintf(2, "after: %d %s\n", i, cmd->cmd[0]);
-	path = get_path(mini, cmd->cmd[0]);
+	path = get_path(mini, cmd->cmd[0]);////// deplacement
 	if (!path)
 		perror("Access ");
 	// if (cmd.infile_ok == 0)
@@ -42,6 +30,51 @@ void	execution(t_data *mini)
 	exit(EXIT_FAILURE);
 	// }
 	//exit(EXIT_SUCCESS);
+}
+
+void	builtin_exec(t_data *mini, t_command *cmd)
+{
+	if (ft_strncmp(cmd->cmd[0],"env", 3) == 0)
+		ft_env(mini->cpy_env);
+	if (ft_strncmp(cmd->cmd[0], "cd", 2) == 0)
+		ft_cd(cmd->cmd, mini->cpy_env);
+	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
+		ft_exit(cmd->cmd);
+	if (ft_strncmp(cmd->cmd[0], "echo", 4) == 0)
+		ft_echo(cmd->cmd);
+	if (ft_strncmp(cmd->cmd[0], "pwd", 3) == 0)
+		ft_pwd();
+	if (ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
+		ft_unset(cmd->cmd, mini->cpy_env);
+	if (ft_strncmp(cmd->cmd[0], "export", 6) == 0)
+		ft_export(cmd->cmd, mini->cpy_env, mini->custom_env)
+
+}
+
+void	execution(t_data *mini)
+{
+	int			i;
+	t_command	*cmd;
+
+	cmd = mini->command;
+	i = mini->pnb;
+	//dprintf(2, "before: %d %s\n", i, cmd->cmd[0]);
+	while (i > 0)
+	{
+		//dprintf(2, "in :%d %s\n", i, cmd->cmd[0]);
+		cmd = cmd->next;
+		i--;
+	}
+	//dprintf(2, "after: %d %s\n", i, cmd->cmd[0]);
+	if (ft_strncmp(cmd->cmd[0],"env", 3) == 0 || 
+		ft_strncmp(cmd->cmd[0], "cd", 2) == 0 || 
+		ft_strncmp(cmd->cmd[0], "exit", 4) == 0 || 
+		ft_strncmp(cmd->cmd[0], "echo", 4) == 0 || 
+		ft_strncmp(cmd->cmd[0], "pwd", 3) == 0 || 
+		ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
+		builtin_exec(mini, cmd);
+	else
+		ft_execve(mini, cmd);
 }
 
 void	child(t_data *mini)

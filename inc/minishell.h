@@ -48,12 +48,15 @@ typedef struct s_parsing
 typedef struct s_data
 {
 	char		**cpy_env;
+	char		**custom_env;
 	t_parsing	parsing;
 	t_list		*tokens;
 	t_list		*last_token;
 	t_command	*command;
 	int			nb_pipes;
 	int			exit_status;
+	int			pnb;
+	int			fd[2];
 }				t_data;
 
 
@@ -68,6 +71,9 @@ typedef struct s_data
 // }
 
 int		init(t_data *data, char **envp);
+
+// liste chainée
+void			ft_lstadd_back(t_list **lst, t_list *new);
 
 //parsing
 int		parsing(t_data *data);
@@ -108,5 +114,26 @@ void	execution(t_data *mini);
 void	child(t_data *mini);
 void	to_execute(t_data *mini);
 void	ft_pipe(t_data *mini);
+
+//in cd.c
+void	ft_cd(char **cmd, char **envp);
+
+//in echo.c
+void	ft_echo(char **cmd);
+
+//in env.c
+void	ft_env(char **envp);
+
+//in exit.c
+void	ft_exit(char **cmd);
+
+//in pwd.c
+void	ft_pwd(void);
+
+//in unset.c
+void	ft_unset(char **cmd, char **envp);
+
+//in export.c
+void	ft_export(char **cmd, char **envp, char **envp2);
 
 #endif 
