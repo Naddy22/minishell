@@ -1,5 +1,10 @@
 #include "../../inc/minishell.h"
 
+/*
+	check if arg is only -n in all format:
+		-n -n -n -n
+		-nnnnn
+*/
 int	check_n_flag(char *arg)
 {
 	int	i;
@@ -7,24 +12,43 @@ int	check_n_flag(char *arg)
 
 	ok = 1;
 	i = 0;
-	while (arg[i] && ok) //tant qu<il y a un caractere et que c<est un n flag
+	while (arg[i] && ok)
 	{
-		if (i == 0 && arg[i] != '-') //si le debut n'est pas un -
+		if (i == 0 && arg[i] != '-')
 			ok = 0;
-		else if (i != 0 && arg[i] != 'n') // si le reste n'est pas uniquement des n
+		else if (i != 0 && arg[i] != 'n')
 			ok = 0;
 		i++;
 	}
 	return (ok);
 }
 
+void	print_args(char *cmd, int *add_next_line)
+{
+	int	ok_n_flag;
+
+	ok_n_flag = 0;
+	if (check_n_flag(cmd))
+	{
+		if (!ok_n_flag)
+			*add_next_line = 0;
+		else
+			printf("%s", cmd);
+	}
+	else
+	{
+		ok_n_flag = 1;
+		printf("%s", cmd);
+	}
+	if (cmd && ok_n_flag)
+		printf(" ");
+}
+
 void	ft_echo(char **cmd)
 {
 	int	l;
 	int	add_next_line;
-	int	ok_n_flag;
 
-	ok_n_flag = 0;
 	add_next_line = 1;
 	l = 0;
 	while (cmd[l])
@@ -39,21 +63,8 @@ void	ft_echo(char **cmd)
 		l = 1;
 		while (cmd[l])
 		{
-			if (check_n_flag(cmd[l])) //is a n flag
-			{
-				if (!ok_n_flag)	//is not ok to print n flag
-					add_next_line = 0;
-				else //is ok to print n flag (after first non n flag encontered)
-					printf("%s", cmd[l]);
-			}
-			else //is not a n flag
-			{
-				ok_n_flag = 1; //allow to print future n flag
-				printf("%s", cmd[l]);
-			}
+			print_args(cmd[l], &add_next_line);
 			l++;
-			if (cmd[l] && ok_n_flag) //if still argument existing, put space
-				printf(" ");
 		}
 		if (add_next_line)
 			printf("\n");
