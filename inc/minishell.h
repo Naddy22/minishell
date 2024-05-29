@@ -17,6 +17,7 @@
 # define FALSE 0
 # define SUCCESS 0
 # define FAIL 1
+# define STOP 10
 
 # define WORD 20
 # define L1_REDIR 21
@@ -25,11 +26,14 @@
 # define R2_REDIR 24
 # define PIPE 25
 
-typedef struct s_list	t_list;
+typedef struct s_command
+{
+	char				**cmd;
+	struct s_command	*next;
+}						t_command;
 
 typedef struct s_list
 {
-	char			**cmd;
 	char			*brut_cmd;
 	int				token_type;
 	struct s_list	*next; // à utiliser pour aller vers la prochaine commande
@@ -43,30 +47,37 @@ typedef struct s_parsing
 
 typedef struct s_data
 {
-	struct s_list	*cmdlst; // to be change
-	char			**cpy_env; //init in parsing
-	t_parsing		parsing; //init in parsing
-	t_list			*tokens; //init in parsing
-	t_list			*last_token; //init in parsing
-	int				nb_pipes;	//init in parsing
-	int				fd[2]; //need initiation to place in cmd struct
-	int				exit_status; //init in parsing
-	int				pnb; //init in parsing
-}					t_data;
+	char		**cpy_env;
+	t_parsing	parsing;
+	t_list		*tokens;
+	t_list		*last_token;
+	t_command	*command;
+	int			nb_pipes;
+	int			exit_status;
+}				t_data;
+
+
+// enum token{
+// 	STR,
+// 	TOKEN_NULL,
+// 	PIPE,
+// 	APPEND_INPUT,
+// 	APPEND_OUTPUT,
+// 	HEREDOC_IN,
+// 	HEREDOC_OUT
+// }
 
 int		init(t_data *data, char **envp);
 
-// liste chainée
-void	ft_lstadd_back(t_list **lst, t_list *new);
-
 //parsing
-void	parsing(t_data *data);
+int		parsing(t_data *data);
 int		read_user_cmd(t_data *data);
-void	add_str_to_token(t_data *data, size_t *i, int *start);
+int		add_str_to_token(t_data *data, size_t *i, int *start);
 
 //token_utils
-void	create_token(t_data *data, size_t *i, int *start, int id);
-void	create_token_pipe_redir(t_data *data, size_t *i, int *start);
+int		create_token(t_data *data, size_t *i, int *start, int id);
+int		create_token_pipe_redir(t_data *data, size_t *i, int *start);
+int		ft_isspace(char c);
 
 //error_utils
 void	free_error(t_data *data, char *error);
@@ -79,7 +90,7 @@ void	free_tokenlist(t_list **list);
 int		handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //quotes
-void	handle_quotes(t_data *data, size_t *i, int *start);
+int		handle_quotes(t_data *data, size_t *i, int *start);
 
 //functions imported from pipex//
 //in file_handling.c
