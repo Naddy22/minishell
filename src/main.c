@@ -47,6 +47,13 @@ int main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		test_print_token_list(data.tokens);
+		if (make_cmds(&data) != SUCCESS)
+		{
+			free_all(&data);
+			continue ;
+		}
+		// printf("TEST\n");
+		printf("stocker dans cmd : %s\n", data.commands->cmd[0]);
 		free_all(&data);
 	}
 	// return (dernier code erreur);

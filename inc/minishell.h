@@ -44,6 +44,7 @@ typedef struct s_parsing
 {
 	char	*last_user_cmd; // commande brut du USER
 	size_t	i;
+	char	**parse_cmd;
 }			t_parsing;
 
 typedef struct s_data
@@ -68,29 +69,36 @@ typedef struct s_data
 // 	HEREDOC_OUT
 // }
 
-int		init(t_data *data, char **envp);
+int			init(t_data *data, char **envp);
 
 //parsing
-int		parsing(t_data *data);
-int		read_user_cmd(t_data *data);
-int		add_str_to_token(t_data *data, size_t *i, int *start);
+int			parsing(t_data *data);
+int			read_user_cmd(t_data *data);
+int			add_str_to_token(t_data *data, size_t *i, int *start);
 
 //token_utils
-int		create_token(t_data *data, size_t *i, int *start, int id);
-int		create_token_pipe_redir(t_data *data, size_t *i, int *start);
-int		ft_isspace(char c);
+int			create_token(t_data *data, size_t *i, int *start, int id);
+int			create_token_pipe_redir(t_data *data, size_t *i, int *start);
+int			ft_isspace(char c);
 
 //error_utils
-void	free_error(t_data *data, char *error);
+void		free_error(t_data *data, char *error);
 
 //free_utils
-void	free_all(t_data *data);
-void	free_tokenlist(t_list **list);
+void		free_all(t_data *data);
+void		free_tokenlist(t_list **list);
 
 //dollar_expansion
-int		handle_dollar_expansion(t_data *data, size_t *i, int *start);
+int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //quotes
-int		handle_quotes(t_data *data, size_t *i, int *start);
+int			handle_quotes(t_data *data, size_t *i, int *start);
+
+//commands
+int			make_cmds(t_data *data);
+
+//command_utils
+t_command	*create_new_cmd(t_data *data);
+void		cmd_add_back(t_command **lst, t_command *new);
 
 #endif 

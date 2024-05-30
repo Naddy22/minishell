@@ -14,7 +14,7 @@ MK = mkdir -p
 RM = rm -rf
 BIN = bin/
 SRC = main.c init.c reading_input.c parsing.c token_utils.c error_utils.c free_utils.c \
-dollar_expansion.c quotes.c
+dollar_expansion.c quotes.c commands.c commands_utils.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black
