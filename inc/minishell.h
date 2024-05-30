@@ -52,7 +52,7 @@ typedef struct s_data
 	t_parsing	parsing;
 	t_list		*tokens;
 	t_list		*last_token;
-	t_command	*command;
+	t_command	*commands;
 	int			nb_pipes;
 	int			exit_status;
 }				t_data;
