@@ -81,3 +81,4 @@ int	make_cmds(t_data *data)
 
 //erreur: n'imprime pas car quand on arrive a la fin de la liste de token forcement 
 //current est a null donc ca renvoie null et c'est pris comme un FAIL
+//faire plutôt un **list cmd et remplacer les return list par un return de int
