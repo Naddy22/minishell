@@ -59,7 +59,7 @@ void	ft_unset(char **cmd, char **envp)
 			envp = remove_elem(cmd[i], envp);
 			i++;
 		}
-		print_envp(envp); //TODO to remove. For test purposes only
+		//print_envp(envp); //TODO to remove. For test purposes only
 	}
-	exit(EXIT_SUCCESS);
+	//exit(EXIT_SUCCESS);
 }

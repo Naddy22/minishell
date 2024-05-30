@@ -8,11 +8,11 @@ void	ft_pwd(void)
 	if (buf[0] == 0)
 	{
 		perror("pwd");
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 	else
 	{
 		printf("%s\n", buf);
-		exit(EXIT_SUCCESS);
+		//exit(EXIT_SUCCESS);
 	}
 }

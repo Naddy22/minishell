@@ -55,10 +55,12 @@ typedef struct s_data
 	t_command	*command;
 	int			nb_pipes;
 	int			exit_status;
+	//exec variables
 	int			pnb;
 	int			fd[2];
+	int			fdin_origin;
+	int			fdout_origin;
 }				t_data;
-
 
 // enum token{
 // 	STR,
@@ -73,7 +75,7 @@ typedef struct s_data
 int		init(t_data *data, char **envp);
 
 // liste chainée
-void			ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
 //parsing
 int		parsing(t_data *data);
@@ -93,6 +95,7 @@ void	free_all(t_data *data);
 void	free_tokenlist(t_list **list);
 
 //dollar_expansion
+char	*get_env_value(char **env_cpy, const char *var_name);
 int		handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //quotes
@@ -101,8 +104,9 @@ int		handle_quotes(t_data *data, size_t *i, int *start);
 //functions imported from pipex//
 //in file_handling.c
 int		to_open(t_data *mini);
-int		change_parent_input(int fd);
+void	change_parent_input(int fd);
 void	parent(t_data *mini);
+void	change_parent_back(t_data *mini);
 
 //in path.c
 char	*test_path(char **paths, char *str);
@@ -114,6 +118,7 @@ void	execution(t_data *mini);
 void	child(t_data *mini);
 void	to_execute(t_data *mini);
 void	ft_pipe(t_data *mini);
+void	init_exec(t_data *mini);
 
 //in cd.c
 void	ft_cd(char **cmd, char **envp);

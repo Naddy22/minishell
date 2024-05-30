@@ -135,5 +135,5 @@ void	ft_export(char **cmd, char **envp, char **envp2)
 		}
 		print_export(new_env, envp2); //TODO remove test
 	}
-	exit(EXIT_SUCCESS);
+	//exit(EXIT_SUCCESS);
 }

@@ -56,7 +56,7 @@ void	ft_cd(char **cmd, char **envp)
 		if (chdir(path_to_go) != 0)
 		{
 			perror("cd");
-			exit(EXIT_FAILURE);
+			//exit(EXIT_FAILURE);
 		}
 		else
 			change_env(path_to_go, &(*envp));
@@ -68,12 +68,12 @@ void	ft_cd(char **cmd, char **envp)
 		if (chdir(path_to_go) != 0)
 		{
 			perror("cd");
-			exit(EXIT_FAILURE);
+			//exit(EXIT_FAILURE);
 		}
 		else
 			change_env(path_to_go, &(*envp));
 			//write(1, "SUCCESS", 7); //change to actual modification of env PWD
 	}
 	ft_pwd(); //to remove. Testing purposes only
-	exit(EXIT_SUCCESS); //change or remove if needed. Not in a child: do not exit. in a child, exit
+	//exit(EXIT_SUCCESS); //change or remove if needed. Not in a child: do not exit. in a child, exit
 }

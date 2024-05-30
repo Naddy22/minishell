@@ -29,9 +29,10 @@ void test_print_token_list(t_list *tokens)
 }
 
 
-int main(int argc, char **argv, char **envp) 
+int	main(int argc, char **argv, char **envp) 
 {
 	t_data data;
+	t_command *com;
 
 	(void)argv;
 	if (argc != 1)
@@ -51,11 +52,20 @@ int main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		test_print_token_list(data.tokens);
+		init_exec(&data);
+		com = ft_calloc(1, sizeof(t_command));
+		com->cmd = ft_calloc(2, sizeof(char *));
+		com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
+		com->cmd[1] = NULL;
+		com->cmd[0] = "ls";
+		com->next = NULL;
+		data.command = com;
 		ft_pipe(&data);
 		free_all(&data);
-	}
+	} 
 	// return (dernier code erreur);
 }
+
 //EXECUTION
 	// t_list	cmd;
 	// t_list	cmd2;

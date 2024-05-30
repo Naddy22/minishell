@@ -10,8 +10,7 @@ int	check_all_digit(char **cmd, int i)
 		if (!ft_isdigit(cmd[i][c]))
 		{
 			printf("exit\n");
-			//perror("exit"); or strerror... 
-			//printf message: numeric argument required
+			printf("minishell: exit %s: numeric argument required\n", cmd[i]);
 			return (1);
 		}
 		c++;
@@ -21,16 +20,10 @@ int	check_all_digit(char **cmd, int i)
 
 void	exit_with_status(int status)
 {
-	printf("exit\n");
+	printf("exit\n");//TODO add free functions here
 	exit(status);
 }
 
-/*
-	1. verifier si seul ou avec code
-		2.1 ecrire code pour seul
-		2.2 ecrire code pour avec errno
-	3. fermer fichiers et free ce qu<il y a a free (a verifier apres execution) 
-*/
 void	ft_exit(char **cmd)
 {
 	int	length;
@@ -40,17 +33,14 @@ void	ft_exit(char **cmd)
 		length++;
 	if (length >= 2)
 	{
-		if (check_all_digit(cmd, 1) == 1)
+		if (check_all_digit(cmd, 1) == 1) //TODO add free functions in if
 		{
-			printf("exit\n");
-			//perror("exit"); or strerror... 
-			//printf message: numeric argument required
-			exit(255);
+			exit(255);// TODO set exit_code, maybe in struct as int exit_code
 		}
 		if (cmd[2])
 		{
-			printf("exit\n");
-			//error message: Too many arguments (error code 1)
+			printf("exit\nminishell: exit: Too many arguments\n");
+			//TODO set error code to 1
 		}
 		else
 			exit_with_status(ft_atoi(cmd[1]));
