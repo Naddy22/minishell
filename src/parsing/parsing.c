@@ -16,7 +16,7 @@ int	find_token(t_data *data, size_t *i, int *start_token)
 		}
 	}
 	if (cmd[*i] == '\0')
-		return SUCCESS;
+		return (SUCCESS);
 	if (create_token(data, i, start_token, WORD) != SUCCESS)
 		return (FAIL);
 	data->last_token->brut_cmd = (char *)ft_calloc(1, sizeof(char));
@@ -108,6 +108,7 @@ int	parsing(t_data *data)
 {
 	int	start;
 	char	*brut_cmd;
+	int	test;
 
 	start = 0;
 	brut_cmd = data->parsing.last_user_cmd;
@@ -117,11 +118,10 @@ int	parsing(t_data *data)
 		return (FAIL);
 	while (brut_cmd[data->parsing.i] != '\0')
 	{
-		if (get_char(data, brut_cmd, &data->parsing.i, &start) == STOP)
+		test = get_char(data, brut_cmd, &data->parsing.i, &start);
+		if (test == STOP)
 			break ;
-		else if (get_char(data, brut_cmd, &data->parsing.i, &start) == SUCCESS)
-			continue ;
-		else
+		else if (test != SUCCESS)
 			return (FAIL);
 	}
 	if (process_end_of_token(data, &data->parsing.i, &start) != SUCCESS)

@@ -58,17 +58,7 @@ typedef struct s_data
 	int			exit_status;
 }				t_data;
 
-
-// enum token{
-// 	STR,
-// 	TOKEN_NULL,
-// 	PIPE,
-// 	APPEND_INPUT,
-// 	APPEND_OUTPUT,
-// 	HEREDOC_IN,
-// 	HEREDOC_OUT
-// }
-
+//init
 int			init(t_data *data, char **envp);
 
 //parsing
