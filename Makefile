@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 MY_LIB		=	./libft/libft.a
 MY_LIBDIR	=	./libft/
@@ -32,7 +32,9 @@ SRC			=	main.c \
 				exit.c \
 				pwd.c \
 				unset.c \
-				export.c
+				export.c \
+				commands.c \
+				commands_utils.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

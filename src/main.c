@@ -33,9 +33,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data data;
 	t_command *com;
-	int	i;
 
-	i = 0;
 	(void)argv;
 	if (argc != 1)
 	{
@@ -54,47 +52,13 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		//test_print_token_list(data.tokens);
+		if (make_cmds(&data) != SUCCESS)
+		{
+			free_all(&data);
+			continue ;
+		}
+		printf("stocker dans cmd : %s\n", data.commands->cmd[0]);
 		init_exec(&data);
-		if (i == 0)
-		{
-			com = ft_calloc(1, sizeof(t_command));
-			com->cmd = ft_calloc(2, sizeof(char *));
-			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
-			com->cmd[1] = NULL;
-			com->cmd[0] = "cd";
-			com->next = NULL;
-			data.command = com;
-		}
-		else if (i == 1)
-		{
-			com = ft_calloc(1, sizeof(t_command));
-			com->cmd = ft_calloc(2, sizeof(char *));
-			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
-			com->cmd[1] = NULL;
-			com->cmd[0] = "pwd";
-			com->next = NULL;
-			data.command = com;
-		}
-		else if (i == 5)
-		{
-			com = ft_calloc(1, sizeof(t_command));
-			com->cmd = ft_calloc(2, sizeof(char *));
-			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
-			com->cmd[1] = NULL;
-			com->cmd[0] = "exit";
-			com->next = NULL;
-			data.command = com;
-		}
-		else
-		{
-			com = ft_calloc(1, sizeof(t_command));
-			com->cmd = ft_calloc(2, sizeof(char *));
-			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
-			com->cmd[1] = NULL;
-			com->cmd[0] = "ls";
-			com->next = NULL;
-			data.command = com;
-		}
 		to_execute(&data);
 		free_all(&data);
 		i++;
