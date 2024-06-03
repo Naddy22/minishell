@@ -16,9 +16,10 @@ void	print_envp(char **envp)
 	}
 }
 
-char	**remove_elem(char *elem, char **envp)
+void	remove_elem(char *elem, t_data *mini)
 {
 	char	**new_env;
+	char	**new_env2;
 	int		size;
 	int		i;
 	int		j;
@@ -27,23 +28,43 @@ char	**remove_elem(char *elem, char **envp)
 	i = 0;
 	j = 0;
 	size = 0;
-	while (envp[size])
+	while (mini->cpy_env[size])
 		size++;
-	new_env = ft_calloc(size, sizeof(char *));
+	new_env = ft_calloc(size + 1, sizeof(char *));
 	while (i < size)
 	{
-		envp_elem = ft_split(envp[i], '=');
-		if (ft_strncmp(elem, envp_elem[0], ft_strlen(elem)) != 0)
+		envp_elem = ft_split(mini->cpy_env[i], '=');
+		if (ft_strncmp(elem, envp_elem[0], ft_strlen(envp_elem[0])) != 0)
 		{
-			new_env[j] = envp[i];
+			new_env[j] = mini->cpy_env[i];
 			j++;
 		}
 		i++;
 	}
-	return (new_env);
+	mini->cpy_env = new_env;
+	if (i == j && mini->custom_env)
+	{
+		i = 0;
+		j = 0;
+		size = 0;
+		while (mini->custom_env[size])
+			size++;
+		new_env2 = ft_calloc(size + 1, sizeof(char *));
+		while (i < size)
+		{
+			envp_elem = ft_split(mini->custom_env[i], '=');
+			if (ft_strncmp(elem, envp_elem[0], ft_strlen(elem)) != 0)
+			{
+				new_env2[j] = mini->custom_env[i];
+				j++;
+			}
+			i++;
+		}
+		mini->custom_env = new_env2;
+	}
 }
 
-void	ft_unset(char **cmd, char **envp)
+void	ft_unset(char **cmd, t_data *mini)
 {
 	int	length;
 	int	i;
@@ -56,7 +77,7 @@ void	ft_unset(char **cmd, char **envp)
 		i = 1;
 		while (i < length)
 		{
-			envp = remove_elem(cmd[i], envp);
+			remove_elem(cmd[i], mini);
 			i++;
 		}
 		//print_envp(envp); //TODO to remove. For test purposes only

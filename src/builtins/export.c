@@ -15,7 +15,7 @@ int	get_size(char **strs)
 	return (size);
 }
 
-char	**deep_cpy(char **envp, char **envp2)
+char	**deep_cpy(t_data *mini)
 {
 	int		i;
 	int		j;
@@ -23,19 +23,19 @@ char	**deep_cpy(char **envp, char **envp2)
 
 	i = 0;
 	j = 0;
-	envext = ft_calloc(get_size(envp) + get_size(envp2) + 1, sizeof(char *));
-	while (envp[i])
+	envext = ft_calloc(get_size(mini->cpy_env) + get_size(mini->custom_env) + 1, sizeof(char *));
+	while (mini->cpy_env[i])
 	{
-		envext[i] = ft_calloc(ft_strlen(envp[i]) + 1, sizeof(char));
-		ft_strlcpy(envext[i], envp[i], ft_strlen(envp[i]) + 1);
+		envext[i] = ft_calloc(ft_strlen(mini->cpy_env[i]) + 1, sizeof(char));
+		ft_strlcpy(envext[i], mini->cpy_env[i], ft_strlen(mini->cpy_env[i]) + 1);
 		i++;
 	}
-	if (envp2)
+	if (mini->custom_env)
 	{
-		while (envp2[j])
+		while (mini->custom_env[j])
 		{
-			envext[i] = ft_calloc(ft_strlen(envp2[j]) + 1, sizeof(char));
-			ft_strlcpy(envext[i], envp2[j], ft_strlen(envp2[j]) + 1);
+			envext[i] = ft_calloc(ft_strlen(mini->custom_env[j]) + 1, sizeof(char));
+			ft_strlcpy(envext[i], mini->custom_env[j], ft_strlen(mini->custom_env[j]) + 1);
 			i++;
 			j++;
 		}
@@ -70,13 +70,13 @@ char	**ordering_env(char **envext)
 	return (envext);
 }
 
-void	print_export(char **envp, char **envp2)
+void	print_export(t_data *mini)
 {
 	int		i;
 	char	**split;
 	char	**envext;
 
-	envext = ordering_env(deep_cpy(envp, envp2));
+	envext = ordering_env(deep_cpy(mini));
 	i = 0;
 	while (envext[i])
 	{
@@ -100,40 +100,44 @@ char	**add_elem(char *elem, char **envp)
 
 	i = 0;
 	size = 0;
-	while (envp[size])
-		size++;
-	new_env = ft_calloc(size + 1, sizeof(char *));
+	if (envp)
+	{
+		while (envp[size])
+			size++;
+	}
+	new_env = ft_calloc(size + 2, sizeof(char *));
 	while (i != size)
 	{
 		new_env[i] = envp[i];
 		i++;
 	}
 	new_env[i] = elem;
+	//free(envp); //TODO make sure it is ok to do that
 	return (new_env);
 }
 
-void	ft_export(char **cmd, char **envp, char **envp2)
+void	ft_export(char **cmd, t_data *mini)
 {
 	int		length;
 	int		i;
-	char	**new_env;
 
 	i = 1;
 	length = get_size(cmd); //TODO ajouter cas ou variable modifiee. Modifier pour unset aussi
 	if (length == 1)
-		print_export(envp, envp2);
+		print_export(mini);
 	else if (length >= 2)
 	{
-		new_env = envp;
 		while (i < length)
 		{
 			if (ft_strchr(cmd[i], '='))
-				new_env = add_elem(cmd[i], new_env);
+				mini->cpy_env = add_elem(cmd[i], mini->cpy_env);
 			else
-				envp2 = add_elem(cmd[i], envp2);
+			{
+				mini->custom_env = add_elem(cmd[i], mini->custom_env);
+				printf("%s\n", mini->custom_env[0]);
+			}
 			i++;
 		}
-		print_export(new_env, envp2); //TODO remove test
 	}
 	//exit(EXIT_SUCCESS);
 }

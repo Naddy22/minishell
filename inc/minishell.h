@@ -48,7 +48,7 @@ typedef struct s_parsing
 
 typedef struct s_data
 {
-	char		**cpy_env;
+	char		**cpy_env; //TODO add original env or env that unset and export can modify without losing data. Useful in some case
 	char		**custom_env;
 	t_parsing	parsing;
 	t_list		*tokens;
@@ -63,10 +63,10 @@ typedef struct s_data
 	int			fdout_origin;
 }				t_data;
 
-int		init(t_data *data, char **envp);
+int			init(t_data *data, char **envp);
 
 // liste chainée
-void	ft_lstadd_back(t_list **lst, t_list *new);
+void		ft_lstadd_back(t_list **lst, t_list *new);
 
 //parsing
 int			parsing(t_data *data);
@@ -86,8 +86,8 @@ void		free_all(t_data *data);
 void		free_tokenlist(t_list **list);
 
 //dollar_expansion
-char	*get_env_value(char **env_cpy, const char *var_name);
-int		handle_dollar_expansion(t_data *data, size_t *i, int *start);
+char		*get_env_value(char **env_cpy, const char *var_name);
+int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //quotes
 int			handle_quotes(t_data *data, size_t *i, int *start);
@@ -101,42 +101,42 @@ void		cmd_add_back(t_command **lst, t_command *new);
 
 //functions imported from pipex//
 //in file_handling.c
-int		to_open(t_data *mini);
-void	change_parent_input(int fd);
-void	parent(t_data *mini);
-void	change_parent_back(t_data *mini);
+int			to_open(t_data *mini);
+void		change_parent_input(int fd);
+void		parent(t_data *mini);
+void		change_parent_back(t_data *mini);
 
 //in path.c
-char	*test_path(char **paths, char *str);
-char	*get_path(t_data *mini, char *str);
+char		*test_path(char **paths, char *str);
+char		*get_path(t_data *mini, char *str);
 
 //in exec.c
-int		ft_size(t_list *lst);
-void	execution(t_data *mini);
-void	child(t_data *mini);
-void	to_execute(t_data *mini);
-void	ft_pipe(t_data *mini);
-void	init_exec(t_data *mini);
+int			ft_size(t_list *lst);
+void		execution(t_data *mini);
+void		child(t_data *mini);
+void		to_execute(t_data *mini);
+void		ft_pipe(t_data *mini);
+void		init_exec(t_data *mini);
 
 //in cd.c
-void	ft_cd(char **cmd, char **envp);
+void		ft_cd(char **cmd, char **envp);
 
 //in echo.c
-void	ft_echo(char **cmd);
+void		ft_echo(char **cmd);
 
 //in env.c
-void	ft_env(char **envp);
+void		ft_env(char **envp);
 
 //in exit.c
-void	ft_exit(char **cmd);
+void		ft_exit(char **cmd);
 
 //in pwd.c
-void	ft_pwd(void);
+void		ft_pwd(void);
 
 //in unset.c
-void	ft_unset(char **cmd, char **envp);
+void		ft_unset(char **cmd, t_data *mini);
 
 //in export.c
-void	ft_export(char **cmd, char **envp, char **envp2);
+void		ft_export(char **cmd, t_data *mini);
 
 #endif 

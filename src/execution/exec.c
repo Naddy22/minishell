@@ -45,22 +45,23 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 	if (ft_strncmp(cmd->cmd[0], "echo", 4) == 0)
 		ft_echo(cmd->cmd);
 	if (ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
-		ft_unset(cmd->cmd, mini->cpy_env);
+		ft_unset(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "export", 6) == 0)
-		ft_export(cmd->cmd, mini->cpy_env, mini->custom_env);
+		ft_export(cmd->cmd, mini);
 
 }
 int isbuiltins(t_data *mini)
 {
 	t_command	*cmd;
 
-	cmd = mini->command;
+	cmd = mini->commands;
 	if (ft_strncmp(cmd->cmd[0],"env", 3) == 0 || 
 		ft_strncmp(cmd->cmd[0], "cd", 2) == 0 || 
 		ft_strncmp(cmd->cmd[0], "exit", 4) == 0 || 
 		ft_strncmp(cmd->cmd[0], "echo", 4) == 0 || 
 		ft_strncmp(cmd->cmd[0], "pwd", 3) == 0 || 
-		ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
+		ft_strncmp(cmd->cmd[0], "unset", 5) == 0 ||
+		ft_strncmp(cmd->cmd[0], "export", 6) == 0)
 		return(1);
 	else
 		return(0);
@@ -71,7 +72,7 @@ void	execution(t_data *mini)
 	int			i;
 	t_command	*cmd;
 
-	cmd = mini->command;
+	cmd = mini->commands;
 	i = mini->pnb;
 	while (i > 0)
 	{
@@ -149,7 +150,7 @@ void	to_execute(t_data *mini)
 	//int	fd_file;
 	if (mini->nb_pipes == 0 && isbuiltins(mini) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful
 	{
-		builtin_exec(mini, mini->command); //TODO gestion redirections si necessaire
+		builtin_exec(mini, mini->commands); //TODO gestion redirections si necessaire
 	}
 	else
 	{
@@ -169,4 +170,5 @@ void	init_exec(t_data *mini)
 	mini->fdin_origin = dup(STDIN_FILENO); 
 	mini->fdout_origin = dup(STDOUT_FILENO);
 	mini->pnb = 0;
+	mini->custom_env = NULL;
 }

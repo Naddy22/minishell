@@ -21,6 +21,7 @@ int	get_env(t_data *data, char **envp)
 
 int init(t_data *data, char **envp)
 {
+	init_exec(data);
 	ft_bzero(&data->parsing, sizeof(t_parsing));
 	if (get_env(data, envp) != SUCCESS)
 		return (FAIL);
