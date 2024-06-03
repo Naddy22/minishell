@@ -79,7 +79,10 @@ void	execution(t_data *mini)
 		i--;
 	}
 	if (isbuiltins(mini) != 0)
+	{
 		builtin_exec(mini, cmd);
+		exit(EXIT_SUCCESS); // change status to actual status... not success. Then can be retrieved in
+	}
 	else
 		ft_execve(mini, cmd);
 }

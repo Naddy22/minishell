@@ -1,6 +1,5 @@
 #include "../../inc/minishell.h"
 
-
 void	change_env(char *path_to_go, char **envp)
 {
 	int		i;

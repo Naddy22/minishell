@@ -75,6 +75,16 @@ int	main(int argc, char **argv, char **envp)
 			com->next = NULL;
 			data.command = com;
 		}
+		else if (i == 5)
+		{
+			com = ft_calloc(1, sizeof(t_command));
+			com->cmd = ft_calloc(2, sizeof(char *));
+			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
+			com->cmd[1] = NULL;
+			com->cmd[0] = "exit";
+			com->next = NULL;
+			data.command = com;
+		}
 		else
 		{
 			com = ft_calloc(1, sizeof(t_command));
