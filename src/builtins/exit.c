@@ -10,12 +10,19 @@ int	check_all_digit(char **cmd, int i)
 		if (!ft_isdigit(cmd[i][c]))
 		{
 			printf("exit\n");
-			//perror("exit"); or strerror... printf message: numeric argument required
+			//perror("exit"); or strerror... 
+			//printf message: numeric argument required
 			return (1);
 		}
 		c++;
 	}
 	return (0);
+}
+
+void	exit_with_status(int status)
+{
+	printf("exit\n");
+	exit(status);
 }
 
 /*
@@ -36,23 +43,18 @@ void	ft_exit(char **cmd)
 		if (check_all_digit(cmd, 1) == 1)
 		{
 			printf("exit\n");
-			//perror("exit"); or strerror... printf message: numeric argument required
+			//perror("exit"); or strerror... 
+			//printf message: numeric argument required
 			exit(255);
 		}
 		if (cmd[2])
 		{
 			printf("exit\n");
-			//error message: Too many arguments
+			//error message: Too many arguments (error code 1)
 		}
 		else
-		{
-			printf("exit\n");
-			exit(ft_atoi(cmd[1]));
-		}
+			exit_with_status(ft_atoi(cmd[1]));
 	}
 	else
-	{
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
+		exit_with_status(EXIT_SUCCESS);
 }
