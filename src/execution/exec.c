@@ -34,7 +34,6 @@ void	ft_execve(t_data *mini, t_command *cmd)
 
 void	builtin_exec(t_data *mini, t_command *cmd)
 {
-	dprintf(2, "here\n");
 	if (ft_strncmp(cmd->cmd[0], "cd", 2) == 0)
 		ft_cd(cmd->cmd, mini->cpy_env);
 	if (ft_strncmp(cmd->cmd[0],"env", 3) == 0)
@@ -51,6 +50,21 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 		ft_export(cmd->cmd, mini->cpy_env, mini->custom_env);
 
 }
+int isbuiltins(t_data *mini)
+{
+	t_command	*cmd;
+
+	cmd = mini->command;
+	if (ft_strncmp(cmd->cmd[0],"env", 3) == 0 || 
+		ft_strncmp(cmd->cmd[0], "cd", 2) == 0 || 
+		ft_strncmp(cmd->cmd[0], "exit", 4) == 0 || 
+		ft_strncmp(cmd->cmd[0], "echo", 4) == 0 || 
+		ft_strncmp(cmd->cmd[0], "pwd", 3) == 0 || 
+		ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
+		return(1);
+	else
+		return(0);
+}
 
 void	execution(t_data *mini)
 {
@@ -64,12 +78,7 @@ void	execution(t_data *mini)
 		cmd = cmd->next;
 		i--;
 	}
-	if (ft_strncmp(cmd->cmd[0],"env", 3) == 0 || 
-		ft_strncmp(cmd->cmd[0], "cd", 2) == 0 || 
-		ft_strncmp(cmd->cmd[0], "exit", 4) == 0 || 
-		ft_strncmp(cmd->cmd[0], "echo", 4) == 0 || 
-		ft_strncmp(cmd->cmd[0], "pwd", 3) == 0 || 
-		ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
+	if (isbuiltins(mini) != 0)
 		builtin_exec(mini, cmd);
 	else
 		ft_execve(mini, cmd);
@@ -105,7 +114,7 @@ void	child(t_data *mini)
 	execution(mini);
 }
 
-void	to_execute(t_data *mini)
+void	ft_pipe(t_data *mini)
 {
 	int	pid;
 	int	status;
@@ -132,17 +141,24 @@ void	to_execute(t_data *mini)
 	}
 }
 
-void	ft_pipe(t_data *mini)
+void	to_execute(t_data *mini)
 {
 	//int	fd_file;
-
+	if (mini->nb_pipes == 0 && isbuiltins(mini) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful
+	{
+		builtin_exec(mini, mini->command); //TODO gestion redirections si necessaire
+	}
+	else
+	{
+		ft_pipe(mini);
+		change_parent_back(mini);
+	}
 	//fd_file = to_open(mini); //TODO change function for redirection when implemented --redir in struct by cmd
 	// if (fd_file == -1)
 	// 	perror("Open ");
 	// if (change_parent_input(fd_file) == -1) //at the end of an execution, change back parent input to stdin. parent output changed?
 	// 	perror("Dup2 ");
-	to_execute(mini);
-	change_parent_back(mini);
+	
 }
 
 void	init_exec(t_data *mini)

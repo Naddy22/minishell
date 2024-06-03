@@ -19,5 +19,6 @@ void	free_tokenlist(t_list **list)
 void	free_all(t_data *data)
 {
 	ft_free_verif((void *)&data->parsing.last_user_cmd);
+	ft_free_verif((void *)&data->command);
 	free_tokenlist(&data->tokens);
 }

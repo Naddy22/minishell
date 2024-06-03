@@ -33,7 +33,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data data;
 	t_command *com;
+	int	i;
 
+	i = 0;
 	(void)argv;
 	if (argc != 1)
 	{
@@ -51,17 +53,41 @@ int	main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-		test_print_token_list(data.tokens);
+		//test_print_token_list(data.tokens);
 		init_exec(&data);
-		com = ft_calloc(1, sizeof(t_command));
-		com->cmd = ft_calloc(2, sizeof(char *));
-		com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
-		com->cmd[1] = NULL;
-		com->cmd[0] = "ls";
-		com->next = NULL;
-		data.command = com;
-		ft_pipe(&data);
+		if (i == 0)
+		{
+			com = ft_calloc(1, sizeof(t_command));
+			com->cmd = ft_calloc(2, sizeof(char *));
+			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
+			com->cmd[1] = NULL;
+			com->cmd[0] = "cd";
+			com->next = NULL;
+			data.command = com;
+		}
+		else if (i == 1)
+		{
+			com = ft_calloc(1, sizeof(t_command));
+			com->cmd = ft_calloc(2, sizeof(char *));
+			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
+			com->cmd[1] = NULL;
+			com->cmd[0] = "pwd";
+			com->next = NULL;
+			data.command = com;
+		}
+		else
+		{
+			com = ft_calloc(1, sizeof(t_command));
+			com->cmd = ft_calloc(2, sizeof(char *));
+			com->cmd[0] = ft_calloc(2 + 1, sizeof(char));
+			com->cmd[1] = NULL;
+			com->cmd[0] = "ls";
+			com->next = NULL;
+			data.command = com;
+		}
+		to_execute(&data);
 		free_all(&data);
+		i++;
 	} 
 	// return (dernier code erreur);
 }
