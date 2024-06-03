@@ -1,5 +1,5 @@
-//#include "../../inc/minishell.h"
-#include "pipex.h"
+#include "../../inc/minishell.h"
+
 
 void	change_env(char *path_to_go, char **envp)
 {
@@ -74,6 +74,5 @@ void	ft_cd(char **cmd, char **envp)
 			change_env(path_to_go, &(*envp));
 			//write(1, "SUCCESS", 7); //change to actual modification of env PWD
 	}
-	ft_pwd(); //to remove. Testing purposes only
 	exit(EXIT_SUCCESS); //change or remove if needed. Not in a child: do not exit. in a child, exit
 }
