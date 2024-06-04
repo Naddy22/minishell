@@ -6,16 +6,16 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 12:39:00 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/17 11:32:45 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:42 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_lstclear(t_libftlist **lst, void (*del)(void *))
+void	ft_lstclear(t_liblst **lst, void (*del)(void *))
 {
-	t_libftlist	*temp;
-	t_libftlist	*list;
+	t_liblst	*temp;
+	t_liblst	*list;
 
 	if (!lst || !del)
 		return ;

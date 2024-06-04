@@ -6,13 +6,13 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:31:27 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/17 11:32:31 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:46 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_lstadd_front(t_libftlist **lst, t_libftlist *new)
+void	ft_lstadd_front(t_liblst **lst, t_liblst *new)
 {
 	new->next = *lst;
 	*lst = new;

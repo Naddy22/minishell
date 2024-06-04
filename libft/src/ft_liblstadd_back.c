@@ -6,15 +6,15 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:59:18 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/22 10:20:40 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:49 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_liblstadd_back(t_libftlist **lst, t_libftlist *new)
+void	ft_liblstadd_back(t_liblst **lst, t_liblst *new)
 {
-	t_libftlist	*temp;
+	t_liblst	*temp;
 
 	if (*lst)
 	{

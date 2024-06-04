@@ -1,4 +1,3 @@
-
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -15,21 +14,21 @@
 //}	t_list;
 
 //libft bonus
-typedef struct s_libftlist
+typedef struct s_liblst
 {
 	void				*content;
-	struct s_libftlist	*next;
-}	t_libftlist;
+	struct s_liblst		*next;
+}	t_liblst;
 
-t_libftlist		*ft_lstnew(void *content);
-void			ft_lstadd_front(t_libftlist **lst, t_libftlist *new);
-int				ft_lstsize(t_libftlist *lst);
-t_libftlist		*ft_lstlast(t_libftlist *lst);
-void			ft_liblstadd_back(t_libftlist **lst, t_libftlist *new);
-void			ft_lstdelone(t_libftlist *lst, void (*del)(void *));
-void			ft_lstclear(t_libftlist **lst, void (*del)(void *));
-void			ft_lstiter(t_libftlist *lst, void (*f)(void *));
-t_libftlist		*ft_lstmap(t_libftlist *lst, void *(*f)(void *),
+t_liblst		*ft_lstnew(void *content);
+void			ft_lstadd_front(t_liblst **lst, t_liblst *new);
+int				ft_lstsize(t_liblst *lst);
+t_liblst		*ft_lstlast(t_liblst *lst);
+void			ft_liblstadd_back(t_liblst **lst, t_liblst *new);
+void			ft_lstdelone(t_liblst *lst, void (*del)(void *));
+void			ft_lstclear(t_liblst **lst, void (*del)(void *));
+void			ft_lstiter(t_liblst *lst, void (*f)(void *));
+t_liblst		*ft_lstmap(t_liblst *lst, void *(*f)(void *),
 					void (*del)(void *));
 
 // libft

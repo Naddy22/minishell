@@ -1,9 +1,9 @@
 #include "../inc/minishell.h"
 
-void test_print_token_list(t_list *tokens)
+void	test_print_token_list(t_list *tokens)
 {
-	t_list *current = tokens;
-	int i;
+	t_list	*current = tokens;
+	int		i;
 
 	i = 0;
 	while (current != NULL)
@@ -28,16 +28,16 @@ void test_print_token_list(t_list *tokens)
 	}
 }
 
-
-int	main(int argc, char **argv, char **envp) 
+int	main(int argc, char **argv, char **envp)
 {
-	t_data data;
+	t_data	data;
+	int		status;
 
 	(void)argv;
 	if (argc != 1)
 	{
 		printf("Error: too many arguments. Number accepted: 0.");
-		return(FAIL);
+		return (FAIL);
 	}
 	ft_memset(&data, 0, sizeof(t_data));
 	init(&data, envp); // verifier si succes sinon quitte completement (exit failure)
@@ -50,40 +50,26 @@ int	main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-		//test_print_token_list(data.tokens);
+
 		if (make_cmds(&data) != SUCCESS)
 		{
 			free_all(&data);
 			continue ;
 		}
-		printf("stocker dans cmd : %s -- %s\n", data.commands->cmd[0], data.commands->cmd[1]);
-		
+		if (data.commands->next)
+			printf("stocker dans cmd : %s, %s -- %s, %s\n", data.commands->cmd[0], data.commands->cmd[1], data.commands->next->cmd[0], data.commands->next->cmd[1]);
+		else
+			printf("stocker dans cmd : %s -- %s\n", data.commands->cmd[0], data.commands->cmd[1]);
+		printf("stocker dans data : nb_pipe %d \n", data.nb_pipes);
+		reset_exec(&data);
 		to_execute(&data);
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == 1)
+			dprintf(2, "to free and exit");
+			//free_and_exit(mini, status);
 		free_all(&data);
-	} 
+	}
+	close(data.fdin_origin);
+	close(data.fdout_origin);
 	// return (dernier code erreur);
 }
-
-//EXECUTION
-	// t_list	cmd;
-	// t_list	cmd2;
-	// t_cmd	mini;
-
-	// (void)argc;
-	// mini.max = 0;
-	// cmd.cmd = ft_split("ls -la", ' ');
-	// cmd.next = &cmd2;
-	// cmd2.cmd = ft_split("grep -v src", ' ');
-	// cmd2.next = NULL;
-	// mini.cmdlst = &cmd;
-	// mini.fd = ft_calloc(2, sizeof(int *));
-	// mini.fd[0] = ft_calloc(1, sizeof(int[2]));
-	// mini.fd[1] = ft_calloc(1, sizeof(int[2]));
-	// mini.max = 1;
-	// mini.pnb = 0;
-	// pipe(mini.fd[0]); //
-	// pipe(mini.fd[1]); //
-	// ft_pipe(&mini, argv, envp);
-
-
-	// return (0);

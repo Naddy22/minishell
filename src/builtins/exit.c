@@ -20,7 +20,7 @@ int	check_all_digit(char **cmd, int i)
 
 void	exit_with_status(int status)
 {
-	printf("exit\n");//TODO add free functions here
+	printf("exit\n");//TODO add free functions here and close dup fds
 	exit(status);
 }
 
@@ -33,9 +33,9 @@ void	ft_exit(char **cmd)
 		length++;
 	if (length >= 2)
 	{
-		if (check_all_digit(cmd, 1) == 1) //TODO add free functions in if
+		if (check_all_digit(cmd, 1) == 1) //TODO add free functions in if and close dup fds
 		{
-			exit(255);// TODO set exit_code, maybe in struct as int exit_code
+			exit(255);// TODO set exit_code, maybe in struct as int exit_code and close dup fds
 		}
 		if (cmd[2])
 		{

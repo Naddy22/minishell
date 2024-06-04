@@ -48,7 +48,8 @@ typedef struct s_parsing
 
 typedef struct s_data
 {
-	char		**cpy_env; //TODO add original env or env that unset and export can modify without losing data. Useful in some case
+	char		**cpy_env;
+	char		**cpy_env_orig;
 	char		**custom_env;
 	t_parsing	parsing;
 	t_list		*tokens;
@@ -116,7 +117,7 @@ void		execution(t_data *mini);
 void		child(t_data *mini);
 void		to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
-void		init_exec(t_data *mini);
+void		reset_exec(t_data *mini);
 
 //in cd.c
 void		ft_cd(char **cmd, char **envp);

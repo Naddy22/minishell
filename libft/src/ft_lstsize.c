@@ -6,13 +6,13 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:23:36 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/17 11:33:40 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:24 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_lstsize(t_libftlist *lst)
+int	ft_lstsize(t_liblst *lst)
 {
 	int		len;
 

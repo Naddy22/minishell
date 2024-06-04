@@ -6,13 +6,13 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 11:16:57 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/17 11:32:52 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:39 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_lstdelone(t_libftlist *lst, void (*del)(void *))
+void	ft_lstdelone(t_liblst *lst, void (*del)(void *))
 {
 	if (!lst || !del)
 		return ;

@@ -54,10 +54,7 @@ void	ft_echo(char **cmd)
 	while (cmd[l])
 		l++;
 	if (l == 1)
-	{
 		printf("\n");
-		//exit(EXIT_SUCCESS);//
-	}
 	else
 	{
 		l = 1;
@@ -68,6 +65,5 @@ void	ft_echo(char **cmd)
 		}
 		if (add_next_line)
 			printf("\n");
-		//exit(EXIT_SUCCESS);//
 	}
 }

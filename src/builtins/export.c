@@ -139,5 +139,4 @@ void	ft_export(char **cmd, t_data *mini)
 			i++;
 		}
 	}
-	//exit(EXIT_SUCCESS);
 }

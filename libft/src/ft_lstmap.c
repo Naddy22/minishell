@@ -6,17 +6,17 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:02:54 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/22 10:19:52 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:13 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-t_libftlist	*ft_lstmap(t_libftlist *lst, void *(*f)(void *), void (*del)(void *))
+t_liblst	*ft_lstmap(t_liblst *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_libftlist	*new_element;
-	t_libftlist	*new_lst;
-	t_libftlist	*tmp;
+	t_liblst	*new_element;
+	t_liblst	*new_lst;
+	t_liblst	*tmp;
 
 	if (!lst || !f)
 		return (NULL);

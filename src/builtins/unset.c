@@ -1,25 +1,38 @@
 #include "../../inc/minishell.h"
 
 /*
-	Change envp to copy or second copy of env
 	this implementation will be leaking as hell
 */
-void	print_envp(char **envp)
+void	remove_elem_custom_env(char *elem, t_data *mini)
 {
-	int	i;
+	char	**new_env2;
+	int		size;
+	int		i;
+	int		j;
+	char	**envp_elem;
 
 	i = 0;
-	while (envp[i])
+	j = 0;
+	size = 0;
+	while (mini->custom_env[size])
+		size++;
+	new_env2 = ft_calloc(size + 1, sizeof(char *));
+	while (i < size)
 	{
-		dprintf(2, "%s\n", envp[i]);
+		envp_elem = ft_split(mini->custom_env[i], '=');
+		if (ft_strncmp(elem, envp_elem[0], ft_strlen(elem)) != 0)
+		{
+			new_env2[j] = mini->custom_env[i];
+			j++;
+		}
 		i++;
 	}
+	mini->custom_env = new_env2;
 }
 
 void	remove_elem(char *elem, t_data *mini)
 {
 	char	**new_env;
-	char	**new_env2;
 	int		size;
 	int		i;
 	int		j;
@@ -43,25 +56,7 @@ void	remove_elem(char *elem, t_data *mini)
 	}
 	mini->cpy_env = new_env;
 	if (i == j && mini->custom_env)
-	{
-		i = 0;
-		j = 0;
-		size = 0;
-		while (mini->custom_env[size])
-			size++;
-		new_env2 = ft_calloc(size + 1, sizeof(char *));
-		while (i < size)
-		{
-			envp_elem = ft_split(mini->custom_env[i], '=');
-			if (ft_strncmp(elem, envp_elem[0], ft_strlen(elem)) != 0)
-			{
-				new_env2[j] = mini->custom_env[i];
-				j++;
-			}
-			i++;
-		}
-		mini->custom_env = new_env2;
-	}
+		remove_elem_custom_env(elem, mini);
 }
 
 void	ft_unset(char **cmd, t_data *mini)
@@ -80,7 +75,5 @@ void	ft_unset(char **cmd, t_data *mini)
 			remove_elem(cmd[i], mini);
 			i++;
 		}
-		//print_envp(envp); //TODO to remove. For test purposes only
 	}
-	//exit(EXIT_SUCCESS);
 }

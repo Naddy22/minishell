@@ -1,9 +1,13 @@
 #include "../../inc/minishell.h"
 
+/*
+decisiont to take : change PWD and OLDPWD or not?
+*/
 void	change_env(char *path_to_go, char **envp)
 {
 	int		i;
 	char	*str;
+	char	*old;
 
 	i = 0;
 	while (envp[i])
@@ -41,10 +45,6 @@ char	*get_home(char **envp)
 		return (homedir[1]);
 }
 
-/*
-	Need to check (in exec) if cd has to be in child or parent 
-	(test whether bash does it in all case or only in some)
-*/
 void	ft_cd(char **cmd, char **envp)
 {
 	char	*path_to_go;
@@ -53,25 +53,18 @@ void	ft_cd(char **cmd, char **envp)
 	{
 		path_to_go = get_home(envp);
 		if (chdir(path_to_go) != 0)
-		{
 			perror("cd");
-			//exit(EXIT_FAILURE);
-		}
 		else
 			change_env(path_to_go, &(*envp));
-			//write(1, "SUCCESS", 7); change to actual modification of env PWD
+			//change to actual modification of env PWD
 	}
 	else if (cmd[1])
 	{
 		path_to_go = cmd[1];
 		if (chdir(path_to_go) != 0)
-		{
 			perror("cd");
-			//exit(EXIT_FAILURE);
-		}
 		else
 			change_env(path_to_go, &(*envp));
-			//write(1, "SUCCESS", 7); //change to actual modification of env PWD
+			//change to actual modification of env PWD
 	}
-	//exit(EXIT_SUCCESS); //change or remove if needed. Not in a child: do not exit. in a child, exit
 }

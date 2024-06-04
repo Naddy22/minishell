@@ -6,13 +6,13 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:35:59 by vboulang          #+#    #+#             */
-/*   Updated: 2024/05/17 11:33:10 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:39:32 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-t_libftlist	*ft_lstlast(t_libftlist *lst)
+t_liblst	*ft_lstlast(t_liblst *lst)
 {
 	if (!lst)
 		return (NULL);
