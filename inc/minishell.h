@@ -27,9 +27,17 @@ typedef struct s_list	t_list;
 # define R2_REDIR 24
 # define PIPE 25
 
+typedef struct s_redir
+{
+	char			*file_name;
+	int				type;
+	struct s_redir	*next;
+}					t_redir;
+
 typedef struct s_command
 {
 	char				**cmd;
+	t_redir				*redir;
 	struct s_command	*next;
 }						t_command;
 
@@ -90,5 +98,6 @@ int			make_cmds(t_data *data);
 //command_utils
 t_command	*create_new_cmd(t_data *data);
 void		cmd_add_back(t_command **lst, t_command *new);
+int			get_tab_cmd(t_data *data, t_list **current);
 
 #endif 

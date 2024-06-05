@@ -1,31 +1,8 @@
 #include "../../inc/minishell.h"
 
-int	get_tab_cmd(t_data *data, t_list **current)
+fill_redir_cmd(t_data *data, t_list *current)
 {
-	t_list *tmp;
-
-	tmp = *current;
-	data->parsing.i = 0;
-	while (tmp && tmp->token_type == WORD)
-	{
-		tmp = tmp->next;
-		data->parsing.i++;
-	}
-	data->parsing.parse_cmd = ft_calloc(data->parsing.i + 1, sizeof(char *));
-	if (data->parsing.parse_cmd == NULL)
-	{
-		perror("Malloc : ");
-		return (FAIL);
-	}
-	data->parsing.i = 0;
-	while (*current && (*current)->token_type == WORD)
-	{
-		data->parsing.parse_cmd[data->parsing.i] = ft_strdup((*current)->brut_cmd);
-		*current = (*current)->next;
-		data->parsing.i++;
-	}
-	data->parsing.parse_cmd[data->parsing.i] = NULL;
-	return (SUCCESS);
+	
 }
 
 int	fill_word_cmd(t_data *data, t_list **current)
@@ -49,6 +26,11 @@ int	get_args(t_data *data, t_list **current)
 		if (fill_word_cmd(data, current) != SUCCESS)
 			return (FAIL);
 	}
+	if ((*current)->token_type >= L1_REDIR && (*current)->token_type < PIPE)
+	{
+		if (fill_redir_cmd(data, current) != SUCCESS)
+			return (FAIL);
+	}
 	return (SUCCESS);
 }
 
@@ -68,7 +50,9 @@ int	make_cmds(t_data *data)
 		}
 		if (!current)
 			return (SUCCESS);
-		if (current->token_type == PIPE)
+		if (current->token_type >= L1_REDIR && current->token_type <= R2_REDIR)
+			;
+		if (current->token_type == PIPE) // creera une nouvelle commande si token suivant est autre chose que null ou |
 			;
 		//prev = current;
 		current = current->next;
@@ -76,6 +60,6 @@ int	make_cmds(t_data *data)
 	return (SUCCESS);
 }
 
-//erreur: n'imprime pas car quand on arrive a la fin de la liste de token forcement 
-//current est a null donc ca renvoie null et c'est pris comme un FAIL
-//faire plutôt un **list cmd et remplacer les return list par un return de int
+//next step: voir pour stocker redir, car c'est les mot qui creer une nouvelle commande
+//alors qu'il faut que ce soit juste la premiere fois ou alors le pipe.
+//si j'ai un pipe tout seul: erreur
