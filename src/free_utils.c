@@ -37,4 +37,10 @@ void	free_all(t_data *data)
 	ft_free_verif((void *)&data->parsing.last_user_cmd);
 	free_tokenlist(&data->tokens);
 	free_cmdlist(&data->commands);
+	if (data->cpy_env)
+		ft_free_table(data->cpy_env);
+	if (data->cpy_env_orig)
+		ft_free_table(data->cpy_env_orig);
+	if (data->custom_env)
+		ft_free_table(data->custom_env);
 }

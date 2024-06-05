@@ -43,7 +43,7 @@ char	**deep_cpy(t_data *mini)
 	return (envext);
 }
 
-char	**ordering_env(char **envext)
+char	**ordering_env(char **envext) //there is splt that aren't freed... please splt this fct in 2 for comparison
 {
 	int		i;
 	int		j;
@@ -67,6 +67,7 @@ char	**ordering_env(char **envext)
 		}
 		i++;
 	}
+	free(swp);
 	return (envext);
 }
 
@@ -84,12 +85,13 @@ void	print_export(t_data *mini)
 		{
 			split = ft_split(envext[i], '=');
 			printf("declare -x %s=\"%s\"\n", split[0], split[1]);
-			free(split);
+			ft_free_table(split);
 		}
 		else
 			printf("declare -x %s\n", envext[i]);
 		i++;
 	}
+	ft_free_table(envext);
 }
 
 char	**add_elem(char *elem, char **envp)

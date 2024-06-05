@@ -40,7 +40,7 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 	if (ft_strncmp(cmd->cmd[0], "pwd", 3) == 0)
 		ft_pwd();
 	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
-		ft_exit(cmd->cmd);
+		ft_exit(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "echo", 4) == 0)
 		ft_echo(cmd->cmd);
 	if (ft_strncmp(cmd->cmd[0], "unset", 5) == 0)

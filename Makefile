@@ -132,4 +132,7 @@ fclean: clean
 rlclean: fclean
 	cd inc/readline && make distclean
 
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --suppressions=supp.txt ./minishell
+
 re:	fclean all

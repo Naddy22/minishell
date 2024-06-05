@@ -7,7 +7,6 @@ void	change_env(char *path_to_go, char **envp)
 {
 	int		i;
 	char	*str;
-	char	*old;
 
 	i = 0;
 	while (envp[i])

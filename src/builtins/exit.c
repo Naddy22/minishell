@@ -18,13 +18,16 @@ int	check_all_digit(char **cmd, int i)
 	return (0);
 }
 
-void	exit_with_status(int status)
+void	exit_with_status(int status, t_data *mini)
 {
 	printf("exit\n");//TODO add free functions here and close dup fds
+	free_all(mini);
+	close(mini->fdin_origin);
+	close(mini->fdout_origin);
 	exit(status);
 }
 
-void	ft_exit(char **cmd)
+void	ft_exit(char **cmd, t_data *mini)
 {
 	int	length;
 
@@ -35,7 +38,7 @@ void	ft_exit(char **cmd)
 	{
 		if (check_all_digit(cmd, 1) == 1) //TODO add free functions in if and close dup fds
 		{
-			exit(255);// TODO set exit_code, maybe in struct as int exit_code and close dup fds
+			exit_with_status(255, mini);// TODO set exit_code, maybe in struct as int exit_code and close dup fds
 		}
 		if (cmd[2])
 		{
@@ -43,8 +46,8 @@ void	ft_exit(char **cmd)
 			//TODO set error code to 1
 		}
 		else
-			exit_with_status(ft_atoi(cmd[1]));
+			exit_with_status(ft_atoi(cmd[1]), mini);
 	}
 	else
-		exit_with_status(EXIT_SUCCESS);
+		exit_with_status(EXIT_SUCCESS, mini);
 }
