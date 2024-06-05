@@ -22,7 +22,7 @@ void	change_env(char *path_to_go, char **envp)
 	}
 }
 
-char	*get_home(char **envp)
+char	**get_home(char **envp)
 {
 	int		i;
 	int		home_not_found;
@@ -41,21 +41,23 @@ char	*get_home(char **envp)
 	if (!homedir)
 		return (NULL);
 	else
-		return (homedir[1]);
+		return (homedir);
 }
 
 void	ft_cd(char **cmd, char **envp)
 {
 	char	*path_to_go;
+	char	**path_home;
 
 	if (!cmd[1])
 	{
-		path_to_go = get_home(envp);
-		if (chdir(path_to_go) != 0)
+		path_home = get_home(envp);
+		if (chdir(path_home[1]) != 0)
 			perror("cd");
 		else
-			change_env(path_to_go, &(*envp));
+			change_env(path_home[1], &(*envp));
 			//change to actual modification of env PWD
+		ft_free_table(path_home);
 	}
 	else if (cmd[1])
 	{

@@ -43,31 +43,41 @@ char	**deep_cpy(t_data *mini)
 	return (envext);
 }
 
+static void	inner(char **envext, int i, int j)
+{
+	char	*swp;
+	char	**spliti;
+	char	**splitj;
+
+	swp = NULL;
+	while (envext[j])
+	{
+		spliti = ft_split(envext[i], '=');
+		splitj = ft_split(envext[j], '=');
+		if (ft_strncmp(spliti[0], splitj[0], ft_strlen(envext[i])) > 0)
+		{
+			swp = envext[i];
+			envext[i] = envext[j];
+			envext[j] = swp;
+		}
+		ft_free_table(splitj);
+		ft_free_table(spliti);
+		j++;
+	}
+}
+
 char	**ordering_env(char **envext) //there is splt that aren't freed... please splt this fct in 2 for comparison
 {
 	int		i;
 	int		j;
-	char	*swp;
 
 	i = 0;
-	swp = NULL;
 	while (envext[i])
 	{
 		j = i + 1;
-		while (envext[j])
-		{
-			if (ft_strncmp(ft_split(envext[i], '=')[0],
-				ft_split(envext[j], '=')[0], ft_strlen(envext[i])) > 0)
-			{
-				swp = envext[i];
-				envext[i] = envext[j];
-				envext[j] = swp;
-			}
-			j++;
-		}
+		inner(envext, i, j);
 		i++;
 	}
-	free(swp);
 	return (envext);
 }
 
@@ -114,7 +124,7 @@ char	**add_elem(char *elem, char **envp)
 		i++;
 	}
 	new_env[i] = elem;
-	//free(envp); //TODO make sure it is ok to do that
+	// free(envp); //TODO make sure it is ok to do that
 	return (new_env);
 }
 
