@@ -28,7 +28,6 @@ void test_print_token_list(t_list *tokens)
 	}
 }
 
-
 int main(int argc, char **argv, char **envp) 
 {
 	t_data data;
@@ -57,6 +56,16 @@ int main(int argc, char **argv, char **envp)
 		{
 			printf("stocker dans cmd : %s\n", data.commands->cmd[i]);
 			i++;
+		}
+		if (data.commands->next)
+		{
+			i = 0;
+			data.commands = data.commands->next;
+			while (data.commands->cmd[i] != NULL)
+			{
+				printf("stocker dans cmd 2: %s\n", data.commands->cmd[i]);
+				i++;
+			}
 		}
 		free_all(&data);
 	}

@@ -31,7 +31,8 @@ int	fill_word_cmd(t_data *data, t_list **current)
 
 int	get_args(t_data *data, t_list **current)
 {
-	data->parsing.parse_cmd = NULL;
+	t_command	*new_cmd;
+
 	if ((*current)->token_type == WORD)
 	{
 		if (fill_word_cmd(data, current) != SUCCESS)
@@ -42,13 +43,19 @@ int	get_args(t_data *data, t_list **current)
 	// 	if (fill_redir_cmd(data, current) != SUCCESS)
 	// 		return (FAIL);
 	// }
+	else if ((*current)->token_type == PIPE)
+	{
+		new_cmd = create_new_lstcmd(data);
+		if (new_cmd == NULL)
+			return (FAIL);
+		cmd_add_back(&data->commands, new_cmd);
+	}
 	return (SUCCESS);
 }
 
 int	make_cmds(t_data *data)
 {
 	t_list *current;
-	//t_list *prev;
 
 	current = data->tokens;
 	data->parsing.parse_cmd = NULL;
@@ -61,11 +68,11 @@ int	make_cmds(t_data *data)
 		}
 		if (!current)
 			return (SUCCESS);
-		if (current->token_type >= L1_REDIR && current->token_type <= R2_REDIR)
-			;
-		if (current->token_type == PIPE) // creera une nouvelle commande si token suivant est autre chose que null ou |
-			;
-		//prev = current;
+		if (current->token_type >= L1_REDIR && current->token_type <= PIPE) // creera une nouvelle commande si token suivant est autre chose que null ou |
+		{
+			if (get_args(data, &current) != SUCCESS)
+				return (FAIL);
+		}
 		current = current->next;
 	}
 	return (SUCCESS);
