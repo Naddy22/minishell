@@ -24,6 +24,12 @@ void	exit_with_status(int status, t_data *mini)
 	free_all(mini);
 	close(mini->fdin_origin);
 	close(mini->fdout_origin);
+	if (mini->cpy_env) //TODO place at each exit point that exit minishell
+		ft_free_table(mini->cpy_env);
+	if (mini->cpy_env_orig) //TODO place at each exit point that exit minishell
+		ft_free_table(mini->cpy_env_orig);
+	if (mini->custom_env) //TODO place at each exit point that exit minishell
+		ft_free_table(mini->custom_env);
 	exit(status);
 }
 

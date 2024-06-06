@@ -138,11 +138,12 @@ char	**add_elem(char *elem, char **envp)
 		}
 		else
 			new_env[i] = ft_strdup(envp[i]);
-		//ft_free_table(split_envi);
+		ft_free_table(split_envi);
 		i++;
 	}
 	if (!found)
 		new_env[i] = elem;
+	ft_free_table(split_elem);
 	//ft_free_table(envp); //TODO make sure it is ok to do that
 	return (new_env);
 }

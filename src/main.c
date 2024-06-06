@@ -41,7 +41,19 @@ int	main(int argc, char **argv, char **envp)
 		return (FAIL);
 	}
 	ft_memset(&data, 0, sizeof(t_data));
-	init(&data, envp); // verifier si succes sinon quitte completement (exit failure)
+	if (init(&data, envp) == FAIL)
+	{
+		free_all(&data); // verifier si succes sinon quitte completement (exit failure)
+		close(data.fdin_origin);
+		close(data.fdout_origin);
+		if (data.cpy_env) //TODO place at each exit point that exit minishell
+			ft_free_table(data.cpy_env);
+		if (data.cpy_env_orig) //TODO place at each exit point that exit minishell
+			ft_free_table(data.cpy_env_orig);
+		if (data.custom_env) //TODO place at each exit point that exit minishell
+			ft_free_table(data.custom_env);
+		return (FAIL);
+	}
 	while (42)
 	{
 		if (read_user_cmd(&data) != SUCCESS)
@@ -51,7 +63,6 @@ int	main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-
 		if (make_cmds(&data) != SUCCESS)
 		{
 			free_all(&data);
@@ -70,8 +81,12 @@ int	main(int argc, char **argv, char **envp)
 			//free_and_exit(mini, status);
 		free_all(&data);
 	}
-	close(data.fdin_origin);
+	close(data.fdin_origin); //TODO place close and free in end_program
 	close(data.fdout_origin);
+	if (data.cpy_env) //TODO place at each exit point that exit minishell
+		ft_free_table(data.cpy_env);
+	if (data.cpy_env_orig) //TODO place at each exit point that exit minishell
+		ft_free_table(data.cpy_env_orig);
 	if (data.custom_env) //TODO place at each exit point that exit minishell
 		ft_free_table(data.custom_env);
 	// return (dernier code erreur);
