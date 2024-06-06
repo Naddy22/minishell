@@ -1,20 +1,31 @@
 #include "../../inc/minishell.h"
 
-fill_redir_cmd(t_data *data, t_list *current)
-{
+// fill_redir_cmd(t_data *data, t_list *current)
+// {
 	
-}
+// }
 
 int	fill_word_cmd(t_data *data, t_list **current)
 {
 	t_command *new_cmd;
-	
+	size_t len;
+
 	if (get_tab_cmd(data, current) == FAIL)
 		return (FAIL);
-	new_cmd = create_new_cmd(data);
-	if (new_cmd == NULL)
-		return (FAIL);
-	cmd_add_back(&data->commands, new_cmd);
+	len = ft_strlen_double(data->parsing.parse_cmd);
+	if (data->commands == NULL)
+	{
+		new_cmd = create_new_lstcmd(data);
+		if (new_cmd == NULL)
+			return (FAIL);
+		cmd_add_back(&data->commands, new_cmd);
+	}
+	else
+	{
+		if (alloc_new_cmd(data, len) != SUCCESS)
+			return (FAIL);
+	}
+	data->parsing.parse_cmd = NULL;
 	return (SUCCESS);
 }
 
@@ -26,11 +37,11 @@ int	get_args(t_data *data, t_list **current)
 		if (fill_word_cmd(data, current) != SUCCESS)
 			return (FAIL);
 	}
-	if ((*current)->token_type >= L1_REDIR && (*current)->token_type < PIPE)
-	{
-		if (fill_redir_cmd(data, current) != SUCCESS)
-			return (FAIL);
-	}
+	// if ((*current)->token_type >= L1_REDIR && (*current)->token_type < PIPE)
+	// {
+	// 	if (fill_redir_cmd(data, current) != SUCCESS)
+	// 		return (FAIL);
+	// }
 	return (SUCCESS);
 }
 

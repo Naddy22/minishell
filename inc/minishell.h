@@ -50,9 +50,10 @@ typedef struct s_list
 
 typedef struct s_parsing
 {
-	char	*last_user_cmd; // commande brut du USER
-	size_t	i;
-	char	**parse_cmd;
+	char		*last_user_cmd; // commande brut du USER
+	size_t		i;
+	char		**parse_cmd;
+	t_command	*last_lstcmd;
 }			t_parsing;
 
 typedef struct s_data
@@ -96,8 +97,9 @@ int			handle_quotes(t_data *data, size_t *i, int *start);
 int			make_cmds(t_data *data);
 
 //command_utils
-t_command	*create_new_cmd(t_data *data);
+t_command	*create_new_lstcmd(t_data *data);
 void		cmd_add_back(t_command **lst, t_command *new);
 int			get_tab_cmd(t_data *data, t_list **current);
+int			alloc_new_cmd(t_data *data, size_t len_new);
 
 #endif 

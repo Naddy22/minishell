@@ -28,7 +28,36 @@ int	get_tab_cmd(t_data *data, t_list **current)
 	return (SUCCESS);
 }
 
-t_command	*create_new_cmd(t_data *data)
+int	alloc_new_cmd(t_data *data, size_t len_new)
+{
+	size_t	len_last;
+	size_t	i;
+	size_t	j;
+	char	**new;
+
+	len_last = ft_strlen_double(data->parsing.last_lstcmd->cmd);
+	i = 0;
+	j = 0;
+	new = ft_calloc(len_last + len_new + 1, sizeof(char *));
+	if (new == NULL)
+		return (FAIL);
+	while (i < len_last)
+	{
+		new[i] = data->parsing.last_lstcmd->cmd[i];
+		i++;
+	}
+	while (j < len_new)
+	{
+		new[i] = data->parsing.parse_cmd[j];
+		i++;
+		j++;
+	}
+	free(data->parsing.last_lstcmd->cmd);
+	data->parsing.last_lstcmd->cmd = new;
+	return (SUCCESS);
+}
+
+t_command	*create_new_lstcmd(t_data *data)
 {
 	t_command *new;
 
@@ -39,11 +68,10 @@ t_command	*create_new_cmd(t_data *data)
 		return (NULL);
 	}
 	if (data->parsing.parse_cmd != NULL)
-	{
 		new->cmd = data->parsing.parse_cmd;
-	}
 	else
 		new->cmd = NULL;
+	data->parsing.last_lstcmd = new;
 	return (new);
 }
 

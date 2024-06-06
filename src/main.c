@@ -52,7 +52,12 @@ int main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-		printf("stocker dans cmd : %s\n", data.commands->cmd[0]);
+		int i = 0;
+		while (data.commands->cmd[i] != NULL)
+		{
+			printf("stocker dans cmd : %s\n", data.commands->cmd[i]);
+			i++;
+		}
 		free_all(&data);
 	}
 	// return (dernier code erreur);
