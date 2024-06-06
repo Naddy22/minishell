@@ -24,6 +24,8 @@ char	**deep_cpy(t_data *mini)
 	i = 0;
 	j = 0;
 	envext = ft_calloc(get_size(mini->cpy_env) + get_size(mini->custom_env) + 1, sizeof(char *));
+	if (!envext)
+		return (NULL);
 	while (mini->cpy_env[i])
 	{
 		envext[i] = ft_calloc(ft_strlen(mini->cpy_env[i]) + 1, sizeof(char));
@@ -60,8 +62,8 @@ static void	inner(char **envext, int i, int j)
 			envext[i] = envext[j];
 			envext[j] = swp;
 		}
-		ft_free_table(splitj);
-		ft_free_table(spliti);
+		//ft_free_table(splitj);
+		//ft_free_table(spliti);
 		j++;
 	}
 }
@@ -72,6 +74,8 @@ char	**ordering_env(char **envext) //there is splt that aren't freed... please s
 	int		j;
 
 	i = 0;
+	if (!envext)
+		return (NULL);
 	while (envext[i])
 	{
 		j = i + 1;
@@ -89,19 +93,22 @@ void	print_export(t_data *mini)
 
 	envext = ordering_env(deep_cpy(mini));
 	i = 0;
-	while (envext[i])
+	if (envext)
 	{
-		if (ft_strchr(envext[i], '='))
+		while (envext[i])
 		{
-			split = ft_split(envext[i], '=');
-			printf("declare -x %s=\"%s\"\n", split[0], split[1]);
-			ft_free_table(split);
+			if (ft_strchr(envext[i], '='))
+			{
+				split = ft_split(envext[i], '=');
+				printf("declare -x %s=\"%s\"\n", split[0], split[1]);
+				//ft_free_table(split);
+			}
+			else
+				printf("declare -x %s\n", envext[i]);
+			i++;
 		}
-		else
-			printf("declare -x %s\n", envext[i]);
-		i++;
+		//ft_free_table(envext);
 	}
-	ft_free_table(envext);
 }
 
 char	**add_elem(char *elem, char **envp)
@@ -109,22 +116,34 @@ char	**add_elem(char *elem, char **envp)
 	char	**new_env;
 	int		size;
 	int		i;
+	int		found;
+	char	**split_elem;
+	char	**split_envi;
+
 
 	i = 0;
-	size = 0;
-	if (envp)
-	{
-		while (envp[size])
-			size++;
-	}
+	found = 0;
+	split_elem = ft_split(elem, '=');
+	size = get_size(envp);
 	new_env = ft_calloc(size + 2, sizeof(char *));
+	if (!new_env)
+		return (NULL);
 	while (i != size)
 	{
-		new_env[i] = envp[i];
+		split_envi = ft_split(envp[i], '=');
+		if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(elem) + 1) == 0)
+		{
+			new_env[i] = elem;
+			found = 1;
+		}
+		else
+			new_env[i] = ft_strdup(envp[i]);
+		//ft_free_table(split_envi);
 		i++;
 	}
-	new_env[i] = elem;
-	// free(envp); //TODO make sure it is ok to do that
+	if (!found)
+		new_env[i] = elem;
+	//ft_free_table(envp); //TODO make sure it is ok to do that
 	return (new_env);
 }
 
@@ -145,7 +164,7 @@ void	ft_export(char **cmd, t_data *mini)
 				mini->cpy_env = add_elem(cmd[i], mini->cpy_env);
 			else
 			{
-				mini->custom_env = add_elem(cmd[i], mini->custom_env);
+				mini->custom_env = add_elem(cmd[i], mini->custom_env); //TODO add elem custom need to check if variable is in envp. if so do not replace. example a= not replace while export a
 				printf("%s\n", mini->custom_env[0]);
 			}
 			i++;

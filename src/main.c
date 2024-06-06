@@ -72,5 +72,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	close(data.fdin_origin);
 	close(data.fdout_origin);
+	if (data.custom_env) //TODO place at each exit point that exit minishell
+		ft_free_table(data.custom_env);
 	// return (dernier code erreur);
 }

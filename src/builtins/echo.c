@@ -4,6 +4,7 @@
 	check if arg is only -n in all format:
 		-n -n -n -n
 		-nnnnn
+	//TODO check when echo -nnn -j -n allo is executed that the last -n prints
 */
 int	check_n_flag(char *arg)
 {
