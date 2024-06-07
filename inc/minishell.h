@@ -98,8 +98,12 @@ int			make_cmds(t_data *data);
 
 //command_utils
 t_command	*create_new_lstcmd(t_data *data);
-void		cmd_add_back(t_command **lst, t_command *new);
 int			get_tab_cmd(t_data *data, t_list **current);
 int			alloc_new_cmd(t_data *data, size_t len_new);
+t_redir		*create_new_lstredir(t_list **current);
+
+//linked_list_utils
+void		cmd_add_back(t_command **lst, t_command *new);
+void		redir_add_back(t_redir **lst, t_redir *new);
 
 #endif 

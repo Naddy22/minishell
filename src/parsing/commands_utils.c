@@ -75,20 +75,17 @@ t_command	*create_new_lstcmd(t_data *data)
 	return (new);
 }
 
-void	cmd_add_back(t_command **lst, t_command *new)
+t_redir	*create_new_lstredir(t_list **current)
 {
-	t_command	*current;
+	t_redir *new;
 
-	current = *lst;
-	if (*lst == NULL)
+	new = ft_calloc(1, sizeof(t_redir));
+	if (new == NULL)
 	{
-		*lst = new;
-		return ;
+		perror("Malloc : ");
+		return (NULL);
 	}
-	else
-	{
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new;
-	}
+	new->type = (*current)->token_type;
+	new->file_name = (*current)->next->brut_cmd;
+	return (new);
 }
