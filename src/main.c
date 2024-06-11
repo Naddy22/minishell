@@ -28,6 +28,31 @@ void test_print_token_list(t_list *tokens)
 	}
 }
 
+void	test_print_cmd(t_data *data)
+{
+	t_command *current_cmd;
+	int i;
+	int j = 1;
+
+	current_cmd = data->commands;
+	while (current_cmd != NULL)
+	{
+		i = 0;
+		if (current_cmd->cmd)
+		{
+			while (current_cmd->cmd[i] != NULL)
+			{
+				printf("Cmd %d: %s\n", j, current_cmd->cmd[i]);
+				i++;
+			}
+		}
+		if (current_cmd->redir && current_cmd->redir->file_name)
+			printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
+		current_cmd = current_cmd->next;
+		j++;
+	}
+}
+
 int main(int argc, char **argv, char **envp) 
 {
 	t_data data;
@@ -51,22 +76,7 @@ int main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-		int i = 0;
-		while (data.commands->cmd[i] != NULL)
-		{
-			printf("stocker dans cmd : %s\n", data.commands->cmd[i]);
-			i++;
-		}
-		if (data.commands->next)
-		{
-			i = 0;
-			data.commands = data.commands->next;
-			while (data.commands->cmd[i] != NULL)
-			{
-				printf("stocker dans cmd 2: %s\n", data.commands->cmd[i]);
-				i++;
-			}
-		}
+		test_print_cmd(&data);
 		free_all(&data);
 	}
 	// return (dernier code erreur);

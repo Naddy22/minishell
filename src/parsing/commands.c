@@ -2,8 +2,16 @@
 
 int	fill_redir_cmd(t_data *data, t_list **current)
 {
-	t_redir *new_redir;
+	t_redir		*new_redir;
+	t_command	*new_cmd;
 
+	if (data->commands == NULL)
+	{
+		new_cmd = create_new_lstcmd(data);
+		if (new_cmd == NULL)
+			return (FAIL);
+		cmd_add_back(&data->commands, new_cmd);
+	}
 	if ((*current)->next && (*current)->next->token_type == WORD)
 	{
 		new_redir = create_new_lstredir(current);
@@ -35,7 +43,7 @@ int	fill_pipe_cmd(t_data *data, t_list *current)
 	{
 		if (!current->next)
 			perror("Syntax error: unexpected end of input after '|'\n");
-		else if (current->next->token_type != PIPE)
+		else if (current->next->token_type == PIPE)
 			perror("Syntax error: unexpected '|' after '|'\n");
 		return (FAIL);
 	}
@@ -111,4 +119,6 @@ int	make_cmds(t_data *data)
 	return (SUCCESS);
 }
 
-//next step: voir pour stocker redir
+
+//next step: fixer pour mettre une erreur si mon 1er token est un pype et
+//			si le nom du fichier est juste un \0
