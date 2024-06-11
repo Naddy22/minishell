@@ -12,13 +12,13 @@ int	fill_redir_cmd(t_data *data, t_list **current)
 			return (FAIL);
 		cmd_add_back(&data->commands, new_cmd);
 	}
-	if ((*current)->next && (*current)->next->token_type == WORD)
+	if ((*current)->next && (*current)->next->token_type == WORD && \
+		(*current)->next->brut_cmd[0] != '\0')
 	{
 		new_redir = create_new_lstredir(current);
 		if (new_redir == NULL)
 			return (FAIL);
 		redir_add_back(&data->commands->redir, new_redir);
-		*current = (*current)->next;
 	}
 	else
 	{
@@ -32,7 +32,8 @@ int	fill_pipe_cmd(t_data *data, t_list *current)
 {
 	t_command	*new_cmd;
 
-	if (current->next && current->next->token_type != PIPE)
+	if (current->next && current->next->token_type != PIPE && \
+		data->commands != NULL)
 	{
 		new_cmd = create_new_lstcmd(data);
 		if (new_cmd == NULL)
@@ -45,6 +46,8 @@ int	fill_pipe_cmd(t_data *data, t_list *current)
 			perror("Syntax error: unexpected end of input after '|'\n");
 		else if (current->next->token_type == PIPE)
 			perror("Syntax error: unexpected '|' after '|'\n");
+		else if (data->commands == NULL)
+			perror("Syntax error: expected command before '|'\n");
 		return (FAIL);
 	}
 	return (SUCCESS);
@@ -118,7 +121,3 @@ int	make_cmds(t_data *data)
 	}
 	return (SUCCESS);
 }
-
-
-//next step: fixer pour mettre une erreur si mon 1er token est un pype et
-//			si le nom du fichier est juste un \0
