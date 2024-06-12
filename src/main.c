@@ -102,7 +102,7 @@ int main(int argc, char **argv, char **envp)
 		to_execute(&data);
 		waitpid(-1, &status, 0);
 		if (WEXITSTATUS(status) == 1)
-			dprintf(2, "to free and exit");
+			dprintf(2, "to free and exit\n");
 			//free_and_exit(mini, status);
 		free_all(&data);
 	}

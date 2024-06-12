@@ -119,7 +119,7 @@ int	check_cpy_env(char *elem, t_data *mini)
 
 	i = 0;
 	found = 0;
-	split_elem = split(elem, '=');
+	split_elem = ft_split(elem, '=');
 	while (mini->cpy_env[i])
 	{
 		split_envi = ft_split(mini->cpy_env[i], '=');
@@ -130,6 +130,17 @@ int	check_cpy_env(char *elem, t_data *mini)
 	}
 	free(split_elem);
 	return(found);
+}
+
+void	replace_env(elem, mini)
+{
+	int	i;
+
+	i = 0;
+	while ()
+	{
+		
+	}
 }
 
 char	**add_elem_env(char *elem, t_data *mini)
@@ -145,7 +156,7 @@ char	**add_elem_env(char *elem, t_data *mini)
 	i = 0;
 	found = check_cpy_env(elem, mini);
 	if (found)
-		replace_env();
+		replace_env(elem, mini);
 	else
 	{
 		found = check_custom();
