@@ -111,6 +111,7 @@ t_redir		*create_new_lstredir(t_list **current);
 //linked_list_utils
 void		cmd_add_back(t_command **lst, t_command *new);
 void		redir_add_back(t_redir **lst, t_redir *new);
+void		ft_lstadd_back(t_list **lst, t_list *new);
 
 //functions imported from pipex//
 //in file_handling.c
