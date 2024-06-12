@@ -75,9 +75,6 @@ typedef struct s_data
 
 int			init(t_data *data, char **envp);
 
-// liste chainée
-void		ft_lstadd_back(t_list **lst, t_list *new);
-
 //parsing
 int			parsing(t_data *data);
 int			read_user_cmd(t_data *data);

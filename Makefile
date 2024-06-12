@@ -22,7 +22,6 @@ SRC			=	main.c \
 				free_utils.c \
 				dollar_expansion.c \
 				quotes.c \
-				ft_lstadd_back.c \
 				exec.c \
 				file_handling.c \
 				path.c \
