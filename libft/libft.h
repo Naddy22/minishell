@@ -95,4 +95,5 @@ void			ft_free_table(char **table);
 long long int	ft_atol(const char *str);
 void			ft_tabcpy(int *src, int*cpy, int size_max);
 void			ft_free_verif(void **ptr);
+size_t			ft_strlen_double(char **str);
 #endif

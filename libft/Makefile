@@ -12,7 +12,7 @@ ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa
 ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c\
 get_next_line.c ft_printf_check_pourcent.c ft_printf_putchar.c ft_printf_putnbr_base.c \
 ft_printf_putnbr_unsigned.c ft_printf_putnbr.c ft_printf_putstr.c ft_printf.c ft_atol.c \
-ft_tabcpy.c ft_free_verif.c ft_liblstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
+ft_tabcpy.c ft_free_verif.c ft_liblstadd_back.c ft_strlen_double.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
 ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 
 # -- COLORS -- #
