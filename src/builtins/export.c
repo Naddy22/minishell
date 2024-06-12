@@ -110,40 +110,103 @@ void	print_export(t_data *mini)
 		//ft_free_table(envext);
 	}
 }
+int	check_cpy_env(char *elem, t_data *mini)
+{
+	int		found;
+	int		i;
+	char	**split_envi;
+	char	**split_elem;
 
-char	**add_elem(char *elem, char **envp)
+	i = 0;
+	found = 0;
+	split_elem = split(elem, '=');
+	while (mini->cpy_env[i])
+	{
+		split_envi = ft_split(mini->cpy_env[i], '=');
+		if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(split_elem[0]) + 1) == 0)
+			found = 1;
+		free(split_envi);
+		i++;
+	}
+	free(split_elem);
+	return(found);
+}
+
+char	**add_elem_env(char *elem, t_data *mini)
+{
+	int		found;
+	int		i;
+
+	char	**new_env;
+	int		size;
+	char	**split_elem;
+	char	**split_envi;
+
+	i = 0;
+	found = check_cpy_env(elem, mini);
+	if (found)
+		replace_env();
+	else
+	{
+		found = check_custom();
+		if (found)
+			add_and_remove();////
+		else
+			add_in_env();////
+	}
+}
+
+	// split_elem = ft_split(elem, '=');
+	// size = get_size(mini->cpy_env);
+	// new_env = ft_calloc(size + 2, sizeof(char *));
+	// if (!new_env)
+	// 	return (NULL);
+	// while (i != size)
+	// {
+	// 	split_envi = ft_split(mini->cpy_env[i], '=');
+	// 	if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(elem) + 1) == 0)
+	// 	{
+	// 		new_env[i] = elem;
+	// 		found = 1;
+	// 	}
+	// 	else
+	// 		new_env[i] = ft_strdup(mini->cpy_env[i]);
+	// 	ft_free_table(split_envi);
+	// 	i++;
+	// }
+	// if (!found)
+	// {
+	// 	if (!mini->custom_env)
+	// 		new_env[i] = elem;
+	// 	else
+	// 		check_custom(new_env, elem, mini); 
+	// }
+	// ft_free_table(split_elem);
+
+
+char	**add_elem_custom(char *elem, t_data *mini)
 {
 	char	**new_env;
 	int		size;
 	int		i;
 	int		found;
-	char	**split_elem;
-	char	**split_envi;
+	char	**split_custom;
 
-
-	i = 0;
-	found = 0;
-	split_elem = ft_split(elem, '=');
-	size = get_size(envp);
-	new_env = ft_calloc(size + 2, sizeof(char *));
-	if (!new_env)
-		return (NULL);
-	while (i != size)
-	{
-		split_envi = ft_split(envp[i], '=');
-		if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(elem) + 1) == 0)
-		{
-			new_env[i] = elem;
-			found = 1;
-		}
-		else
-			new_env[i] = ft_strdup(envp[i]);
-		ft_free_table(split_envi);
-		i++;
-	}
+	found = check_cpy_env(elem, mini); //TODO check if in cpy_env. If so, do nothing
 	if (!found)
+	{
+		i = 0;
+		size = get_size(mini->custom_env);
+		new_env = ft_calloc(size + 2, sizeof(char *));
+		if (!new_env)
+			return (NULL);
+		while (i != size)
+		{
+			new_env[i] = ft_strdup(mini->custom_env[i]);
+			i++;
+		}
 		new_env[i] = elem;
-	ft_free_table(split_elem);
+	}
 	//ft_free_table(envp); //TODO make sure it is ok to do that
 	return (new_env);
 }
@@ -153,7 +216,7 @@ void	ft_export(char **cmd, t_data *mini)
 	int		length;
 	int		i;
 
-	i = 1;
+	i = 1; //TODO check input validity do not start with invalid character
 	length = get_size(cmd); //TODO ajouter cas ou variable modifiee. Modifier pour unset aussi
 	if (length == 1)
 		print_export(mini);
@@ -162,10 +225,10 @@ void	ft_export(char **cmd, t_data *mini)
 		while (i < length)
 		{
 			if (ft_strchr(cmd[i], '='))
-				mini->cpy_env = add_elem(cmd[i], mini->cpy_env);
+				add_elem_env(cmd[i], mini->cpy_env);
 			else
 			{
-				mini->custom_env = add_elem(cmd[i], mini->custom_env); //TODO add elem custom need to check if variable is in envp. if so do not replace. example a= not replace while export a
+				add_elem_custom(cmd[i], mini->custom_env); //TODO add elem custom need to check if variable is in envp. if so do not replace. example a= not replace while export a
 				printf("%s\n", mini->custom_env[0]);
 			}
 			i++;
