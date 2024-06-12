@@ -10,24 +10,25 @@ void	remove_elem_custom_env(char *elem, t_data *mini)
 	int		i;
 	int		j;
 	char	**envp_elem;
+	char	**split_elem;
 
 	i = 0;
 	j = 0;
-	size = 0;
-	while (mini->custom_env[size])
-		size++;
-	new_env2 = ft_calloc(size + 1, sizeof(char *));
+	size = get_size(mini->custom_env);
+	new_env2 = ft_calloc(size + 1, sizeof(char *)); //TODO set to null if originally size of 1
+	split_elem = ft_split(elem, '=');
 	while (i < size)
 	{
 		envp_elem = ft_split(mini->custom_env[i], '=');
-		if (ft_strncmp(elem, envp_elem[0], ft_strlen(elem)) != 0)
+		if (ft_strncmp(split_elem[0], envp_elem[0], ft_strlen(split_elem[0]) + 1) != 0)
 		{
 			new_env2[j] = mini->custom_env[i];
 			j++;
 		}
-		//ft_free_table(envp_elem);
+		ft_free_table(envp_elem);
 		i++;
 	}
+	ft_free_table(split_elem);
 	//ft_free_table(mini->custom_env);
 	mini->custom_env = new_env2;
 }
@@ -42,9 +43,7 @@ void	remove_elem(char *elem, t_data *mini)
 
 	i = 0;
 	j = 0;
-	size = 0;
-	while (mini->cpy_env[size])
-		size++;
+	size = get_size(mini->cpy_env);
 	new_env = ft_calloc(size + 1, sizeof(char *)); //TODO check if elem exists in any envp and if so, calloc, otherwise do not make anything
 	while (i < size)
 	{
@@ -54,7 +53,7 @@ void	remove_elem(char *elem, t_data *mini)
 			new_env[j] = mini->cpy_env[i];
 			j++;
 		}
-		//ft_free_table(envp_elem);
+		ft_free_table(envp_elem);
 		i++;
 	}
 	//ft_free_table(mini->cpy_env);

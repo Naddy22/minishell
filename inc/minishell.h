@@ -150,9 +150,11 @@ void		ft_exit(char **cmd, t_data *mini);
 void		ft_pwd(void);
 
 //in unset.c
+void		remove_elem_custom_env(char *elem, t_data *mini);
 void		ft_unset(char **cmd, t_data *mini);
 
 //in export.c
+int			get_size(char **strs);
 void		ft_export(char **cmd, t_data *mini);
 
 #endif 
