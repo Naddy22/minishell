@@ -1,52 +1,97 @@
 #include "../../inc/minishell.h"
 
-int	get_tab_cmd(t_data *data, t_list **current)
+int	fill_redir_cmd(t_data *data, t_list **current)
 {
-	t_list *tmp;
+	t_redir		*new_redir;
+	t_command	*new_cmd;
 
-	tmp = *current;
-	data->parsing.i = 0;
-	while (tmp && tmp->token_type == WORD)
+	if (data->commands == NULL)
 	{
-		tmp = tmp->next;
-		data->parsing.i++;
+		new_cmd = create_new_lstcmd(data);
+		if (new_cmd == NULL)
+			return (FAIL);
+		cmd_add_back(&data->commands, new_cmd);
 	}
-	data->parsing.parse_cmd = ft_calloc(data->parsing.i + 1, sizeof(char *));
-	if (data->parsing.parse_cmd == NULL)
+	if ((*current)->next && (*current)->next->token_type == WORD && \
+		(*current)->next->brut_cmd[0] != '\0')
 	{
-		perror("Malloc : ");
+		new_redir = create_new_lstredir(current);
+		if (new_redir == NULL)
+			return (FAIL);
+		redir_add_back(&data->commands->redir, new_redir);
+	}
+	else
+	{
+		perror("Syntax error: Expected filename after redirection\n");
 		return (FAIL);
 	}
-	data->parsing.i = 0;
-	while (*current && (*current)->token_type == WORD)
+	return (SUCCESS);
+}
+
+int	fill_pipe_cmd(t_data *data, t_list *current)
+{
+	t_command	*new_cmd;
+
+	if (current->next && current->next->token_type != PIPE && \
+		data->commands != NULL)
 	{
-		data->parsing.parse_cmd[data->parsing.i] = ft_strdup((*current)->brut_cmd);
-		*current = (*current)->next;
-		data->parsing.i++;
+		new_cmd = create_new_lstcmd(data);
+		if (new_cmd == NULL)
+			return (FAIL);
+		cmd_add_back(&data->commands, new_cmd);
 	}
-	data->parsing.parse_cmd[data->parsing.i] = NULL;
+	else
+	{
+		if (!current->next)
+			perror("Syntax error: unexpected end of input after '|'\n");
+		else if (current->next->token_type == PIPE)
+			perror("Syntax error: unexpected '|' after '|'\n");
+		else if (data->commands == NULL)
+			perror("Syntax error: expected command before '|'\n");
+		return (FAIL);
+	}
 	return (SUCCESS);
 }
 
 int	fill_word_cmd(t_data *data, t_list **current)
 {
 	t_command *new_cmd;
-	
+	size_t len;
+
 	if (get_tab_cmd(data, current) == FAIL)
 		return (FAIL);
-	new_cmd = create_new_cmd(data);
-	if (new_cmd == NULL)
-		return (FAIL);
-	cmd_add_back(&data->commands, new_cmd);
+	len = ft_strlen_double(data->parsing.parse_cmd);
+	if (data->commands == NULL)
+	{
+		new_cmd = create_new_lstcmd(data);
+		if (new_cmd == NULL)
+			return (FAIL);
+		cmd_add_back(&data->commands, new_cmd);
+	}
+	else
+	{
+		if (alloc_new_cmd(data, len) != SUCCESS)
+			return (FAIL);
+	}
+	data->parsing.parse_cmd = NULL;
 	return (SUCCESS);
 }
 
 int	get_args(t_data *data, t_list **current)
 {
-	data->parsing.parse_cmd = NULL;
 	if ((*current)->token_type == WORD)
 	{
 		if (fill_word_cmd(data, current) != SUCCESS)
+			return (FAIL);
+	}
+	else if ((*current)->token_type >= L1_REDIR && (*current)->token_type < PIPE)
+	{
+		if (fill_redir_cmd(data, current) != SUCCESS)
+			return (FAIL);
+	}
+	else if ((*current)->token_type == PIPE)
+	{
+		if (fill_pipe_cmd(data, *current) != SUCCESS)
 			return (FAIL);
 	}
 	return (SUCCESS);
@@ -55,7 +100,6 @@ int	get_args(t_data *data, t_list **current)
 int	make_cmds(t_data *data)
 {
 	t_list *current;
-	//t_list *prev;
 
 	current = data->tokens;
 	data->parsing.parse_cmd = NULL;
@@ -68,14 +112,12 @@ int	make_cmds(t_data *data)
 		}
 		if (!current)
 			return (SUCCESS);
-		if (current->token_type == PIPE)
-			;
-		//prev = current;
+		if (current->token_type >= L1_REDIR && current->token_type <= PIPE)
+		{
+			if (get_args(data, &current) != SUCCESS)
+				return (FAIL);
+		}
 		current = current->next;
 	}
 	return (SUCCESS);
 }
-
-//erreur: n'imprime pas car quand on arrive a la fin de la liste de token forcement 
-//current est a null donc ca renvoie null et c'est pris comme un FAIL
-//faire plutôt un **list cmd et remplacer les return list par un return de int

@@ -28,7 +28,32 @@ void	test_print_token_list(t_list *tokens)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+void	test_print_cmd(t_data *data)
+{
+	t_command *current_cmd;
+	int i;
+	int j = 1;
+
+	current_cmd = data->commands;
+	while (current_cmd != NULL)
+	{
+		i = 0;
+		if (current_cmd->cmd)
+		{
+			while (current_cmd->cmd[i] != NULL)
+			{
+				printf("Cmd %d: %s\n", j, current_cmd->cmd[i]);
+				i++;
+			}
+		}
+		if (current_cmd->redir && current_cmd->redir->file_name)
+			printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
+		current_cmd = current_cmd->next;
+		j++;
+	}
+}
+
+int main(int argc, char **argv, char **envp) 
 {
 	t_data	data;
 	int		status;
