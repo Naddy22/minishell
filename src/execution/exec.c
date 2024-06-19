@@ -86,10 +86,25 @@ void	execution(t_data *mini) //add t_command with good cmd as arg. add pid in ea
 
 void	child(t_data *mini)
 {
+	t_command	*cmd;
+	int			pnb;
+
+	pnb = mini->pnb;
+	cmd = mini->commands;
+	while (pnb > 0)
+	{
+		cmd = cmd->next;
+		pnb--;
+	}
 	if (mini->pnb != mini->nb_pipes)
 	{
-		if (dup2(mini->fd[1], STDOUT_FILENO) == -1)
-			perror("Dup2 ");
+		if (cmd->redir != NULL)
+			set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
+		else
+		{
+			if (dup2(mini->fd[1], STDOUT_FILENO) == -1)
+				perror("Dup2 ");
+		}
 	}
 	close(mini->fd[0]);
 	close(mini->fd[1]);
@@ -121,7 +136,11 @@ void	ft_pipe(t_data *mini)
 void	to_execute(t_data *mini)
 {
 	if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful
+	{
+		set_redir(mini, 0); //TODO check if another function is needed for this use
 		builtin_exec(mini, mini->commands); //TODO gestion redirections si necessaire
+		// change_parent_back(mini);
+	}
 	else
 	{
 		ft_pipe(mini);
@@ -129,7 +148,7 @@ void	to_execute(t_data *mini)
 	}
 }
 
-void	reset_exec(t_data *mini)
+void	reset_exec(t_data *mini) //TODO remove and place line in main..
 {
 	mini->pnb = 0;
 }

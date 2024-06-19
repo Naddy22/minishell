@@ -37,6 +37,10 @@ typedef struct s_command
 {
 	char				**cmd;
 	t_redir				*redir;
+	int					fdin;
+	int					fdout;
+	char				*delim;
+	int					heredoc;
 	struct s_command	*next;
 }						t_command;
 
@@ -117,7 +121,7 @@ void		redir_add_back(t_redir **lst, t_redir *new);
 
 //functions imported from pipex//
 //in file_handling.c
-int			to_open(t_data *mini);
+int			to_open(t_redir *redir);
 void		change_parent_input(int fd);
 void		parent(t_data *mini);
 void		change_parent_back(t_data *mini);
@@ -125,6 +129,9 @@ void		change_parent_back(t_data *mini);
 //in path.c
 char		*test_path(char **paths, char *str);
 char		*get_path(t_data *mini, char *str);
+
+//in redirection.c
+void		set_redir(t_data *mini, int pnb);
 
 //in exec.c
 int			ft_size(t_list *lst);

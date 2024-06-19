@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:17:07 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/06 15:39:02 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:50:23 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 /*
 add mode arg then use redir value to open fds the right way?
 */
-int	to_open(t_data *mini)
+int	to_open(t_redir *redir)
 {
 	int	fd;
 
-	if (mini->pnb == 0)
-		fd = open("in", O_RDONLY);
+	if (redir->type == L1_REDIR)
+		fd = open(redir->file_name, O_RDONLY);
+	else if (redir->type == R1_REDIR)
+		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	else if (redir->type == R2_REDIR)
+		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	else
-		fd = open("out", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		fd = open("heredoc", O_RDWR | O_CREAT , 0666); //TODO change to what will be decided for heredoc
 	return (fd);
 }
 
