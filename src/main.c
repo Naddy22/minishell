@@ -81,6 +81,7 @@ int main(int argc, char **argv, char **envp)
 	}
 	while (42)
 	{
+	
 		if (read_user_cmd(&data) != SUCCESS)
 			continue ;
 		if (parsing(&data) != SUCCESS)
