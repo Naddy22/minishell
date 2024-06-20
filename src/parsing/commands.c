@@ -18,7 +18,7 @@ int	fill_redir_cmd(t_data *data, t_list **current)
 		new_redir = create_new_lstredir(current);
 		if (new_redir == NULL)
 			return (FAIL);
-		redir_add_back(&data->commands->redir, new_redir);
+		redir_add_back(&data->parsing.last_lstcmd->redir, new_redir);
 	}
 	else
 	{

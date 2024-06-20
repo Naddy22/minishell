@@ -53,6 +53,31 @@ void	test_print_cmd(t_data *data)
 	}
 }
 
+void	test_print_redir(t_data *data)
+{
+	t_command	*current_cmd;
+	t_redir		*redir;
+	int			i;
+	int			j = 1;
+
+	current_cmd = data->commands;
+	while (current_cmd != NULL)
+	{
+		redir = current_cmd->redir;
+		i = 0;
+		while (redir != NULL)
+		{
+			printf("cmd: %s, redir %d: %s, %d\n", current_cmd->cmd[0], i, redir->file_name, redir->type);
+			i++;
+			redir= redir->next;
+		}
+		if (current_cmd->redir && current_cmd->redir->file_name)
+			printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
+		current_cmd = current_cmd->next;
+		j++;
+	}
+}
+
 int main(int argc, char **argv, char **envp) 
 {
 	t_data	data;
@@ -93,11 +118,12 @@ int main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-		if (data.commands->next)
-			printf("stocker dans cmd : %s, %s -- %s, %s\n", data.commands->cmd[0], data.commands->cmd[1], data.commands->next->cmd[0], data.commands->next->cmd[1]);
-		else
-			printf("stocker dans cmd : %s -- %s\n", data.commands->cmd[0], data.commands->cmd[1]);
-		printf("stocker dans data : nb_pipe %d \n", data.nb_pipes);
+		// if (data.commands->next)
+		// 	printf("stocker dans cmd : %s, %s -- %s, %s\n", data.commands->cmd[0], data.commands->cmd[1], data.commands->next->cmd[0], data.commands->next->cmd[1]);
+		// else
+		// 	printf("stocker dans cmd : %s -- %s\n", data.commands->cmd[0], data.commands->cmd[1]);
+		// printf("stocker dans data : nb_pipe %d \n", data.nb_pipes);
+		// test_print_redir(&data);
 		reset_exec(&data);
 		to_execute(&data);
 		waitpid(-1, &status, 0);

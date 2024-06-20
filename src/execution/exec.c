@@ -96,16 +96,14 @@ void	child(t_data *mini)
 		cmd = cmd->next;
 		pnb--;
 	}
-	if (mini->pnb != mini->nb_pipes)
-	{
-		if (cmd->redir != NULL)
-			set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
-		else
-		{
-			if (dup2(mini->fd[1], STDOUT_FILENO) == -1)
-				perror("Dup2 ");
-		}
-	}
+	// dprintf(2, "cmd: %s, redir %s\n", cmd->cmd[0], cmd->redir->file_name);
+	// if (cmd->redir != NULL)
+	set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
+	// else
+	// {
+	// 	if (dup2(mini->fd[1], STDOUT_FILENO) == -1)
+	// 		perror("Dup2 ");
+	// }
 	close(mini->fd[0]);
 	close(mini->fd[1]);
 	execution(mini);
@@ -113,7 +111,7 @@ void	child(t_data *mini)
 
 void	ft_pipe(t_data *mini)
 {
-	int	pid; //TODO change to stock it in int table with nb_pipe
+	int	pid;
 
 	while (mini->pnb <= mini->nb_pipes)
 	{
@@ -139,7 +137,7 @@ void	to_execute(t_data *mini)
 	{
 		set_redir(mini, 0); //TODO check if another function is needed for this use
 		builtin_exec(mini, mini->commands); //TODO gestion redirections si necessaire
-		// change_parent_back(mini);
+		change_parent_back(mini);
 	}
 	else
 	{
