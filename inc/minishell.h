@@ -26,6 +26,13 @@
 # define R2_REDIR 24
 # define PIPE 25
 
+typedef enum sig_type
+{
+	MAIN,
+	HERE_DOC,
+	CHILD
+}	sig_type;
+
 typedef struct s_redir
 {
 	char			*file_name;
