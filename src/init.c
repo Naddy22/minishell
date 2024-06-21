@@ -42,7 +42,6 @@ int	init(t_data *data, char **envp)
 {
 	data->fdin_origin = dup(STDIN_FILENO);
 	data->fdout_origin = dup(STDOUT_FILENO);
-	data->custom_env = NULL;
 	ft_bzero(&data->parsing, sizeof(t_parsing));
 	if (get_env(data, envp) != SUCCESS)
 		return (FAIL);

@@ -13,6 +13,37 @@ int	get_size(char **strs)
 	while (strs[size])
 		size++;
 	return (size);
+
+}
+
+int	verif_name(char *str) //TODO add edge case if multiple equals... see doc
+{
+	int	i;
+	int	equal_count;
+
+	equal_count = 0;
+	i = 0;
+	if (!str)
+		return (0);
+	while(str[i])
+	{
+		if (i == 0 && (ft_isalpha(str[i]) || str[i] == '_'))
+		{
+			dprintf(2, "1\n");
+			i++;
+		}
+		else if (i != 0 && (ft_isalnum(str[i]) || str[i] == '_'))
+		{
+			dprintf(2, "2\n");
+			i++;
+		}
+		else if (str[i] == '=')
+			return (1);
+		else
+			return (0);
+		
+	}
+	return (1);
 }
 
 char	**deep_cpy(t_data *mini)
@@ -23,7 +54,7 @@ char	**deep_cpy(t_data *mini)
 
 	i = 0;
 	j = 0;
-	envext = ft_calloc(get_size(mini->cpy_env) + get_size(mini->custom_env) + 1, sizeof(char *));
+	envext = ft_calloc(get_size(mini->cpy_env) + 1, sizeof(char *));
 	if (!envext)
 		return (NULL);
 	while (mini->cpy_env[i])
@@ -31,16 +62,6 @@ char	**deep_cpy(t_data *mini)
 		envext[i] = ft_calloc(ft_strlen(mini->cpy_env[i]) + 1, sizeof(char));
 		ft_strlcpy(envext[i], mini->cpy_env[i], ft_strlen(mini->cpy_env[i]) + 1);
 		i++;
-	}
-	if (mini->custom_env)
-	{
-		while (mini->custom_env[j])
-		{
-			envext[i] = ft_calloc(ft_strlen(mini->custom_env[j]) + 1, sizeof(char));
-			ft_strlcpy(envext[i], mini->custom_env[j], ft_strlen(mini->custom_env[j]) + 1);
-			i++;
-			j++;
-		}
 	}
 	return (envext);
 }
@@ -113,7 +134,8 @@ void	print_export(t_data *mini)
 		ft_free_table(envext);
 	}
 }
-int	check_cpy_env(char *elem, t_data *mini)
+
+int	check_env(char *elem, t_data *mini)
 {
 	int		found;
 	int		i;
@@ -132,31 +154,6 @@ int	check_cpy_env(char *elem, t_data *mini)
 		i++;
 	}
 	ft_free_table(split_elem);
-	return(found);
-}
-
-int	check_custom(char *elem, t_data *mini)
-{
-	int		found;
-	int		i;
-	char	**split_custi;
-	char	**split_elem;
-
-	i = 0;
-	found = 0;
-	if (mini->custom_env)
-	{
-		split_elem = ft_split(elem, '=');
-		while (mini->custom_env[i])
-		{
-			split_custi = ft_split(mini->custom_env[i], '=');
-			if (ft_strncmp(split_custi[0], split_elem[0], ft_strlen(split_elem[0]) + 1) == 0)
-				found = 1;
-			free(split_custi);
-			i++;
-		}
-		free(split_elem);
-	}
 	return(found);
 }
 
@@ -182,7 +179,7 @@ void	replace_env(char *elem, t_data *mini)
 	ft_free_table(split_elem);
 }
 
-char	**add_to_env(char *elem, t_data *mini, int found)
+char	**add_to_env(char *elem, t_data *mini)
 {
 	char	**new_env;
 	int		size;
@@ -192,9 +189,7 @@ char	**add_to_env(char *elem, t_data *mini, int found)
 	size = get_size(mini->cpy_env);
 	new_env = ft_calloc(size + 2, sizeof(char *));
 	if (!new_env)
-		return(NULL);
-	if (found) //remove from custom env
-		remove_elem_custom_env(elem, mini);
+		return (NULL);
 	while (i != size)
 	{
 		new_env[i] = ft_strdup(mini->cpy_env[i]);
@@ -204,48 +199,17 @@ char	**add_to_env(char *elem, t_data *mini, int found)
 	return (new_env);
 }
 
-void	add_elem_env(char *elem, t_data *mini)
+void	add_elem(char *elem, t_data *mini)
 {
 	int		found;
 	int		i;
 
 	i = 0;
-	found = check_cpy_env(elem, mini);
+	found = check_env(elem, mini);
 	if (found)
 		replace_env(elem, mini);
 	else
-	{
-		found = check_custom(elem, mini);
-		mini->cpy_env = add_to_env(elem, mini, found);
-	}
-}
-
-char	**add_elem_custom(char *elem, t_data *mini)
-{
-	char	**new_env;
-	int		size;
-	int		i;
-	int		found;
-
-	found = check_cpy_env(elem, mini); //TODO check if in cpy_env. If so, do nothing
-	if (!found)
-	{
-		i = 0;
-		size = get_size(mini->custom_env);
-		new_env = ft_calloc(size + 2, sizeof(char *));
-		if (!new_env)
-			return (NULL);
-		while (i != size)
-		{
-			new_env[i] = ft_strdup(mini->custom_env[i]);
-			i++;
-		}
-		new_env[i] = elem;
-		return (new_env);
-	}
-	else
-		return (mini->custom_env);
-	//ft_free_table(envp); //TODO make sure it is ok to do that
+		mini->cpy_env = add_to_env(elem, mini);
 }
 
 void	ft_export(char **cmd, t_data *mini)
@@ -253,7 +217,7 @@ void	ft_export(char **cmd, t_data *mini)
 	int		length;
 	int		i;
 
-	i = 1; //TODO check input validity do not start with invalid character
+	i = 1;
 	length = get_size(cmd); //TODO ajouter cas ou variable modifiee. Modifier pour unset aussi
 	if (length == 1)
 		print_export(mini);
@@ -261,14 +225,16 @@ void	ft_export(char **cmd, t_data *mini)
 	{
 		while (i < length)
 		{
-			if (ft_strchr(cmd[i], '='))
-				add_elem_env(cmd[i], mini);
+			if (verif_name(cmd[i]))
+				add_elem(cmd[i], mini);
 			else
-			{
-				mini->custom_env = add_elem_custom(cmd[i], mini); //TODO add elem custom need to check if variable is in envp. if so do not replace. example a= not replace while export a
-				//printf("%s\n", mini->custom_env[0]); //TODO remove??
-			}
+				printf("minishell: export: `%s': not a valid identifier\n", cmd[i]);
 			i++;
 		}
 	}
 }
+
+
+/*
+export $allo     efface le contenu de l'environnement...?
+*/

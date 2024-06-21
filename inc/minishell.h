@@ -63,7 +63,6 @@ typedef struct s_data
 {
 	char		**cpy_env;
 	char		**cpy_env_orig;
-	char		**custom_env;
 	t_parsing	parsing;
 	t_list		*tokens;
 	t_list		*last_token;

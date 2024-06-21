@@ -28,7 +28,7 @@ void	set_redir(t_data *mini, int pnb)
 		{
 			cmd->fdin = to_open(redir);
 			if (dup2(cmd->fdin, STDIN_FILENO) == -1)
-				perror("Dup2 ---");
+				perror("Dup2 ---"); //TODO remove ---
 			close(cmd->fdin);
 		}
 		else if (redir->type == L2_REDIR) //<<

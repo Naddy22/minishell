@@ -100,8 +100,6 @@ int main(int argc, char **argv, char **envp)
 			ft_free_table(data.cpy_env);
 		if (data.cpy_env_orig) //TODO place at each exit point that exit minishell
 			ft_free_table(data.cpy_env_orig);
-		if (data.custom_env) //TODO place at each exit point that exit minishell
-			ft_free_table(data.custom_env);
 		return (FAIL);
 	}
 	while (42)
@@ -138,7 +136,5 @@ int main(int argc, char **argv, char **envp)
 		ft_free_table(data.cpy_env);
 	if (data.cpy_env_orig) //TODO place at each exit point that exit minishell
 		ft_free_table(data.cpy_env_orig);
-	if (data.custom_env) //TODO place at each exit point that exit minishell
-		ft_free_table(data.custom_env);
 	// return (dernier code erreur);
 }

@@ -25,7 +25,7 @@ void	ft_execve(t_data *mini, t_command *cmd)
 		path = get_path(mini, cmd->cmd[0]);
 	if (!path)
 		perror("Access ");
-	execve(path, cmd->cmd, NULL);
+	execve(path, cmd->cmd, NULL); //TODO change NULL for cpy_env
 	perror("Execve ");
 	//free_all(cmd); //TODO check for free at this point
 	exit(EXIT_FAILURE);
@@ -133,17 +133,22 @@ void	ft_pipe(t_data *mini)
 
 void	to_execute(t_data *mini)
 {
-	if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful
+	if (mini->commands->cmd)
 	{
-		set_redir(mini, 0); //TODO check if another function is needed for this use
-		builtin_exec(mini, mini->commands); //TODO gestion redirections si necessaire
-		change_parent_back(mini);
+		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful
+		{
+			set_redir(mini, 0); //TODO check if another function is needed for this use
+			builtin_exec(mini, mini->commands); //TODO gestion redirections si necessaire
+			change_parent_back(mini);
+		}
+		else
+		{
+			ft_pipe(mini);
+			change_parent_back(mini);
+		}
 	}
-	else
-	{
-		ft_pipe(mini);
-		change_parent_back(mini);
-	}
+	// else
+		//TODO make redirections out to create files
 }
 
 void	reset_exec(t_data *mini) //TODO remove and place line in main..
