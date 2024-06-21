@@ -110,8 +110,10 @@ void	ft_pipe(t_data *mini)
 			close(mini->fd[0]);
 		}
 		if (pid == 0)
-		//TODO mettre a l'interieur la futur fonction de signaux pour child
+		{
+			set_signal(CHILD);
 			child(mini);
+		}
 		else
 			parent(mini); 
 		close(mini->fd[1]);

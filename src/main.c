@@ -81,22 +81,23 @@ int main(int argc, char **argv, char **envp)
 	}
 	while (42)
 	{
-	
+		set_signal(MAIN);
 		if (read_user_cmd(&data) != SUCCESS)
 			continue ;
+		set_signal(PARENT);
 		if (parsing(&data) != SUCCESS)
 		{
 			free_all(&data);
 			continue ;
 		}
-		test_print_token_list(data.tokens);
+		// test_print_token_list(data.tokens);
 		if (make_cmds(&data) != SUCCESS)
 		{
 			free_all(&data);
 			continue ;
 		}
-		test_print_cmd(&data);
-		printf("Nb_pipe: %d \n", data.nb_pipes);
+		// test_print_cmd(&data);
+		// printf("Nb_pipe: %d \n", data.nb_pipes);
 		reset_exec(&data);
 		to_execute(&data);
 		waitpid(-1, &status, 0);

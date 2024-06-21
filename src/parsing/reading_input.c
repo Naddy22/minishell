@@ -40,7 +40,7 @@ int	read_user_cmd(t_data *data)
 		printf("exit");
 		free_all(data);
 		rl_clear_history();
-		exit(EXIT_SUCCESS);
+		exit(data->exit_status);
 	}
 	else
 	{

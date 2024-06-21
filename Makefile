@@ -34,7 +34,8 @@ SRC			=	main.c \
 				export.c \
 				commands.c \
 				commands_utils.c \
-				linked_list_utils.c
+				linked_list_utils.c \
+				signals.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

@@ -30,7 +30,8 @@ typedef enum sig_type
 {
 	MAIN,
 	HERE_DOC,
-	CHILD
+	CHILD,
+	PARENT,
 }	sig_type;
 
 typedef struct s_redir
@@ -160,5 +161,8 @@ void		ft_unset(char **cmd, t_data *mini);
 
 //in export.c
 void		ft_export(char **cmd, t_data *mini);
+
+//signals.c
+void	set_signal(sig_type type);
 
 #endif 
