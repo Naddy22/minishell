@@ -16,7 +16,7 @@ int	get_size(char **strs)
 
 }
 
-int	verif_name(char *str) //TODO add edge case if multiple equals... see doc
+int	verif_name(char *str)
 {
 	int	i;
 	int	equal_count;
@@ -106,10 +106,33 @@ char	**ordering_env(char **envext)
 	return (envext);
 }
 
+void	print_equal(char *envext)
+{
+	int		j;
+	char	**split;
+
+	split = ft_split(envext, '=');
+	if (get_size(split) == 1)
+		printf("declare -x %s=\"\"\n", split[0]);
+	else if (get_size(split) == 2)
+		printf("declare -x %s=\"%s\"\n", split[0], split[1]);
+	else
+	{
+		j = 2;
+		while (split[j])
+		{
+			split[1]=ft_strjoin(split[1], "=");
+			split[1]=ft_strjoin(split[1], split[j]);
+			j++;
+		}
+		printf("declare -x %s=\"%s\"\n", split[0], split[1]);
+	}
+	ft_free_table(split);
+}
+
 void	print_export(t_data *mini)
 {
 	int		i;
-	char	**split;
 	char	**envext;
 
 	envext = ordering_env(deep_cpy(mini));
@@ -119,14 +142,7 @@ void	print_export(t_data *mini)
 		while (envext[i])
 		{
 			if (ft_strchr(envext[i], '='))
-			{
-				split = ft_split(envext[i], '=');
-				if (split[1] == NULL)
-					printf("declare -x %s=\"\"\n", split[0]);
-				else
-					printf("declare -x %s=\"%s\"\n", split[0], split[1]);
-				ft_free_table(split);
-			}
+				print_equal(envext[i]);
 			else
 				printf("declare -x %s\n", envext[i]);
 			i++;
@@ -218,7 +234,7 @@ void	ft_export(char **cmd, t_data *mini)
 	int		i;
 
 	i = 1;
-	length = get_size(cmd); //TODO ajouter cas ou variable modifiee. Modifier pour unset aussi
+	length = get_size(cmd);
 	if (length == 1)
 		print_export(mini);
 	else if (length >= 2)

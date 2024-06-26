@@ -138,10 +138,9 @@ void		execution(t_data *mini);
 void		child(t_data *mini);
 void		to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
-void		reset_exec(t_data *mini);
 
 //in cd.c
-void		ft_cd(char **cmd, char **envp);
+void		ft_cd(char **cmd, t_data *mini);
 
 //in echo.c
 void		ft_echo(char **cmd);
@@ -156,7 +155,7 @@ void		ft_exit(char **cmd, t_data *mini);
 void		ft_pwd(void);
 
 //in unset.c
-void		remove_elem_custom_env(char *elem, t_data *mini);
+void		remove_elem(char *elem, t_data *mini);
 void		ft_unset(char **cmd, t_data *mini);
 
 //in export.c

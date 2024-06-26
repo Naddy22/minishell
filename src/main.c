@@ -105,7 +105,10 @@ int main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		if (read_user_cmd(&data) != SUCCESS)
+		{
+			free_all(&data);
 			continue ;
+		}
 		if (parsing(&data) != SUCCESS)
 		{
 			free_all(&data);
@@ -122,7 +125,7 @@ int main(int argc, char **argv, char **envp)
 		// 	printf("stocker dans cmd : %s -- %s\n", data.commands->cmd[0], data.commands->cmd[1]);
 		// printf("stocker dans data : nb_pipe %d \n", data.nb_pipes);
 		// test_print_redir(&data);
-		reset_exec(&data);
+		data.pnb = 0;
 		to_execute(&data);
 		waitpid(-1, &status, 0);
 		if (WEXITSTATUS(status) == 1)

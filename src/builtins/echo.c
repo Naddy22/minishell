@@ -1,11 +1,5 @@
 #include "../../inc/minishell.h"
 
-/*
-	check if arg is only -n in all format:
-		-n -n -n -n
-		-nnnnn
-	//TODO check when echo -nnn -j -n allo is executed that the last -n prints
-*/
 int	check_n_flag(char *arg)
 {
 	int	i;
@@ -24,45 +18,41 @@ int	check_n_flag(char *arg)
 	return (ok);
 }
 
-void	print_args(char *cmd, int *add_next_line)
+void	print_args(char *cmd, int *add_next_line, int *ok_n_flag)
 {
-	int	ok_n_flag;
-
-	ok_n_flag = 0;
 	if (check_n_flag(cmd))
 	{
-		if (!ok_n_flag)
+		if (!(*ok_n_flag))
 			*add_next_line = 0;
 		else
 			printf("%s", cmd);
 	}
 	else
 	{
-		ok_n_flag = 1;
+		*ok_n_flag = 1;
 		printf("%s", cmd);
 	}
-	if (cmd && ok_n_flag)
-		printf(" ");
 }
 
 void	ft_echo(char **cmd)
 {
 	int	l;
 	int	add_next_line;
+	int	ok_n_flag;
 
+	ok_n_flag = 0;
 	add_next_line = 1;
-	l = 0;
-	while (cmd[l])
-		l++;
-	if (l == 1)
+	if (get_size(cmd) == 1)
 		printf("\n");
 	else
 	{
 		l = 1;
 		while (cmd[l])
 		{
-			print_args(cmd[l], &add_next_line);
+			print_args(cmd[l], &add_next_line, &ok_n_flag);
 			l++;
+			if (cmd[l] && ok_n_flag)
+				printf(" ");
 		}
 		if (add_next_line)
 			printf("\n");

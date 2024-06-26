@@ -1,25 +1,18 @@
 #include "../../inc/minishell.h"
 
-/*
-decisiont to take : change PWD and OLDPWD or not?
-*/
-void	change_env(char *path_to_go, char **envp)
+void	change_env(char *old, t_data *mini)
 {
-	int		i;
-	char	*str;
+	char	str[1024];
+	char	**export;
 
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strnstr(envp[i], "PWD", 3))
-			i++;
-		else
-		{
-			str = ft_strjoin("PWD=", path_to_go);
-			envp[i] = str;
-			i++;
-		}
-	}
+	export = ft_calloc(4, sizeof(char *));
+	if (!export)
+		perror("malloc "); //check if error ok
+	getcwd(str, 1024);
+	export[0] = "export";
+	export[1] = ft_strjoin("PWD=", str);
+	export[2] = ft_strjoin("OLDPWD=", old);
+	ft_export(export, mini);
 }
 
 char	**get_home(char **envp)
@@ -44,19 +37,20 @@ char	**get_home(char **envp)
 		return (homedir);
 }
 
-void	ft_cd(char **cmd, char **envp)
+void	ft_cd(char **cmd, t_data *mini)
 {
 	char	*path_to_go;
 	char	**path_home;
+	char	buf[1024];
 
+	getcwd(buf, 1024);
 	if (!cmd[1])
 	{
-		path_home = get_home(envp);
+		path_home = get_home(mini->cpy_env);
 		if (chdir(path_home[1]) != 0)
 			perror("cd");
 		else
-			change_env(path_home[1], &(*envp));
-			//change to actual modification of env PWD
+			change_env(buf, mini);
 		ft_free_table(path_home);
 	}
 	else if (cmd[1])
@@ -65,7 +59,6 @@ void	ft_cd(char **cmd, char **envp)
 		if (chdir(path_to_go) != 0)
 			perror("cd");
 		else
-			change_env(path_to_go, &(*envp));
-			//change to actual modification of env PWD
+			change_env(buf, mini);
 	}
 }
