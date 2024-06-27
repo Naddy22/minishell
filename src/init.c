@@ -13,7 +13,7 @@ int	get_env_dup(t_data *data, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		data->cpy_env_orig[i] = strdup(envp[i]);
+		data->cpy_env_orig[i] = ft_strdup(envp[i]);
 		i++;
 	}
 	return (SUCCESS);
@@ -32,7 +32,7 @@ int	get_env(t_data *data, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		data->cpy_env[i] = strdup(envp[i]);
+		data->cpy_env[i] = ft_strdup(envp[i]);
 		i++;
 	}
 	return (SUCCESS);
