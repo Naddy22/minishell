@@ -96,6 +96,7 @@ int			ft_isspace(char c);
 
 //error_utils
 void		free_error(t_data *data, char *error);
+int			get_err_code(int exit_code);
 
 //free_utils
 void		free_all(t_data *data);

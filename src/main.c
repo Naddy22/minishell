@@ -101,7 +101,8 @@ int main(int argc, char **argv, char **envp)
 		reset_exec(&data);
 		to_execute(&data);
 		waitpid(-1, &status, 0);
-		if (WEXITSTATUS(status) == 1)
+		data.exit_status = get_err_code(status);
+		if (WEXITSTATUS(status) == 1) //TODO remplacer par la fonction qui gere les erreurs pas signaux(130,131)
 			dprintf(2, "to free and exit\n");
 			//free_and_exit(mini, status);
 		free_all(&data);

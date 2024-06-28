@@ -21,7 +21,7 @@ int	handle_simple_quote(t_data *data, size_t *i, int *start)
 	{
 		if (str[*i] == '\0')
 		{
-			ft_putstr_fd("Error: quote is not close", 2);
+			ft_putstr_fd("Error: quote is not close\n", 2);
 			data->exit_status = 258;
 			return (FAIL);
 		}
@@ -53,7 +53,7 @@ int	handle_double_quote(t_data *data, size_t *i, int *start)
 	{
 		if (str[*i] == '\0')
 		{
-			ft_putstr_fd("Error: quote is not close", 2);
+			ft_putstr_fd("Error: quote is not close\n", 2);
 			data->exit_status = 258;
 			return (FAIL);
 		}
