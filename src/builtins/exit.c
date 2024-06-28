@@ -39,7 +39,7 @@ void	ft_exit(char **cmd, t_data *mini)
 		if (cmd[2])
 		{
 			ft_putstr_fd("exit\nminishell: exit: Too many arguments\n", 2);
-			mini->exit_status = 1;
+			mini->exit_status = 1; //changer pour return 1
 		}
 		else
 		{
