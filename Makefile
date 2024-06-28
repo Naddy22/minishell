@@ -22,7 +22,6 @@ SRC			=	main.c \
 				free_utils.c \
 				dollar_expansion.c \
 				quotes.c \
-				ft_lstadd_back.c \
 				exec.c \
 				file_handling.c \
 				path.c \
@@ -36,6 +35,7 @@ SRC			=	main.c \
 				commands.c \
 				commands_utils.c \
 				linked_list_utils.c \
+				signals.c \
 				redirections.c
 
 # -- COLORS -- #

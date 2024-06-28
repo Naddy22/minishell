@@ -24,7 +24,7 @@ static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 		ft_free_verif((void *)&data->parsing.last_user_cmd);
 		return (FALSE);
 	}
-	data->parsing.last_user_cmd = ft_strdup(current_cmd);
+	data->parsing.last_user_cmd = current_cmd;
 	return (TRUE);
 }
 
@@ -38,9 +38,9 @@ int	read_user_cmd(t_data *data)
 	if (rl_buffer == NULL) //càd que ctrl+D à été fait = quitte tout
 	{
 		printf("exit");
-		free_all(data);
+		free_data(data);
 		rl_clear_history();
-		exit(EXIT_SUCCESS);
+		exit(data->exit_status);
 	}
 	else
 	{

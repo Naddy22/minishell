@@ -22,7 +22,8 @@ int	fill_redir_cmd(t_data *data, t_list **current)
 	}
 	else
 	{
-		perror("Syntax error: Expected filename after redirection\n");
+		ft_putstr_fd("Syntax error: Expected filename after redirection\n", 2);
+		data->exit_status = 2;
 		return (FAIL);
 	}
 	return (SUCCESS);
@@ -43,11 +44,12 @@ int	fill_pipe_cmd(t_data *data, t_list *current)
 	else
 	{
 		if (!current->next)
-			perror("Syntax error: unexpected end of input after '|'\n");
+			ft_putstr_fd("Syntax error: unexpected end of input after '|'\n", 2);
 		else if (current->next->token_type == PIPE)
-			perror("Syntax error: unexpected '|' after '|'\n");
+			ft_putstr_fd("Syntax error: unexpected '|' after '|'\n", 2);
 		else if (data->commands == NULL)
-			perror("Syntax error: expected command before '|'\n");
+			ft_putstr_fd("Syntax error: expected command before '|'\n", 2);
+		data->exit_status = 2;
 		return (FAIL);
 	}
 	return (SUCCESS);
