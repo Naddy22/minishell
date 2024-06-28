@@ -1,8 +1,5 @@
 #include "../../inc/minishell.h"
 
-/*
-	might be leaking a lot too
-*/
 int	get_size(char **strs)
 {
 	int	size;
@@ -28,20 +25,13 @@ int	verif_name(char *str)
 	while(str[i])
 	{
 		if (i == 0 && (ft_isalpha(str[i]) || str[i] == '_'))
-		{
-			dprintf(2, "1\n");
 			i++;
-		}
 		else if (i != 0 && (ft_isalnum(str[i]) || str[i] == '_'))
-		{
-			dprintf(2, "2\n");
 			i++;
-		}
 		else if (str[i] == '=')
 			return (1);
 		else
 			return (0);
-		
 	}
 	return (1);
 }
@@ -187,6 +177,7 @@ void	replace_env(char *elem, t_data *mini)
 		if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(elem) + 1) == 0)
 		{
 			free(mini->cpy_env[i]);
+			mini->cpy_env[i] = NULL;
 			mini->cpy_env[i] = elem;
 		}
 		ft_free_table(split_envi);
@@ -212,6 +203,8 @@ char	**add_to_env(char *elem, t_data *mini)
 		i++;
 	}
 	new_env[i] = elem;
+	ft_free_table(mini->cpy_env);
+	mini->cpy_env = NULL;
 	return (new_env);
 }
 
@@ -241,16 +234,13 @@ void	ft_export(char **cmd, t_data *mini)
 	{
 		while (i < length)
 		{
-			if (verif_name(cmd[i]))
+			if (verif_name(cmd[i]) && ft_strlen(cmd[i]) != 0)
 				add_elem(cmd[i], mini);
+			else if (ft_strlen(cmd[i]) == 0)
+				print_export(mini);
 			else
 				printf("minishell: export: `%s': not a valid identifier\n", cmd[i]);
 			i++;
 		}
 	}
 }
-
-
-/*
-export $allo     efface le contenu de l'environnement...?
-*/

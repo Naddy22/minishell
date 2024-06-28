@@ -63,10 +63,10 @@ typedef struct s_data
 {
 	char		**cpy_env;
 	char		**cpy_env_orig;
-	t_parsing	parsing;
-	t_list		*tokens;
-	t_list		*last_token;
-	t_command	*commands;
+	t_parsing	parsing;//
+	t_list		*tokens;//
+	t_list		*last_token;//
+	t_command	*commands;//
 	int			nb_pipes;
 	int			exit_status;
 	//exec variables
@@ -97,6 +97,7 @@ void		free_error(t_data *data, char *error);
 //free_utils
 void		free_all(t_data *data);
 void		free_tokenlist(t_list **list);
+void		free_data(t_data *data);
 
 //dollar_expansion
 char		*get_env_value(char **env_cpy, const char *var_name);

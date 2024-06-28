@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:26:08 by namoisan          #+#    #+#             */
-/*   Updated: 2024/01/24 12:00:46 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:37:14 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_free_table(char **table)
 		while (table[i])
 		{
 			free(table[i]);
+			table[i] = NULL;
 			i++;
 		}
 		free(table);

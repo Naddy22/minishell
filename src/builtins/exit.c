@@ -9,8 +9,10 @@ int	check_all_digit(char **cmd, int i)
 	{
 		if (!ft_isdigit(cmd[i][c]))
 		{
-			printf("exit\n");
-			printf("minishell: exit %s: numeric argument required\n", cmd[i]);
+			ft_putstr_fd("exit\n", 2);
+			ft_putstr_fd("minishell: exit ", 2);
+			ft_putstr_fd(cmd[i], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
 			return (1);
 		}
 		c++;
@@ -18,40 +20,38 @@ int	check_all_digit(char **cmd, int i)
 	return (0);
 }
 
-void	exit_with_status(int status, t_data *mini)
+void	exit_with_status(t_data *mini)
 {
-	printf("exit\n");//TODO add free functions here and close dup fds
-	free_all(mini);
 	close(mini->fdin_origin);
 	close(mini->fdout_origin);
-	if (mini->cpy_env) //TODO place at each exit point that exit minishell
-		ft_free_table(mini->cpy_env);
-	if (mini->cpy_env_orig) //TODO place at each exit point that exit minishell
-		ft_free_table(mini->cpy_env_orig);
-	exit(status);
+	free_data(mini);
+	exit((unsigned char)mini->exit_status);
 }
 
 void	ft_exit(char **cmd, t_data *mini)
 {
-	int	length;
-
-	length = 0;
-	while (cmd[length])
-		length++;
-	if (length >= 2)
+	if (get_size(cmd) >= 2)
 	{
-		if (check_all_digit(cmd, 1) == 1) //TODO add free functions in if and close dup fds
+		if (check_all_digit(cmd, 1) == 1)
 		{
-			exit_with_status(255, mini);// TODO set exit_code, maybe in struct as int exit_code and close dup fds
+			mini->exit_status = 255;
+			exit_with_status(mini);
 		}
 		if (cmd[2])
 		{
-			printf("exit\nminishell: exit: Too many arguments\n");
-			//TODO set error code to 1
+			ft_putstr_fd("exit\nminishell: exit: Too many arguments\n", 2);
+			mini->exit_status = 1;
 		}
 		else
-			exit_with_status(ft_atoi(cmd[1]), mini);
+		{
+			mini->exit_status = ft_atoi(cmd[1]);
+			ft_putstr_fd("exit\n", 2);
+			exit_with_status(mini);
+		}
 	}
 	else
-		exit_with_status(EXIT_SUCCESS, mini);
+	{
+		ft_putstr_fd("exit\n", 2);
+		exit_with_status(mini);
+	}
 }

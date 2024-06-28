@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:40:48 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/04 14:25:19 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:12:51 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*test_path(char **paths, char *str)
 	i = 0;
 	while (paths[i])
 	{
-		correct_path = ft_strjoin(paths[i], "/");
-		correct_path = ft_strjoin(correct_path, str);
+		correct_path = ft_strjoin_dup(paths[i], "/");
+		correct_path = ft_strjoin_dup(correct_path, str);
 		if (access(correct_path, X_OK) == 0)
 			return (correct_path);
 		else

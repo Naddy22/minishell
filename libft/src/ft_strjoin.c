@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:15:27 by namoisan          #+#    #+#             */
-/*   Updated: 2024/05/17 11:40:00 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:12:13 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

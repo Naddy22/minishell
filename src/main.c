@@ -93,13 +93,7 @@ int main(int argc, char **argv, char **envp)
 	ft_memset(&data, 0, sizeof(t_data));
 	if (init(&data, envp) == FAIL)
 	{
-		free_all(&data); // verifier si succes sinon quitte completement (exit failure)
-		close(data.fdin_origin);
-		close(data.fdout_origin);
-		if (data.cpy_env) //TODO place at each exit point that exit minishell
-			ft_free_table(data.cpy_env);
-		if (data.cpy_env_orig) //TODO place at each exit point that exit minishell
-			ft_free_table(data.cpy_env_orig);
+		free_data(&data);
 		return (FAIL);
 	}
 	while (42)
@@ -119,12 +113,6 @@ int main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-		// if (data.commands->next)
-		// 	printf("stocker dans cmd : %s, %s -- %s, %s\n", data.commands->cmd[0], data.commands->cmd[1], data.commands->next->cmd[0], data.commands->next->cmd[1]);
-		// else
-		// 	printf("stocker dans cmd : %s -- %s\n", data.commands->cmd[0], data.commands->cmd[1]);
-		// printf("stocker dans data : nb_pipe %d \n", data.nb_pipes);
-		// test_print_redir(&data);
 		data.pnb = 0;
 		to_execute(&data);
 		waitpid(-1, &status, 0);
@@ -133,11 +121,5 @@ int main(int argc, char **argv, char **envp)
 			//free_and_exit(mini, status);
 		free_all(&data);
 	}
-	close(data.fdin_origin); //TODO place close and free in end_program
-	close(data.fdout_origin);
-	if (data.cpy_env) //TODO place at each exit point that exit minishell
-		ft_free_table(data.cpy_env);
-	if (data.cpy_env_orig) //TODO place at each exit point that exit minishell
-		ft_free_table(data.cpy_env_orig);
 	// return (dernier code erreur);
 }

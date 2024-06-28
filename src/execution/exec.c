@@ -15,49 +15,74 @@ int	ft_size(t_list *lst)
 	return (len);
 }
 
+char	**dup_table(char **strs)
+{
+	char	**new_tab;
+	int		i;
+
+	i = 0;
+	new_tab = ft_calloc(get_size(strs) + 1, sizeof(char *));
+	if (!new_tab)
+		return (NULL);
+	while (strs[i])
+	{
+		new_tab[i] = ft_strdup(strs[i]);
+		i++;
+	}
+	return (new_tab);
+}
+
 void	ft_execve(t_data *mini, t_command *cmd)
 {
-	char		*path;
+	char	*path;
+	char	**env;
+	char	**cmd_table;
 
 	if (access(cmd->cmd[0], X_OK) == 0)
-		path = cmd->cmd[0];
+		path = ft_strdup(cmd->cmd[0]);
 	else
 		path = get_path(mini, cmd->cmd[0]);
 	if (!path)
 		perror("Access ");
-	execve(path, cmd->cmd, mini->cpy_env);
+	env = dup_table(mini->cpy_env);
+	cmd_table = dup_table(cmd->cmd);
+	free_data(mini);
+	execve(path, cmd_table, env);
 	perror("Execve ");
-	//free_all(cmd); //TODO check for free at this point
-	exit(EXIT_FAILURE);
+	ft_free_table(env);
+	ft_free_table(cmd_table);
+	free(path);
+	path = NULL;
+	exit(EXIT_FAILURE); //TODO change exit for ft_exit with good args...
 }
 
 void	builtin_exec(t_data *mini, t_command *cmd)
 {
-	if (ft_strncmp(cmd->cmd[0], "cd", 2) == 0)
+	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 		ft_cd(cmd->cmd, mini);
-	if (ft_strncmp(cmd->cmd[0], "env", 3) == 0)
+	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
 		ft_env(mini->cpy_env);
-	if (ft_strncmp(cmd->cmd[0], "pwd", 3) == 0)
+	if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
 		ft_pwd();
-	if (ft_strncmp(cmd->cmd[0], "exit", 4) == 0)
+	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 		ft_exit(cmd->cmd, mini);
-	if (ft_strncmp(cmd->cmd[0], "echo", 4) == 0)
+	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		ft_echo(cmd->cmd);
-	if (ft_strncmp(cmd->cmd[0], "unset", 5) == 0)
+	if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
 		ft_unset(cmd->cmd, mini);
-	if (ft_strncmp(cmd->cmd[0], "export", 6) == 0)
+	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 		ft_export(cmd->cmd, mini);
 }
 
 int	isbuiltins(t_command *cmd)
 {
-	if (ft_strncmp(cmd->cmd[0], "env", 3) == 0
-		|| ft_strncmp(cmd->cmd[0], "cd", 2) == 0
-		|| ft_strncmp(cmd->cmd[0], "exit", 4) == 0
-		|| ft_strncmp(cmd->cmd[0], "echo", 4) == 0
-		|| ft_strncmp(cmd->cmd[0], "pwd", 3) == 0
-		|| ft_strncmp(cmd->cmd[0], "unset", 5) == 0
-		|| ft_strncmp(cmd->cmd[0], "export", 6) == 0)
+	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0
+		|| ft_strncmp(cmd->cmd[0], "cd", 3) == 0
+		|| ft_strncmp(cmd->cmd[0], "exit", 5) == 0
+		|| ft_strncmp(cmd->cmd[0], "echo", 5) == 0
+		|| ft_strncmp(cmd->cmd[0], "pwd", 4) == 0
+		|| ft_strncmp(cmd->cmd[0], "unset", 6) == 0
+		|| ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 		return (1);
 	else
 		return (0);
@@ -78,7 +103,7 @@ void	execution(t_data *mini) //add t_command with good cmd as arg. add pid in ea
 	if (isbuiltins(cmd) != 0)
 	{
 		builtin_exec(mini, cmd);
-		exit(EXIT_SUCCESS); // change status to actual status... not success. Then can be retrieved in
+		exit(EXIT_SUCCESS); //TODO change status to actual status... not success. Then can be retrieved in
 	}
 	else
 		ft_execve(mini, cmd);
@@ -128,7 +153,7 @@ void	to_execute(t_data *mini)
 {
 	if (mini->commands->cmd)
 	{
-		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful
+		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful isbuiltins and ft_builtins done
 		{
 			set_redir(mini, 0);
 			builtin_exec(mini, mini->commands);
