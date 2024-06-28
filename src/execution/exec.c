@@ -128,6 +128,8 @@ void	child(t_data *mini)
 	set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
 	close(mini->fd[0]);
 	close(mini->fd[1]);
+	close(mini->fdin_origin);
+	close(mini->fdout_origin);
 	execution(mini);
 }
 

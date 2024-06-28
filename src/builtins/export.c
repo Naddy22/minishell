@@ -10,7 +10,6 @@ int	get_size(char **strs)
 	while (strs[size])
 		size++;
 	return (size);
-
 }
 
 int	verif_name(char *str)
