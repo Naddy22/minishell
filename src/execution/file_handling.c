@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:17:07 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/28 13:39:04 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:41:37 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ void	change_output(int fd)
 {
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		perror("Dup2 ");
-	close(fd);
+	if (fd != 1 && fd != 2)
+		close(fd);
 }
 
 void	change_input(int fd)
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
 		perror("Dup2 ");
-	close(fd);
+	if (fd != 0)
+		close(fd);
 }
 
 void	parent(t_data *mini)
@@ -52,6 +54,8 @@ void	parent(t_data *mini)
 
 void	change_parent_back(t_data *mini)
 {
-	change_input(mini->fdin_origin);
-	change_output(mini->fdout_origin);
+	if (dup2(mini->fdin_origin, STDIN_FILENO) == -1)
+		perror("Dup2, impossible to restore stdin ");
+	if (dup2(mini->fdout_origin, STDOUT_FILENO) == -1)
+		perror("Dup2, impossible to restore stdout ");
 }
