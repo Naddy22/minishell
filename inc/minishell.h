@@ -122,7 +122,8 @@ void		redir_add_back(t_redir **lst, t_redir *new);
 //functions imported from pipex//
 //in file_handling.c
 int			to_open(t_redir *redir);
-void		change_parent_input(int fd);
+void		change_input(int fd);
+void		change_output(int fd);
 void		parent(t_data *mini);
 void		change_parent_back(t_data *mini);
 

@@ -9,8 +9,7 @@ int	check_all_digit(char **cmd, int i)
 	{
 		if (!ft_isdigit(cmd[i][c]))
 		{
-			ft_putstr_fd("exit\n", 2);
-			ft_putstr_fd("minishell: exit ", 2);
+			ft_putstr_fd("exit\nminishell: exit ", 2);
 			ft_putstr_fd(cmd[i], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			return (1);

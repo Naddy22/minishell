@@ -99,10 +99,7 @@ int main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		if (read_user_cmd(&data) != SUCCESS)
-		{
-			free_all(&data);
 			continue ;
-		}
 		if (parsing(&data) != SUCCESS)
 		{
 			free_all(&data);

@@ -53,11 +53,14 @@ void	ft_execve(t_data *mini, t_command *cmd)
 	ft_free_table(cmd_table);
 	free(path);
 	path = NULL;
-	exit(EXIT_FAILURE); //TODO change exit for ft_exit with good args...
+	exit(EXIT_FAILURE);
 }
 
 void	builtin_exec(t_data *mini, t_command *cmd)
 {
+	int	status;
+
+	status = 0;
 	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 		ft_cd(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
@@ -72,6 +75,7 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 		ft_unset(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 		ft_export(cmd->cmd, mini);
+	mini->exit_status = status;
 }
 
 int	isbuiltins(t_command *cmd)
