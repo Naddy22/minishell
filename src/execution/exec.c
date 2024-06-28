@@ -62,11 +62,11 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 
 	status = 0;
 	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-		ft_cd(cmd->cmd, mini);
+		status = ft_cd(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
 		ft_env(mini->cpy_env); //pas besoin de return
 	if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
-		ft_pwd();
+		status = ft_pwd();
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
 		status = ft_exit(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)

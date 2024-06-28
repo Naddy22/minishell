@@ -15,7 +15,7 @@ void	change_env(char *old, t_data *mini)
 	ft_export(export, mini);
 }
 
-void	ft_cd(char **cmd, t_data *mini)
+int	ft_cd(char **cmd, t_data *mini)
 {
 	char	*path_to_go;
 	char	*path_home;
@@ -27,8 +27,8 @@ void	ft_cd(char **cmd, t_data *mini)
 		path_home = get_env_value(mini->cpy_env, "HOME");
 		if (!path_home || chdir(path_home) != 0)
 		{
-			mini->exit_status = 1;
-			ft_putstr_fd("bash: cd: HOME not set\n", 2);
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			return (1);
 		}
 		else
 			change_env(buf, mini);
@@ -40,12 +40,13 @@ void	ft_cd(char **cmd, t_data *mini)
 		path_to_go = cmd[1];
 		if (chdir(path_to_go) != 0)
 		{
-			mini->exit_status = 1;
-			ft_putstr_fd("bash: cd: ", 2);
+			ft_putstr_fd("minishell: cd: ", 2);
 			ft_putstr_fd(path_to_go, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
+			return (1);
 		}
 		else
 			change_env(buf, mini);
 	}
+	return (0);
 }

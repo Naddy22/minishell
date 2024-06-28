@@ -142,7 +142,7 @@ void		to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
 
 //in cd.c
-void		ft_cd(char **cmd, t_data *mini);
+int			ft_cd(char **cmd, t_data *mini);
 
 //in echo.c
 void		ft_echo(char **cmd);
@@ -154,7 +154,7 @@ void		ft_env(char **envp);
 int			ft_exit(char **cmd, t_data *mini);
 
 //in pwd.c
-void		ft_pwd(void);
+int			ft_pwd(void);
 
 //in unset.c
 void		remove_elem(char *elem, t_data *mini);
