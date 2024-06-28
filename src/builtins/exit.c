@@ -27,7 +27,7 @@ void	exit_with_status(t_data *mini)
 	exit((unsigned char)mini->exit_status);
 }
 
-void	ft_exit(char **cmd, t_data *mini)
+int	ft_exit(char **cmd, t_data *mini)
 {
 	if (get_size(cmd) >= 2)
 	{
@@ -39,7 +39,7 @@ void	ft_exit(char **cmd, t_data *mini)
 		if (cmd[2])
 		{
 			ft_putstr_fd("exit\nminishell: exit: Too many arguments\n", 2);
-			mini->exit_status = 1; //changer pour return 1
+			return (1);
 		}
 		else
 		{
@@ -53,4 +53,5 @@ void	ft_exit(char **cmd, t_data *mini)
 		ft_putstr_fd("exit\n", 2);
 		exit_with_status(mini);
 	}
+	return (0);
 }

@@ -151,7 +151,7 @@ void		ft_echo(char **cmd);
 void		ft_env(char **envp);
 
 //in exit.c
-void		ft_exit(char **cmd, t_data *mini);
+int			ft_exit(char **cmd, t_data *mini);
 
 //in pwd.c
 void		ft_pwd(void);

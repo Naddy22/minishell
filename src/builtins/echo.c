@@ -1,5 +1,7 @@
 #include "../../inc/minishell.h"
 
+//Gestion des codes d'erreur ok
+
 int	check_n_flag(char *arg)
 {
 	int	i;

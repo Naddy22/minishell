@@ -64,13 +64,13 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 	if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 		ft_cd(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
-		ft_env(mini->cpy_env);
+		ft_env(mini->cpy_env); //pas besoin de return
 	if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
 		ft_pwd();
 	if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
-		ft_exit(cmd->cmd, mini);
+		status = ft_exit(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
-		ft_echo(cmd->cmd);
+		ft_echo(cmd->cmd); //pas besoin de return
 	if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
 		ft_unset(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
