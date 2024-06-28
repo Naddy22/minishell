@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   file_handling.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/11 14:17:07 by vboulang          #+#    #+#             */
-/*   Updated: 2024/06/28 14:39:58 by namoisan         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
 /*
@@ -34,14 +22,16 @@ void	change_output(int fd)
 {
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		perror("Dup2 ");
-	close(fd);
+	if (fd != 1 && fd != 2)
+		close(fd);
 }
 
 void	change_input(int fd)
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
 		perror("Dup2 ");
-	close(fd);
+	if (fd != 0)
+		close(fd);
 }
 
 void	parent(t_data *mini)
