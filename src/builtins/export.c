@@ -110,8 +110,8 @@ void	print_equal(char *envext)
 		j = 2;
 		while (split[j])
 		{
-			split[1]=ft_strjoin(split[1], "=");
-			split[1]=ft_strjoin(split[1], split[j]);
+			split[1]=ft_strjoin_dup(split[1], "=");
+			split[1]=ft_strjoin_dup(split[1], split[j]);
 			j++;
 		}
 		printf("declare -x %s=\"%s\"\n", split[0], split[1]);
