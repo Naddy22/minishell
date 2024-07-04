@@ -26,6 +26,14 @@
 # define R2_REDIR 24
 # define PIPE 25
 
+typedef enum sig_type
+{
+	MAIN,
+	HERE_DOC,
+	CHILD,
+	PARENT,
+}	sig_type;
+
 typedef struct s_redir
 {
 	char			*file_name;
@@ -78,9 +86,6 @@ typedef struct s_data
 
 int			init(t_data *data, char **envp);
 
-// liste chainée
-void		ft_lstadd_back(t_list **lst, t_list *new);
-
 //parsing
 int			parsing(t_data *data);
 int			read_user_cmd(t_data *data);
@@ -93,6 +98,7 @@ int			ft_isspace(char c);
 
 //error_utils
 void		free_error(t_data *data, char *error);
+int			get_err_code(int exit_code);
 
 //free_utils
 void		free_all(t_data *data);
@@ -118,6 +124,7 @@ t_redir		*create_new_lstredir(t_list **current);
 //linked_list_utils
 void		cmd_add_back(t_command **lst, t_command *new);
 void		redir_add_back(t_redir **lst, t_redir *new);
+void		ft_lstadd_back(t_list **lst, t_list *new);
 
 //functions imported from pipex//
 //in file_handling.c
@@ -163,5 +170,8 @@ void		ft_unset(char **cmd, t_data *mini);
 //in export.c
 int			get_size(char **strs);
 void		ft_export(char **cmd, t_data *mini);
+
+//signals.c
+void	set_signal(sig_type type);
 
 #endif 

@@ -98,13 +98,16 @@ int main(int argc, char **argv, char **envp)
 	}
 	while (42)
 	{
+		set_signal(MAIN);
 		if (read_user_cmd(&data) != SUCCESS)
 			continue ;
+		set_signal(PARENT);
 		if (parsing(&data) != SUCCESS)
 		{
 			free_all(&data);
 			continue ;
 		}
+		test_print_token_list(data.tokens);
 		if (make_cmds(&data) != SUCCESS)
 		{
 			free_all(&data);
@@ -113,10 +116,12 @@ int main(int argc, char **argv, char **envp)
 		data.pnb = 0;
 		to_execute(&data);
 		waitpid(-1, &status, 0);
-		if (WEXITSTATUS(status) == 1)
+		data.exit_status = get_err_code(status);
+		if (WEXITSTATUS(status) == 1) //TODO remplacer par la fonction qui gere les erreurs pas signaux(130,131)
 			dprintf(2, "to free and exit\n");
 			//free_and_exit(mini, status);
 		free_all(&data);
 	}
+	free_data(&data);
 	// return (dernier code erreur);
 }
