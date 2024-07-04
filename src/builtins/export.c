@@ -12,29 +12,6 @@ int	get_size(char **strs)
 	return (size);
 }
 
-int	verif_name(char *str)
-{
-	int	i;
-	int	equal_count;
-
-	equal_count = 0;
-	i = 0;
-	if (!str)
-		return (0);
-	while(str[i])
-	{
-		if (i == 0 && (ft_isalpha(str[i]) || str[i] == '_'))
-			i++;
-		else if (i != 0 && (ft_isalnum(str[i]) || str[i] == '_'))
-			i++;
-		else if (str[i] == '=')
-			return (1);
-		else
-			return (0);
-	}
-	return (1);
-}
-
 char	**deep_cpy(t_data *mini)
 {
 	int		i;
@@ -220,26 +197,31 @@ void	add_elem(char *elem, t_data *mini)
 		mini->cpy_env = add_to_env(elem, mini);
 }
 
-void	ft_export(char **cmd, t_data *mini)
+int	ft_export(char **cmd, t_data *mini)
 {
 	int		length;
 	int		i;
 
-	i = 1;
+	i = 0;
 	length = get_size(cmd);
 	if (length == 1)
 		print_export(mini);
 	else if (length >= 2)
 	{
-		while (i < length)
+		while (++i < length)
 		{
 			if (verif_name(cmd[i]) && ft_strlen(cmd[i]) != 0)
 				add_elem(cmd[i], mini);
 			else if (ft_strlen(cmd[i]) == 0)
 				print_export(mini);
 			else
-				printf("minishell: export: `%s': not a valid identifier\n", cmd[i]);
-			i++;
+			{
+				ft_putstr_fd("minishell: export: `", 2);
+				ft_putstr_fd(cmd[i], 2);
+				ft_putendl_fd("': not a valid identifier", 2);
+				return (1);
+			}
 		}
 	}
+	return (0);
 }

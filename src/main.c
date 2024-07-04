@@ -81,9 +81,7 @@ void	test_print_redir(t_data *data)
 int main(int argc, char **argv, char **envp) 
 {
 	t_data	data;
-	int		status;
 
-	status = 0;
 	(void)argv;
 	if (argc != 1)
 	{
@@ -115,11 +113,6 @@ int main(int argc, char **argv, char **envp)
 		}
 		data.pnb = 0;
 		to_execute(&data);
-		waitpid(-1, &status, 0);
-		data.exit_status = get_err_code(status);
-		if (WEXITSTATUS(status) == 1) //TODO remplacer par la fonction qui gere les erreurs pas signaux(130,131)
-			dprintf(2, "to free and exit\n");
-			//free_and_exit(mini, status);
 		free_all(&data);
 	}
 	free_data(&data);

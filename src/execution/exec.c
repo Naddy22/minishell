@@ -72,9 +72,9 @@ void	builtin_exec(t_data *mini, t_command *cmd)
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		ft_echo(cmd->cmd); //pas besoin de return
 	if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
-		ft_unset(cmd->cmd, mini);
+		status = ft_unset(cmd->cmd, mini);
 	if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
-		ft_export(cmd->cmd, mini);
+		status = ft_export(cmd->cmd, mini);
 	mini->exit_status = status;
 }
 
@@ -107,7 +107,7 @@ void	execution(t_data *mini) //add t_command with good cmd as arg. add pid in ea
 	if (isbuiltins(cmd) != 0)
 	{
 		builtin_exec(mini, cmd);
-		exit(EXIT_SUCCESS); //TODO change status to actual status... not success. Then can be retrieved in
+		exit(mini->exit_status);
 	}
 	else
 		ft_execve(mini, cmd);
@@ -158,7 +158,7 @@ void	ft_pipe(t_data *mini)
 	}
 }
 
-void	to_execute(t_data *mini)
+int	to_execute(t_data *mini)
 {
 	if (mini->commands->cmd)
 	{
@@ -167,11 +167,14 @@ void	to_execute(t_data *mini)
 			set_redir(mini, 0);
 			builtin_exec(mini, mini->commands);
 			change_parent_back(mini);
+			return (mini->exit_status);
 		}
 		else
 		{
 			ft_pipe(mini);
 			change_parent_back(mini);
+			waitpid(-1, &mini->tmp_status, 0);
+			mini->exit_status = get_err_code(mini->tmp_status);
 		}
 	}
 	else
@@ -179,4 +182,5 @@ void	to_execute(t_data *mini)
 		set_redir(mini, 0);
 		change_parent_back(mini);
 	}
+	return (0);
 }

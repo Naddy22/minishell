@@ -1,5 +1,28 @@
 #include "../../inc/minishell.h"
 
+int	verif_name(char *str)
+{
+	int	i;
+	int	equal_count;
+
+	equal_count = 0;
+	i = 0;
+	if (!str)
+		return (FALSE);
+	while(str[i])
+	{
+		if (i == 0 && (ft_isalpha(str[i]) || str[i] == '_'))
+			i++;
+		else if (i != 0 && (ft_isalnum(str[i]) || str[i] == '_'))
+			i++;
+		else if (str[i] == '=')
+			return (TRUE);
+		else
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
 void	remove_elem(char *elem, t_data *mini)
 {
 	char	**new_env;
@@ -27,7 +50,7 @@ void	remove_elem(char *elem, t_data *mini)
 	mini->cpy_env = new_env;
 }
 
-void	ft_unset(char **cmd, t_data *mini)
+int	ft_unset(char **cmd, t_data *mini)
 {
 	int	length;
 	int	i;
@@ -40,8 +63,17 @@ void	ft_unset(char **cmd, t_data *mini)
 		i = 1;
 		while (i < length)
 		{
-			remove_elem(cmd[i], mini);
+			if (verif_name(cmd[i]) == TRUE)
+				remove_elem(cmd[i], mini);
+			else
+			{
+				ft_putstr_fd("minishell: unset: `", 2);
+				ft_putstr_fd(cmd[i], 2);
+				ft_putstr_fd("': not a valid identifier\n", 2);
+				return (1);
+			}
 			i++;
 		}
 	}
+	return (0);
 }

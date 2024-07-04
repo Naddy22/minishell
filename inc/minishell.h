@@ -76,6 +76,7 @@ typedef struct s_data
 	t_list		*last_token;//
 	t_command	*commands;//
 	int			nb_pipes;
+	int			tmp_status;
 	int			exit_status;
 	//exec variables
 	int			pnb;
@@ -145,7 +146,7 @@ void		set_redir(t_data *mini, int pnb);
 int			ft_size(t_list *lst);
 void		execution(t_data *mini);
 void		child(t_data *mini);
-void		to_execute(t_data *mini);
+int			to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
 
 //in cd.c
@@ -165,11 +166,12 @@ int			ft_pwd(void);
 
 //in unset.c
 void		remove_elem(char *elem, t_data *mini);
-void		ft_unset(char **cmd, t_data *mini);
+int			ft_unset(char **cmd, t_data *mini);
+int			verif_name(char *str);
 
 //in export.c
 int			get_size(char **strs);
-void		ft_export(char **cmd, t_data *mini);
+int			ft_export(char **cmd, t_data *mini);
 
 //signals.c
 void	set_signal(sig_type type);
