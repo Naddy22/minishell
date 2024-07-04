@@ -43,7 +43,10 @@ void	ft_execve(t_data *mini, t_command *cmd)
 	else
 		path = get_path(mini, cmd->cmd[0]);
 	if (!path)
+	{
 		perror("Access ");
+		mini->exit_status = 127;
+	}
 	env = dup_table(mini->cpy_env);
 	cmd_table = dup_table(cmd->cmd);
 	free_data(mini);

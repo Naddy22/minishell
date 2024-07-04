@@ -28,7 +28,7 @@ void	ft_cd(char **cmd, t_data *mini)
 		if (!path_home || chdir(path_home) != 0)
 		{
 			mini->exit_status = 1;
-			ft_putstr_fd("bash: cd: HOME not set\n", 2);
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		}
 		else
 			change_env(buf, mini);
@@ -41,7 +41,7 @@ void	ft_cd(char **cmd, t_data *mini)
 		if (chdir(path_to_go) != 0)
 		{
 			mini->exit_status = 1;
-			ft_putstr_fd("bash: cd: ", 2);
+			ft_putstr_fd("minishell: cd: ", 2);
 			ft_putstr_fd(path_to_go, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
 		}
