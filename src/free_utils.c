@@ -1,5 +1,21 @@
 #include "../inc/minishell.h"
 
+void	free_redirlist(t_redir **redir)
+{
+	t_redir	*current;
+	t_redir	*next;
+
+	current = *redir;
+	while (current != NULL)
+	{
+		next = current->next;
+		ft_free_verif((void **)&current->file_name);
+		ft_free_verif((void **)&current);
+		current = next;
+	}
+	*redir = NULL;
+}
+
 void	free_tokenlist(t_list **list)
 {
 	t_list	*current;
@@ -25,7 +41,9 @@ void	free_cmdlist(t_command **list)
 	while (current != NULL)
 	{
 		next = current->next;
-		ft_free_verif((void **)&current->cmd);
+		if (current->redir)
+			free_redirlist(&current->redir);
+		ft_free_table(current->cmd);
 		ft_free_verif((void **)&current);
 		current = next;
 	}
@@ -44,8 +62,12 @@ void	free_all(t_data *data)
 */
 void	free_data(t_data *data)
 {
+	close(data->fdin_origin);
+	close(data->fdout_origin);
 	free_all(data);
-	ft_free_table(data->cpy_env);
-	ft_free_table(data->cpy_env_orig);
+	if (data->cpy_env)
+		ft_free_table(data->cpy_env);
+	if (data->cpy_env_orig)
+		ft_free_table(data->cpy_env_orig);
 	data = NULL;
 }
