@@ -1,20 +1,5 @@
 #include "../../inc/minishell.h"
 
-int	ft_size(t_list *lst)
-{
-	int		len;
-
-	len = 0;
-	if (!lst)
-		return (0);
-	while (lst)
-	{
-		len++;
-		lst = lst->next;
-	}
-	return (len);
-}
-
 char	**dup_table(char **strs)
 {
 	char	**new_tab;

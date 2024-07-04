@@ -143,7 +143,6 @@ char		*get_path(t_data *mini, char *str);
 void		set_redir(t_data *mini, int pnb);
 
 //in exec.c
-int			ft_size(t_list *lst);
 void		execution(t_data *mini);
 void		child(t_data *mini);
 int			to_execute(t_data *mini);

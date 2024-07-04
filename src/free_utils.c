@@ -8,8 +8,8 @@ void	free_redirlist(t_redir **redir)
 	current = *redir;
 	while (current != NULL)
 	{
+		printf("%d\n", current->type);
 		next = current->next;
-		ft_free_verif((void **)&current->file_name);
 		ft_free_verif((void **)&current);
 		current = next;
 	}
