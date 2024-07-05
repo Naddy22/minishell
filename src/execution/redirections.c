@@ -60,6 +60,8 @@ void	set_redir(t_data *mini, int pnb)
 		change_output(1);
 	if (mini->nb_pipes != mini->pnb)
 		change_output(mini->fd[1]);
+	// if (mini->nb_pipes > 0 && mini->pnb > 0) //TODO check if really needed when execution will work
+	// 	change_input(mini->fd[0]);
 	while (redir)
 	{
 		if (redir->type == L1_REDIR || redir->type == L2_REDIR)

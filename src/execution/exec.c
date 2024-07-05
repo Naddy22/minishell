@@ -123,7 +123,7 @@ void	child(t_data *mini)
 
 void	ft_pipe(t_data *mini)
 {
-	int	pid;
+	pid_t	pid;
 
 	while (mini->pnb <= mini->nb_pipes)
 	{
