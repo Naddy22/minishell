@@ -106,9 +106,9 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 
 int	parsing(t_data *data)
 {
-	int	start;
+	int		start;
 	char	*brut_cmd;
-	int	test;
+	int		test;
 
 	start = 0;
 	brut_cmd = data->parsing.last_user_cmd;

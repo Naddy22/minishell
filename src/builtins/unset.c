@@ -3,9 +3,7 @@
 int	verif_name(char *str)
 {
 	int	i;
-	int	equal_count;
 
-	equal_count = 0;
 	i = 0;
 	if (!str)
 		return (FALSE);

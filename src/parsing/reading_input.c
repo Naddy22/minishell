@@ -37,10 +37,11 @@ int	read_user_cmd(t_data *data)
 	current_cmd = NULL;
 	if (rl_buffer == NULL) //càd que ctrl+D à été fait = quitte tout
 	{
-		printf("exit");
-		free_data(data);
+		printf("exit\n");
 		rl_clear_history();
-		exit(data->exit_status);
+		exit_with_status(data);
+		// free_data(data);
+		// exit(data->exit_status);
 	}
 	else
 	{

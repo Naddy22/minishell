@@ -8,7 +8,6 @@ void	free_redirlist(t_redir **redir)
 	current = *redir;
 	while (current != NULL)
 	{
-		printf("%d\n", current->type);
 		next = current->next;
 		ft_free_verif((void **)&current);
 		current = next;
@@ -65,9 +64,7 @@ void	free_data(t_data *data)
 	close(data->fdin_origin);
 	close(data->fdout_origin);
 	free_all(data);
-	if (data->cpy_env)
-		ft_free_table(data->cpy_env);
-	if (data->cpy_env_orig)
-		ft_free_table(data->cpy_env_orig);
+	ft_free_table(data->cpy_env);
+	ft_free_table(data->cpy_env_orig);
 	data = NULL;
 }

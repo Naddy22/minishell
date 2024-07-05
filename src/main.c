@@ -115,6 +115,4 @@ int main(int argc, char **argv, char **envp)
 		to_execute(&data);
 		free_all(&data);
 	}
-	free_data(&data);
-	// return (dernier code erreur);
 }

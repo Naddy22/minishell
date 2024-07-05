@@ -15,11 +15,9 @@ int	get_size(char **strs)
 char	**deep_cpy(t_data *mini)
 {
 	int		i;
-	int		j;
 	char	**envext;
 
 	i = 0;
-	j = 0;
 	envext = ft_calloc(get_size(mini->cpy_env) + 1, sizeof(char *));
 	if (!envext)
 		return (NULL);
@@ -187,9 +185,7 @@ char	**add_to_env(char *elem, t_data *mini)
 void	add_elem(char *elem, t_data *mini)
 {
 	int		found;
-	int		i;
 
-	i = 0;
 	found = check_env(elem, mini);
 	if (found)
 		replace_env(elem, mini);

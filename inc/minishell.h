@@ -159,6 +159,7 @@ void		ft_env(char **envp);
 
 //in exit.c
 int			ft_exit(char **cmd, t_data *mini);
+void		exit_with_status(t_data *mini);
 
 //in pwd.c
 int			ft_pwd(void);
