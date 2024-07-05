@@ -53,8 +53,8 @@ void	free_cmdlist(t_command **list)
 void	free_all(t_data *data)
 {
 	ft_free_verif((void *)&data->parsing.last_user_cmd);
-	free_tokenlist(&data->tokens);
 	free_cmdlist(&data->commands);
+	free_tokenlist(&data->tokens);
 }
 
 /*
@@ -65,9 +65,7 @@ void	free_data(t_data *data)
 	close(data->fdin_origin);
 	close(data->fdout_origin);
 	free_all(data);
-	if (data->cpy_env)
-		ft_free_table(data->cpy_env);
-	if (data->cpy_env_orig)
-		ft_free_table(data->cpy_env_orig);
+	ft_free_table(data->cpy_env);
+	ft_free_table(data->cpy_env_orig);
 	data = NULL;
 }
