@@ -74,8 +74,8 @@ int	fill_word_cmd(t_data *data, t_list **current)
 	{
 		if (alloc_new_cmd(data, len) != SUCCESS)
 			return (FAIL);
+		ft_free_verif((void **)&data->parsing.parse_cmd);
 	}
-	//data->parsing.parse_cmd = NULL;
 	return (SUCCESS);
 }
 
