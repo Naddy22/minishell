@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_putnbr_base.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vincent <vincent@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:44:19 by namoisan          #+#    #+#             */
-/*   Updated: 2023/12/19 11:07:26 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:48:10 by vincent          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static int	count_nb(unsigned long n, char *base)
 	base_size = ft_strlen(base);
 	if (n == 0)
 		return (1);
-	if (n < 0)
-	{
-		n = -n;
-		count++;
-	}
+	// if (n < 0)
+	// {
+	// 	n = -n;
+	// 	count++;
+	// }
 	while (n > 0)
 	{
 		count++;

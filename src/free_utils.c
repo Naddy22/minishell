@@ -42,6 +42,9 @@ void	free_cmdlist(t_command **list)
 		next = current->next;
 		if (current->redir)
 			free_redirlist(&current->redir);
+		//dprintf(2, "0 %s : %p ; %p\n", current->cmd[0], &current->cmd[0], &current->cmd);		
+		//dprintf(2, "1 %s : %p ; %p\n", current->cmd[1], &current->cmd[1], &current->cmd);
+		//dprintf(2, "2 %s : %p ; %p\n", current->cmd[2], &current->cmd[2], &current->cmd);
 		ft_free_table(current->cmd);
 		ft_free_verif((void **)&current);
 		current = next;

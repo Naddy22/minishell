@@ -148,6 +148,7 @@ void	ft_pipe(t_data *mini)
 
 int	to_execute(t_data *mini)
 {
+	//TODO DO HEREDOC HERE
 	if (mini->commands->cmd)
 	{
 		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful isbuiltins and ft_builtins done
@@ -164,11 +165,6 @@ int	to_execute(t_data *mini)
 			waitpid(-1, &mini->tmp_status, 0);
 			mini->exit_status = get_err_code(mini->tmp_status);
 		}
-	}
-	else
-	{
-		set_redir(mini, 0);
-		change_parent_back(mini);
 	}
 	return (0);
 }

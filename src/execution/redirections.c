@@ -15,24 +15,18 @@ t_command	*get_cmd(t_data *mini, int pnb)
 
 void	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 {
-	if (redir->type == L1_REDIR)
+
+	if (access(redir->file_name, R_OK) == 0)
 	{
-		if (access(redir->file_name, R_OK) == 0)
-		{
-			cmd->fdin = to_open(redir);
-			change_input(cmd->fdin);
-		}
-		else
-		{
-			perror("Access ");
-			mini->exit_status = 126;
-		}
+		cmd->fdin = to_open(redir);
+		change_input(cmd->fdin);
 	}
-	else if (redir->type == L2_REDIR)
+	else
 	{
-		cmd->heredoc = to_open(redir); //TODO change to what will be decided for heredoc
-		change_input(cmd->heredoc);
+		perror("Access ");
+		mini->exit_status = 126;
 	}
+	
 }
 
 void	set_r_redir(t_redir	*redir, t_command *cmd)
@@ -57,11 +51,9 @@ void	set_redir(t_data *mini, int pnb)
 	cmd = get_cmd(mini, pnb);
 	redir = cmd->redir;
 	if (!redir && mini->nb_pipes == mini->pnb)
-		change_output(1);
+		change_output(mini->fdout_origin);
 	if (mini->nb_pipes != mini->pnb)
 		change_output(mini->fd[1]);
-	// if (mini->nb_pipes > 0 && mini->pnb > 0) //TODO check if really needed when execution will work
-	// 	change_input(mini->fd[0]);
 	while (redir)
 	{
 		if (redir->type == L1_REDIR || redir->type == L2_REDIR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_putnbr_unsigned.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vincent <vincent@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:04 by namoisan          #+#    #+#             */
-/*   Updated: 2023/12/19 12:01:31 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:47:32 by vincent          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static int	count_nb(unsigned int n)
 	count = 0;
 	if (n == 0)
 		return (1);
-	if (n < 0)
-	{
-		n = -n;
-		count++;
-	}
+	// if (n < 0)
+	// {
+	// 	n = -n;
+	// 	count++;
+	// }
 	while (n > 0)
 	{
 		count++;

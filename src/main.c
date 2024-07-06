@@ -78,7 +78,7 @@ void	test_print_redir(t_data *data)
 	}
 }
 
-int main(int argc, char **argv, char **envp) 
+int main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
