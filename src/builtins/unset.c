@@ -36,7 +36,7 @@ void	remove_elem(char *elem, t_data *mini)
 	while (i < size)
 	{
 		envp_elem = ft_split(mini->cpy_env[i], '=');
-		if (ft_strncmp(elem, envp_elem[0], ft_strlen(envp_elem[0])) != 0)
+		if (ft_strncmp(elem, envp_elem[0], ft_strlen(elem) + 1) != 0)
 		{
 			new_env[j] = mini->cpy_env[i];
 			j++;

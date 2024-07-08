@@ -116,8 +116,6 @@ void	child(t_data *mini)
 	set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
 	close(mini->fd[0]);
 	close(mini->fd[1]);
-	close(mini->fdin_origin);
-	close(mini->fdout_origin);
 	execution(mini);
 }
 
@@ -148,7 +146,7 @@ void	ft_pipe(t_data *mini)
 
 int	to_execute(t_data *mini)
 {
-	//TODO DO HEREDOC HERE
+	make_here_docs(mini); //TODO return value if error?
 	if (mini->commands->cmd)
 	{
 		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0) //TODO check every strncmp to prevent exit and exitl to be compared and successful isbuiltins and ft_builtins done

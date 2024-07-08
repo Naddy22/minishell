@@ -39,6 +39,7 @@ typedef struct s_redir
 	char			*file_name;
 	int				type;
 	struct s_redir	*next;
+	char			*delim;
 }					t_redir;
 
 typedef struct s_command
@@ -47,8 +48,6 @@ typedef struct s_command
 	t_redir				*redir;
 	int					fdin;
 	int					fdout;
-	char				*delim;
-	int					heredoc;
 	struct s_command	*next;
 }						t_command;
 
@@ -127,53 +126,55 @@ void		cmd_add_back(t_command **lst, t_command *new);
 void		redir_add_back(t_redir **lst, t_redir *new);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 
-//functions imported from pipex//
-//in file_handling.c
+//file_handling.c
 int			to_open(t_redir *redir);
 void		change_input(int fd);
 void		change_output(int fd);
 void		parent(t_data *mini);
 void		change_parent_back(t_data *mini);
 
-//in path.c
+//path.c
 char		*test_path(char **paths, char *str);
 char		*get_path(t_data *mini, char *str);
 
-//in redirection.c
+//redirection.c
 void		set_redir(t_data *mini, int pnb);
 
-//in exec.c
+//exec.c
 void		execution(t_data *mini);
 void		child(t_data *mini);
 int			to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
 
-//in cd.c
+//cd.c
 int			ft_cd(char **cmd, t_data *mini);
 
-//in echo.c
+//echo.c
 void		ft_echo(char **cmd);
 
-//in env.c
+//env.c
 void		ft_env(char **envp);
 
-//in exit.c
+//exit.c
 int			ft_exit(char **cmd, t_data *mini);
 void		exit_with_status(t_data *mini);
 
-//in pwd.c
+//pwd.c
 int			ft_pwd(void);
 
-//in unset.c
+//unset.c
 void		remove_elem(char *elem, t_data *mini);
 int			ft_unset(char **cmd, t_data *mini);
 int			verif_name(char *str);
 
-//in export.c
+//export.c
 int			get_size(char **strs);
 int			ft_export(char **cmd, t_data *mini);
 
 //signals.c
 void	set_signal(sig_type type);
+
+//heredoc.c
+void	make_here_docs(t_data *mini);
 
 #endif 

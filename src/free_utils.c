@@ -9,7 +9,12 @@ void	free_redirlist(t_redir **redir)
 	while (current != NULL)
 	{
 		next = current->next;
-		ft_free_verif((void **)&current);
+		if (current->type == L2_REDIR)
+		{
+			unlink(current->file_name);
+			ft_free_verif((void *)&current->file_name);
+		}
+		ft_free_verif((void *)&current);
 		current = next;
 	}
 	*redir = NULL;

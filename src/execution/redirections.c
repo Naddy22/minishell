@@ -15,7 +15,6 @@ t_command	*get_cmd(t_data *mini, int pnb)
 
 void	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 {
-
 	if (access(redir->file_name, R_OK) == 0)
 	{
 		cmd->fdin = to_open(redir);

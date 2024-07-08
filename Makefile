@@ -36,7 +36,8 @@ SRC			=	main.c \
 				commands_utils.c \
 				linked_list_utils.c \
 				signals.c \
-				redirections.c
+				redirections.c \
+				heredoc.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

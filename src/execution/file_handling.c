@@ -1,20 +1,17 @@
 #include "../../inc/minishell.h"
 
-/*
-add mode arg then use redir value to open fds the right way?
-*/
 int	to_open(t_redir *redir)
 {
 	int	fd;
 
-	if (redir->type == L1_REDIR)
+	if (redir->type == L1_REDIR || redir->type == L2_REDIR)
 		fd = open(redir->file_name, O_RDONLY);
 	else if (redir->type == R1_REDIR)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (redir->type == R2_REDIR)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	else
-		fd = open("heredoc", O_RDWR | O_CREAT , 0666); //TODO change to what will be decided for heredoc
+		fd = -1;
 	return (fd);
 }
 

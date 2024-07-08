@@ -30,8 +30,8 @@ static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 
 int	read_user_cmd(t_data *data)
 {
-	char *rl_buffer;
-	char *current_cmd;
+	char	*rl_buffer;
+	char	*current_cmd;
 
 	rl_buffer = readline("minishell>");
 	current_cmd = NULL;
