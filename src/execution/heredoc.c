@@ -23,7 +23,7 @@ int	check_here_docs(t_data *mini)
 void	readline_here_doc(int fd, char *delim)
 {
 	char	*rl_buffer;
-	char	*to_print;
+	// char	*to_print;
 	size_t	len;
 
 	len = ft_strlen(delim);
@@ -35,8 +35,8 @@ void	readline_here_doc(int fd, char *delim)
 			ft_free_verif((void *)&rl_buffer);
 			return ;
 		}
-		to_print = parsing_heredoc(rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
-		ft_putstr_fd(to_print, fd);
+		// to_print = parsing_heredoc(rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
+		// ft_putstr_fd(to_print, fd);
 		ft_putstr_fd("\n", fd);
 		ft_free_verif((void *)&rl_buffer);
 	}

@@ -6,7 +6,7 @@
 /*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:40:48 by vboulang          #+#    #+#             */
-/*   Updated: 2024/07/05 12:04:47 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:49:00 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*test_path(char **paths, char *str)
 	i = 0;
 	while (paths[i])
 	{
-		correct_path = ft_strjoin_dup(paths[i], "/");
+		correct_path = ft_strjoin(paths[i], "/");
 		correct_path = ft_strjoin_dup(correct_path, str);
 		if (access(correct_path, X_OK) == 0)
 			return (correct_path);
@@ -40,6 +40,7 @@ char	*get_path(t_data *mini, char *str)
 	paths_to_split = get_env_value(mini->cpy_env, "PATH");
 	paths = ft_split(paths_to_split, ':');
 	correct_path = test_path(paths, str);
+	ft_free_table(paths);
 	if (!correct_path)
 		return (NULL);
 	else

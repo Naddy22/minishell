@@ -59,6 +59,7 @@ void	free_all(t_data *data)
 	ft_free_verif((void *)&data->parsing.last_user_cmd);
 	free_cmdlist(&data->commands);
 	free_tokenlist(&data->tokens);
+	data->last_token = NULL;
 }
 
 /*

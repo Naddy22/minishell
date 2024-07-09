@@ -13,6 +13,12 @@ void	change_env(char *old, t_data *mini)
 	export[1] = ft_strjoin("PWD=", str);
 	export[2] = ft_strjoin("OLDPWD=", old);
 	ft_export(export, mini);
+	free(export[1]);
+	export[1]=NULL;
+	free(export[2]);
+	export[2]=NULL;
+	free(export);
+	export=NULL;
 }
 
 int	ft_cd(char **cmd, t_data *mini)

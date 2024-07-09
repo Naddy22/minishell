@@ -49,7 +49,7 @@ void	set_redir(t_data *mini, int pnb)
 
 	cmd = get_cmd(mini, pnb);
 	redir = cmd->redir;
-	if (!redir && mini->nb_pipes == mini->pnb)
+	if (!redir && mini->nb_pipes == mini->pnb && mini->pnb != 0)
 	{
 		// dprintf(2, "change output %d\n", mini->fdout_origin);
 		change_output(mini->fdout_origin);

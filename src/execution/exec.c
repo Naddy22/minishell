@@ -17,6 +17,16 @@ char	**dup_table(char **strs)
 	return (new_tab);
 }
 
+void	path_error_message(char **cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd[0], 2);
+	if(ft_strchr(cmd[0], '/') != 0)
+		ft_putstr_fd(": No such file or directory\n",2);
+	else
+		ft_putstr_fd(": command not found\n", 2);
+}
+
 void	ft_execve(t_data *mini, t_command *cmd)
 {
 	char	*path;
@@ -29,8 +39,9 @@ void	ft_execve(t_data *mini, t_command *cmd)
 		path = get_path(mini, cmd->cmd[0]);
 	if (!path)
 	{
-		perror("Access ");
+		path_error_message(cmd->cmd);
 		mini->exit_status = 127;
+		exit_with_status(mini);
 	}
 	env = dup_table(mini->cpy_env);
 	cmd_table = dup_table(cmd->cmd);

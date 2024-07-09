@@ -152,7 +152,7 @@ void	replace_env(char *elem, t_data *mini)
 		{
 			free(mini->cpy_env[i]);
 			mini->cpy_env[i] = NULL;
-			mini->cpy_env[i] = elem;
+			mini->cpy_env[i] = ft_strdup(elem);
 		}
 		ft_free_table(split_envi);
 		i++;
@@ -176,9 +176,8 @@ char	**add_to_env(char *elem, t_data *mini)
 		new_env[i] = ft_strdup(mini->cpy_env[i]);
 		i++;
 	}
-	new_env[i] = elem;
+	new_env[i] = ft_strdup(elem);
 	ft_free_table(mini->cpy_env);
-	mini->cpy_env = NULL;
 	return (new_env);
 }
 

@@ -112,29 +112,6 @@ int main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		data.pnb = 0;
-		// start manual test
-        // char **catptr = malloc(2 * sizeof (char *));
-        // char *cat = "cat";
-        // char *ls = "ls";
-        // char **lsptr = malloc(2 * sizeof (char *));
-        // t_command    testcmd;
-        // t_command    testcmd2;
-        // t_command    testcmd3;
-        // catptr[0] = cat;
-        // catptr[1] = NULL;
-        // lsptr[0] = ls;
-        // lsptr[1]=NULL;
-        // testcmd.cmd = catptr;
-        // testcmd2.cmd = catptr;
-        // testcmd3.cmd = lsptr;
-        // testcmd.redir = NULL;
-        // testcmd2.redir = NULL;
-        // testcmd3.redir = NULL;
-        // testcmd.next=&testcmd2;
-        // testcmd2.next=&testcmd3;
-        // testcmd3.next=NULL;
-        // data.commands = &testcmd;
-        // end manual test
 		to_execute(&data);
 		free_all(&data);
 	}
