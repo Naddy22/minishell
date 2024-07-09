@@ -21,6 +21,10 @@ int	check_all_digit(char **cmd, int i)
 
 void	exit_with_status(t_data *mini)
 {
+	// dprintf(2, "exit:24 close fdout_origin %d\n", mini->fdout_origin);
+	// dprintf(2, "exit:25 close fdin_origin %d\n", mini->fdin_origin);
+	close(mini->fdout_origin);
+	close(mini->fdin_origin);
 	free_data(mini);
 	exit((unsigned char)mini->exit_status);
 }

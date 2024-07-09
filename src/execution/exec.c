@@ -35,6 +35,10 @@ void	ft_execve(t_data *mini, t_command *cmd)
 	env = dup_table(mini->cpy_env);
 	cmd_table = dup_table(cmd->cmd);
 	free_data(mini);
+	// dprintf(2, "exec:38 close fdout_origin in child %d\n", mini->fdout_origin);
+	// dprintf(2, "exec:39 close fdin_origin in child %d\n", mini->fdin_origin);
+	close(mini->fdin_origin);
+	close(mini->fdout_origin);
 	execve(path, cmd_table, env);
 	perror("Execve ");
 	ft_free_table(env);
@@ -114,6 +118,8 @@ void	child(t_data *mini)
 		pnb--;
 	}
 	set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
+	// dprintf(2, "exec:121 close pipe0 in child %d\n", mini->fd[0]);
+	// dprintf(2, "exec:122 close pipe1 in child %d\n", mini->fd[1]);
 	close(mini->fd[0]);
 	close(mini->fd[1]);
 	execution(mini);
@@ -126,19 +132,23 @@ void	ft_pipe(t_data *mini)
 	while (mini->pnb <= mini->nb_pipes)
 	{
 		pipe(mini->fd);
+		// dprintf(2, "exec:135 created pipe0 and pipe1 %d %d\n", mini->fd[0], mini->fd[1]);
 		pid = fork();
 		if (pid == -1)
 		{
 			perror("Fork ");
+			// dprintf(2, "exec:140 pipe0 close cause fork error %d\n", mini->fd[0]);
 			close(mini->fd[0]);
 		}
 		if (pid == 0)
 		{
 			set_signal(CHILD);
+			// dprintf(2, "going in child\n");
 			child(mini);
 		}
 		else
-			parent(mini); 
+			parent(mini);
+		// dprintf(2, "exec:150 pipe1 close (parent) %d\n", mini->fd[1]);
 		close(mini->fd[1]);
 		mini->pnb += 1;
 	}
@@ -159,6 +169,7 @@ int	to_execute(t_data *mini)
 		else
 		{
 			ft_pipe(mini);
+			// dprintf(2, "change parent back\n");
 			change_parent_back(mini);
 			waitpid(-1, &mini->tmp_status, 0);
 			mini->exit_status = get_err_code(mini->tmp_status);

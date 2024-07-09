@@ -50,9 +50,15 @@ void	set_redir(t_data *mini, int pnb)
 	cmd = get_cmd(mini, pnb);
 	redir = cmd->redir;
 	if (!redir && mini->nb_pipes == mini->pnb)
+	{
+		// dprintf(2, "change output %d\n", mini->fdout_origin);
 		change_output(mini->fdout_origin);
+	}
 	if (mini->nb_pipes != mini->pnb)
+	{
+		// dprintf(2, "change output %d\n", mini->fd[1]);
 		change_output(mini->fd[1]);
+	}
 	while (redir)
 	{
 		if (redir->type == L1_REDIR || redir->type == L2_REDIR)

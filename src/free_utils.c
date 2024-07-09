@@ -12,9 +12,9 @@ void	free_redirlist(t_redir **redir)
 		if (current->type == L2_REDIR)
 		{
 			unlink(current->file_name);
-			ft_free_verif((void *)&current->file_name);
+			ft_free_verif((void **)&current->file_name);
 		}
-		ft_free_verif((void *)&current);
+		ft_free_verif((void **)&current);
 		current = next;
 	}
 	*redir = NULL;
@@ -47,9 +47,9 @@ void	free_cmdlist(t_command **list)
 		next = current->next;
 		if (current->redir)
 			free_redirlist(&current->redir);
-		//dprintf(2, "0 %s : %p ; %p\n", current->cmd[0], &current->cmd[0], &current->cmd);		
-		//dprintf(2, "1 %s : %p ; %p\n", current->cmd[1], &current->cmd[1], &current->cmd);
-		//dprintf(2, "2 %s : %p ; %p\n", current->cmd[2], &current->cmd[2], &current->cmd);
+		dprintf(2, "0 %s : %p ; %p\n", current->cmd[0], &current->cmd[0], &current->cmd);		
+		dprintf(2, "1 %s : %p ; %p\n", current->cmd[1], &current->cmd[1], &current->cmd);
+		dprintf(2, "2 %s : %p ; %p\n", current->cmd[2], &current->cmd[2], &current->cmd);
 		ft_free_table(current->cmd);
 		ft_free_verif((void **)&current);
 		current = next;
@@ -69,8 +69,8 @@ void	free_all(t_data *data)
 */
 void	free_data(t_data *data)
 {
-	close(data->fdin_origin);
-	close(data->fdout_origin);
+	// close(data->fdin_origin);
+	// close(data->fdout_origin);
 	free_all(data);
 	ft_free_table(data->cpy_env);
 	ft_free_table(data->cpy_env_orig);

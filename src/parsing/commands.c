@@ -69,6 +69,7 @@ int	fill_word_cmd(t_data *data, t_list **current)
 		if (new_cmd == NULL)
 			return (FAIL);
 		cmd_add_back(&data->commands, new_cmd);
+		data->parsing.parse_cmd = NULL;
 	}
 	else
 	{

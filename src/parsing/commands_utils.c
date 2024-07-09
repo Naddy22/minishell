@@ -52,7 +52,7 @@ int	alloc_new_cmd(t_data *data, size_t len_new)
 		i++;
 		j++;
 	}
-	// ft_free_verif((void **)&data->parsing.last_lstcmd->cmd);
+	ft_free_verif((void **)&data->parsing.last_lstcmd->cmd);
 	data->parsing.last_lstcmd->cmd = new;
 	return (SUCCESS);
 }
