@@ -57,9 +57,10 @@ int	handle_double_quote(t_data *data, size_t *i, int *start)
 			data->exit_status = 258;
 			return (FAIL);
 		}
-		else if (str[*i] == '$')
+		else if (str[*i] == '$' && data->last_token->previous->token_type != L2_REDIR)
 		{
-			handle_dollar_in_dquote(data, i, start);
+			if (handle_dollar_in_dquote(data, i, start) != SUCCESS)
+				return (FAIL);
 			continue ;
 		}
 		(*i)++;

@@ -33,7 +33,7 @@ int	add_dollar_value_to_str(t_data *data, const char *value)
 		data->last_token->brut_cmd = ft_strdup(value);
 		if (data->last_token->brut_cmd == NULL)
 		{
-			perror("Malloc : ");
+			perror("Malloc");
 			return (FAIL);
 		}
 	}
@@ -43,7 +43,7 @@ int	add_dollar_value_to_str(t_data *data, const char *value)
 		new = ft_strjoin(current, value);
 		if (new == NULL)
 		{
-			perror("Malloc : ");
+			perror("Malloc");
 			return (FAIL);
 		}
 		ft_free_verif((void **)&data->last_token->brut_cmd);
@@ -62,13 +62,13 @@ int	add_exit_status_to_token(t_data *data, size_t *i)
 	status_char = ft_itoa(data->exit_status);
 	if (status_char == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (FAIL);	
 	}
 	new = ft_strjoin(current, status_char);
 	if (new == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (FAIL);
 	}
 	ft_free_verif((void **)&(data->last_token->brut_cmd));
@@ -88,7 +88,7 @@ char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
 	var_name = ft_substr(str, *start, *i - *start);
 	if (var_name == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (NULL);
 	}
 	result = get_env_value(data->cpy_env, var_name);

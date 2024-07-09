@@ -39,7 +39,7 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 	tmp = ft_substr(str, *start, *i - *start);
 	if (tmp == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (FAIL);
 	}
 	data->last_token->brut_cmd = ft_strjoin(token, tmp);
@@ -47,7 +47,7 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 	ft_free_verif((void *)&tmp);
 	if (data->last_token->brut_cmd == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (FAIL);
 	}
 	return (SUCCESS);
@@ -86,7 +86,7 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 		if (find_token(data, i, start) != SUCCESS)
 			return (FAIL);
 	}
-	else if (str[*i] == '$')
+	else if (str[*i] == '$' && data->last_token->previous->token_type != L2_REDIR)
 	{
 		if (process_end_of_token(data, i, start) != SUCCESS)
 			return (FAIL);

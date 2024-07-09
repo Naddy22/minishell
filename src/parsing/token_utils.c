@@ -19,6 +19,8 @@ int	create_token(t_data *data, size_t *i, int *start, int id)
 		return(FAIL);
 	}
 	new->token_type = id;
+	if (data->last_token)
+		new->previous = data->last_token;
 	data->last_token = new;
 	ft_lstadd_back(&data->tokens, new);
 	if (id == WORD)
@@ -55,7 +57,8 @@ int	create_token_pipe_redir(t_data *data, size_t *i, int *start)
 
 int ft_isspace(char c)
 {
-	if (c == ' ' || c == '\t') 
-		return (TRUE);
-	return (FALSE); 
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || \
+		c == '\r')
+		return (TRUE); //TODO Voir pourquoi le isspace semble pas fonctionner ('ls\t-la' fonctionne mais tout est collé)
+	return (FALSE);
 }
