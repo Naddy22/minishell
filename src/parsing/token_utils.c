@@ -59,6 +59,6 @@ int ft_isspace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || \
 		c == '\r')
-		return (TRUE); //TODO Voir pourquoi le isspace semble pas fonctionner ('ls\t-la' fonctionne mais tout est collé)
+		return (TRUE);
 	return (FALSE);
 }
