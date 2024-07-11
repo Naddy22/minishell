@@ -33,11 +33,11 @@ void	change_input(int fd)
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
 		perror("Dup2 ");
-	// if (fd != 0)
-	// {
+	if (fd != 0)
+	{
 		// dprintf(2, "file_handling:38 close %d\n", fd);
 		close(fd);
-	// }
+	}
 	// else
 	// 	dprintf(2, "file_handling:42 fd %d not closed\n", fd);
 }
