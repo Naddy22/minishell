@@ -1,3 +1,5 @@
+#include "../../inc/minishell.h"
+
 int	get_size(char **strs)
 {
 	int	size;
@@ -8,4 +10,17 @@ int	get_size(char **strs)
 	while (strs[size])
 		size++;
 	return (size);
+}
+
+t_command	*get_cmd(t_data *mini, int pnb)
+{
+	t_command	*cmd;
+
+	cmd = mini->commands;
+	while (pnb > 0)
+	{
+		cmd = cmd->next;
+		pnb--;
+	}
+	return (cmd);
 }

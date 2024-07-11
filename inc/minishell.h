@@ -141,12 +141,15 @@ char		*get_path(t_data *mini, char *str);
 //redirection.c
 void		set_redir(t_data *mini, int pnb);
 
+
+//execution
 //exec.c
-void		execution(t_data *mini);
-void		child(t_data *mini, pid_t pid);
+void		builtin_exec(t_data *mini, t_command *cmd);
 int			to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
 
+
+//builtins
 //cd.c
 int			ft_cd(char **cmd, t_data *mini);
 
@@ -169,13 +172,26 @@ int			ft_unset(char **cmd, t_data *mini);
 int			verif_name(char *str);
 
 //export.c
-int			get_size(char **strs);
 int			ft_export(char **cmd, t_data *mini);
 
 //signals.c
-void	set_signal(sig_type type);
+void		set_signal(sig_type type);
 
 //heredoc.c
-void	make_here_docs(t_data *mini);
+void		make_here_docs(t_data *mini);
+
+//child.c
+void		ft_execve(t_data *mini, t_command *cmd);
+void		execution(t_data *mini);
+void		child(t_data *mini, pid_t pid);
+
+//exec_utils.c
+char		**dup_table(char **strs);
+void		path_error_message(char **cmd);
+int			isbuiltins(t_command *cmd);
+
+//utils.c
+int			get_size(char **strs);
+t_command	*get_cmd(t_data *mini, int pnb);
 
 #endif 
