@@ -48,6 +48,7 @@ typedef struct s_command
 	t_redir				*redir;
 	int					fdin;
 	int					fdout;
+	pid_t				pid;
 	struct s_command	*next;
 }						t_command;
 
@@ -142,7 +143,7 @@ void		set_redir(t_data *mini, int pnb);
 
 //exec.c
 void		execution(t_data *mini);
-void		child(t_data *mini);
+void		child(t_data *mini, pid_t pid);
 int			to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
 

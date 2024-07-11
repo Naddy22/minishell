@@ -116,7 +116,7 @@ void	execution(t_data *mini) //add t_command with good cmd as arg. add pid in ea
 		ft_execve(mini, cmd);
 }
 
-void	child(t_data *mini)
+void	child(t_data *mini, pid_t pid)
 {
 	t_command	*cmd;
 	int			pnb;
@@ -128,6 +128,7 @@ void	child(t_data *mini)
 		cmd = cmd->next;
 		pnb--;
 	}
+	cmd->pid = pid;
 	set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
 	// dprintf(2, "exec:121 close pipe0 in child %d\n", mini->fd[0]);
 	// dprintf(2, "exec:122 close pipe1 in child %d\n", mini->fd[1]);
@@ -155,13 +156,26 @@ void	ft_pipe(t_data *mini)
 		{
 			set_signal(CHILD);
 			// dprintf(2, "going in child\n");
-			child(mini);
+			child(mini, pid);
 		}
 		else
 			parent(mini);
 		// dprintf(2, "exec:150 pipe1 close (parent) %d\n", mini->fd[1]);
 		close(mini->fd[1]);
 		mini->pnb += 1;
+	}
+}
+
+void	waiting_for_all_childs(t_data *mini)
+{
+	t_command	*cmd;
+
+	cmd = mini->commands;
+	while (cmd)
+	{
+		waitpid(cmd->pid, &mini->tmp_status, 0);
+		mini->exit_status = get_err_code(mini->tmp_status);
+		cmd = cmd->next;
 	}
 }
 
@@ -181,9 +195,8 @@ int	to_execute(t_data *mini)
 		{
 			ft_pipe(mini);
 			// dprintf(2, "change parent back\n");
+			waiting_for_all_childs(mini);
 			change_parent_back(mini);
-			waitpid(-1, &mini->tmp_status, 0);
-			mini->exit_status = get_err_code(mini->tmp_status);
 		}
 	}
 	return (0);
