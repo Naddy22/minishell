@@ -32,7 +32,7 @@ void	print_args(char *cmd, int *add_next_line, int *ok_n_flag)
 	else
 	{
 		*ok_n_flag = 1;
-		printf("%s", cmd);
+		printf("%s", cmd); //TODO: lis 32bit trop loin
 	}
 }
 

@@ -52,7 +52,7 @@ int	add_dollar_value_to_str(t_data *data, const char *value)
 	return (SUCCESS);
 }
 
-int	add_exit_status_to_token(t_data *data, size_t *i)
+int	add_exit_status_to_token(t_data *data, size_t *i, int *start)
 {
 	char	*status_char;
 	char	*current;
@@ -75,6 +75,7 @@ int	add_exit_status_to_token(t_data *data, size_t *i)
 	data->last_token->brut_cmd = new;
 	ft_free_verif((void **)&status_char);
 	(*i)++;
+	*start = *i;
 	return (SUCCESS);
 }
 
@@ -103,15 +104,22 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	char *result;
 	char *str;
 
+	if (data->last_token && data->last_token->previous && \
+	data->last_token->previous->token_type == L2_REDIR)
+	{
+		(*i)++;
+		return (SUCCESS);
+	}
 	str = data->parsing.last_user_cmd;
 	(*i)++;
 	if(ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
 		return (add_str_to_token(data, i, start));
 	if(str[*i] == '?')
-		return (add_exit_status_to_token(data, i));
+		return (add_exit_status_to_token(data, i, start));
 	*start = *i;
 	result = process_variable_name(data, i, start, str);
 	if (result == NULL)
 		return (FAIL);
+	*start = *i;
 	return (add_dollar_value_to_str(data, result));
 }
