@@ -4,7 +4,7 @@ int	check_here_docs(t_data *mini)
 {
 	t_redir		*redir;
 	t_command	*command;
-	
+
 	command = mini->commands;
 	while (command)
 	{
@@ -23,8 +23,8 @@ int	check_here_docs(t_data *mini)
 void	readline_here_doc(int fd, char *delim)
 {
 	char	*rl_buffer;
-	// char	*to_print;
 	size_t	len;
+	// char	*to_print;
 
 	len = ft_strlen(delim);
 	while (42)

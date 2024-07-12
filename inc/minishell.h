@@ -32,7 +32,7 @@ typedef enum sig_type
 	HERE_DOC,
 	CHILD,
 	PARENT,
-}	sig_type;
+}	t_sig_type;
 
 typedef struct s_redir
 {
@@ -141,13 +141,11 @@ char		*get_path(t_data *mini, char *str);
 //redirection.c
 void		set_redir(t_data *mini, int pnb);
 
-
 //execution
 //exec.c
 void		builtin_exec(t_data *mini, t_command *cmd);
 int			to_execute(t_data *mini);
 void		ft_pipe(t_data *mini);
-
 
 //builtins
 //cd.c
@@ -155,6 +153,12 @@ int			ft_cd(char **cmd, t_data *mini);
 
 //echo.c
 void		ft_echo(char **cmd);
+
+//environment_utils.c
+char		**ordering_env(char **envp);
+void		replace_env(char *elem, t_data *mini);
+char		**add_to_env(char *elem, t_data *mini);
+void		add_elem(char *elem, t_data *mini);
 
 //env.c
 void		ft_env(char **envp);
@@ -173,9 +177,10 @@ int			verif_name(char *str);
 
 //export.c
 int			ft_export(char **cmd, t_data *mini);
+int			check_env(char *elem, t_data *mini);
 
 //signals.c
-void		set_signal(sig_type type);
+void		set_signal(t_sig_type type);
 
 //heredoc.c
 void		make_here_docs(t_data *mini);

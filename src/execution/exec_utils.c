@@ -21,8 +21,8 @@ void	path_error_message(char **cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd[0], 2);
-	if(ft_strchr(cmd[0], '/') != 0)
-		ft_putstr_fd(": No such file or directory\n",2);
+	if (ft_strchr(cmd[0], '/') != 0)
+		ft_putstr_fd(": No such file or directory\n", 2);
 	else
 		ft_putstr_fd(": command not found\n", 2);
 }

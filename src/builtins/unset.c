@@ -7,7 +7,7 @@ int	verif_name(char *str)
 	i = 0;
 	if (!str)
 		return (FALSE);
-	while(str[i])
+	while (str[i])
 	{
 		if (i == 0 && (ft_isalpha(str[i]) || str[i] == '_'))
 			i++;

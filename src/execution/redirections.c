@@ -12,7 +12,6 @@ void	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 		perror("Access ");
 		mini->exit_status = 126;
 	}
-	
 }
 
 void	set_r_redir(t_redir	*redir, t_command *cmd)

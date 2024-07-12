@@ -19,7 +19,7 @@ static void sig_handler_main(int signum)
 	rl_redisplay();
 }
 
-void	set_signal(sig_type type)
+void	set_signal(t_sig_type type)
 {
 	if (type == MAIN)
 	{
