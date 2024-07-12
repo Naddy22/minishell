@@ -1,17 +1,5 @@
 #include "../../inc/minishell.h"
 
-int	get_size(char **strs)
-{
-	int	size;
-
-	size = 0;
-	if (!strs)
-		return (size);
-	while (strs[size])
-		size++;
-	return (size);
-}
-
 char	**deep_cpy(t_data *mini)
 {
 	int		i;
@@ -24,50 +12,34 @@ char	**deep_cpy(t_data *mini)
 	while (mini->cpy_env[i])
 	{
 		envext[i] = ft_calloc(ft_strlen(mini->cpy_env[i]) + 1, sizeof(char));
-		ft_strlcpy(envext[i], mini->cpy_env[i], ft_strlen(mini->cpy_env[i]) + 1);
+		ft_strlcpy(envext[i], mini->cpy_env[i],
+			ft_strlen(mini->cpy_env[i]) + 1);
 		i++;
 	}
 	return (envext);
 }
 
-static void	inner(char **envext, int i, int j)
+int	check_env(char *elem, t_data *mini)
 {
-	char	*swp;
-	char	**spliti;
-	char	**splitj;
-
-	swp = NULL;
-	while (envext[j])
-	{
-		spliti = ft_split(envext[i], '=');
-		splitj = ft_split(envext[j], '=');
-		if (ft_strncmp(spliti[0], splitj[0], ft_strlen(envext[i])) > 0)
-		{
-			swp = envext[i];
-			envext[i] = envext[j];
-			envext[j] = swp;
-		}
-		ft_free_table(splitj);
-		ft_free_table(spliti);
-		j++;
-	}
-}
-
-char	**ordering_env(char **envext)
-{
+	int		found;
 	int		i;
-	int		j;
+	char	**split_envi;
+	char	**split_elem;
 
 	i = 0;
-	if (!envext)
-		return (NULL);
-	while (envext[i])
+	found = 0;
+	split_elem = ft_split(elem, '=');
+	while (mini->cpy_env[i])
 	{
-		j = i + 1;
-		inner(envext, i, j);
+		split_envi = ft_split(mini->cpy_env[i], '=');
+		if (ft_strncmp(split_envi[0], split_elem[0],
+				ft_strlen(split_elem[0]) + 1) == 0)
+			found = 1;
+		ft_free_table(split_envi);
 		i++;
 	}
-	return (envext);
+	ft_free_table(split_elem);
+	return (found);
 }
 
 void	print_equal(char *envext)
@@ -85,8 +57,8 @@ void	print_equal(char *envext)
 		j = 2;
 		while (split[j])
 		{
-			split[1]=ft_strjoin_dup(split[1], "=");
-			split[1]=ft_strjoin_dup(split[1], split[j]);
+			split[1] = ft_strjoin_dup(split[1], "=");
+			split[1] = ft_strjoin_dup(split[1], split[j]);
 			j++;
 		}
 		printf("declare -x %s=\"%s\"\n", split[0], split[1]);
@@ -113,84 +85,6 @@ void	print_export(t_data *mini)
 		}
 		ft_free_table(envext);
 	}
-}
-
-int	check_env(char *elem, t_data *mini)
-{
-	int		found;
-	int		i;
-	char	**split_envi;
-	char	**split_elem;
-
-	i = 0;
-	found = 0;
-	split_elem = ft_split(elem, '=');
-	while (mini->cpy_env[i])
-	{
-		split_envi = ft_split(mini->cpy_env[i], '=');
-		if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(split_elem[0]) + 1) == 0)
-			found = 1;
-		ft_free_table(split_envi);
-		i++;
-	}
-	ft_free_table(split_elem);
-	return(found);
-}
-
-void	replace_env(char *elem, t_data *mini)
-{
-	int		i;
-	char	**split_envi;
-	char	**split_elem;
-
-	i = 0;
-	split_elem = ft_split(elem, '=');
-	while (mini->cpy_env[i])
-	{
-		split_envi = ft_split(mini->cpy_env[i], '=');
-		if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(elem) + 1) == 0)
-		{
-			free(mini->cpy_env[i]);
-			mini->cpy_env[i] = NULL;
-			mini->cpy_env[i] = elem;
-		}
-		ft_free_table(split_envi);
-		i++;
-	}
-	ft_free_table(split_elem);
-}
-
-char	**add_to_env(char *elem, t_data *mini)
-{
-	char	**new_env;
-	int		size;
-	int		i;
-
-	i = 0;
-	size = get_size(mini->cpy_env);
-	new_env = ft_calloc(size + 2, sizeof(char *));
-	if (!new_env)
-		return (NULL);
-	while (i != size)
-	{
-		new_env[i] = ft_strdup(mini->cpy_env[i]);
-		i++;
-	}
-	new_env[i] = elem;
-	ft_free_table(mini->cpy_env);
-	mini->cpy_env = NULL;
-	return (new_env);
-}
-
-void	add_elem(char *elem, t_data *mini)
-{
-	int		found;
-
-	found = check_env(elem, mini);
-	if (found)
-		replace_env(elem, mini);
-	else
-		mini->cpy_env = add_to_env(elem, mini);
 }
 
 int	ft_export(char **cmd, t_data *mini)

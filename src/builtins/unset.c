@@ -7,7 +7,7 @@ int	verif_name(char *str)
 	i = 0;
 	if (!str)
 		return (FALSE);
-	while(str[i])
+	while (str[i])
 	{
 		if (i == 0 && (ft_isalpha(str[i]) || str[i] == '_'))
 			i++;
@@ -38,13 +38,13 @@ void	remove_elem(char *elem, t_data *mini)
 		envp_elem = ft_split(mini->cpy_env[i], '=');
 		if (ft_strncmp(elem, envp_elem[0], ft_strlen(elem) + 1) != 0)
 		{
-			new_env[j] = mini->cpy_env[i];
+			new_env[j] = ft_strdup(mini->cpy_env[i]);
 			j++;
 		}
 		ft_free_table(envp_elem);
 		i++;
 	}
-	//ft_free_table(mini->cpy_env);
+	ft_free_table(mini->cpy_env);
 	mini->cpy_env = new_env;
 }
 
