@@ -50,8 +50,8 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 		perror("Malloc");
 		return (FAIL);
 	}
-	// if (data->last_token->brut_cmd[0] == '$' && !isalnum(data->last_token->brut_cmd[0]))
-	// 	*start = *i; //fait pour eviter que ca fasse $$ quand je met $, car ca passe 2 fois dans cette fonction obligatoirement.
+	if (data->last_token->brut_cmd[0] == '$' && !isalnum(data->last_token->brut_cmd[0]))
+		*start = *i; //fait pour eviter que ca fasse $$ quand je met $, car ca passe 2 fois dans cette fonction obligatoirement.
 	return (SUCCESS);
 }
 
@@ -64,6 +64,8 @@ int	process_end_of_token(t_data *data, size_t *i, int *start)
 		data->last_token->previous->token_type == L2_REDIR \
 		&& str[*i] == '$')
 			return (SUCCESS);
+	if (!data->tokens) //mis car si juste exemple $A dans la ligne de commande, le seul node n'existe plus
+		return (FAIL);
 	if (data->last_token->token_type == WORD)
 	{
 		if (add_str_to_token(data, i, start) != SUCCESS)
@@ -98,7 +100,6 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 			return (FAIL);
 		if (handle_dollar_expansion(data, i, start) != SUCCESS)
 			return (FAIL);
-		// *start = *i; //le soucis vient de là car dans tous les cas on veut que start soit egal a i a ce moment la sauf que pas le cas quand on a un << avant
 	}
 	else if (str[*i] == '\'' || str[*i] == '"')
 	{
@@ -134,3 +135,4 @@ int	parsing(t_data *data)
 		return (FAIL);
 	return (SUCCESS);
 }
+//voir probleme quand j'ecris ex: h$ ca m'ecrit hh$h$ dans mon token. Je pense que c'est encore du au start que je set mal

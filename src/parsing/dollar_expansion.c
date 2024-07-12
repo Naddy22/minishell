@@ -86,6 +86,12 @@ char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
 
 	while((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
 		(*i)++;
+	if (str[*i] == '$')
+	{
+		result = ft_strdup("$"); //mis pour avoir un $ si $$ ecrit
+		(*i)++;
+		return (result);
+	}
 	var_name = ft_substr(str, *start, *i - *start);
 	if (var_name == NULL)
 	{
@@ -121,5 +127,8 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	if (result == NULL)
 		return (FAIL);
 	*start = *i;
+	if (result[0] == '\0' && (!data->last_token->brut_cmd || \
+		data->last_token->brut_cmd[0] == '\0')) //Condition pour pas que ca aille dedans si ma commande a deja commencé a etre rempli (ex: coucou$A), ajout de \0 car mon brut est forcement créer
+		return (ft_reset_1token(data, &data->last_token));
 	return (add_dollar_value_to_str(data, result));
 }
