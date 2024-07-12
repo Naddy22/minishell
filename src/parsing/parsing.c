@@ -44,12 +44,14 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 	}
 	data->last_token->brut_cmd = ft_strjoin(token, tmp);
 	ft_free_verif((void *)&token);
-	ft_free_verif((void *)&tmp);
+	ft_free_verif((void *)&tmp); 
 	if (data->last_token->brut_cmd == NULL)
 	{
 		perror("Malloc");
 		return (FAIL);
 	}
+	// if (data->last_token->brut_cmd[0] == '$' && !isalnum(data->last_token->brut_cmd[0]))
+	// 	*start = *i; //fait pour eviter que ca fasse $$ quand je met $, car ca passe 2 fois dans cette fonction obligatoirement.
 	return (SUCCESS);
 }
 
