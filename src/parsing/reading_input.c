@@ -9,7 +9,7 @@ static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 		return (FALSE);
 	}
 	add_history(rl_buffer);
-	current_cmd = ft_strtrim(rl_buffer, " ");
+	current_cmd = ft_strtrim(rl_buffer, " "); //TODO check also if tabs... pretty sure it is causing segfaults here if cmd is only tabs
 	if (current_cmd == NULL)
 	{
 		ft_free_verif((void *)&rl_buffer);

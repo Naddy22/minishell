@@ -63,7 +63,7 @@ int	process_end_of_token(t_data *data, size_t *i, int *start)
 		if (add_str_to_token(data, i, start) != SUCCESS)
 			return (FAIL);
 	}
-	if (ft_isspace(str[*i]) == TRUE)
+	if (ft_isspace(str[*i]) == TRUE) //TODO check what happens with only tabs... it segfaults
 		(*i)++;
 	else if (str[*i] == '\0')
 		return (SUCCESS);

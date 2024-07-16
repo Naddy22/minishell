@@ -7,7 +7,7 @@
 // strjoin par la suite au texte deja commencé afin de remplacer tout en allouant
 // la bonne taille (si le env n'existe pas, ca join juste rien avec rien)
 
-char *get_env_value(char **env_cpy, const char *var_name)
+char *get_env_value(char **env_cpy, const char *var_name) //TODO \$HOME a gerer? ne doit pas remplacer $HOME
 {
 	size_t i;
 	size_t len;

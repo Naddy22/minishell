@@ -1,6 +1,7 @@
 #include "../../inc/minishell.h"
 
-//Gestion des codes d'erreur ok
+//TODO echo "" $HOME imprime comme avec -n
+//TODO echo "" hola doit imprimer espace entre "" et hola
 
 int	check_n_flag(char *arg)
 {
