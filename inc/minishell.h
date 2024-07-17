@@ -54,6 +54,7 @@ typedef struct s_command
 
 typedef struct s_list
 {
+	struct s_list	*previous;
 	char			*brut_cmd;
 	int				token_type;
 	struct s_list	*next; // à utiliser pour aller vers la prochaine commande

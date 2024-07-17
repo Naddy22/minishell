@@ -34,11 +34,16 @@ int	handle_simple_quote(t_data *data, size_t *i, int *start)
 
 int	handle_dollar_in_dquote(t_data *data, size_t *i, int *start)
 {
+	if (data->last_token && data->last_token->previous && \
+	data->last_token->previous->token_type == L2_REDIR)
+	{
+		(*i)++;
+		return (SUCCESS);
+	}
 	if (add_str_to_token(data, i, start) != SUCCESS)
 		return (FAIL);
 	if (handle_dollar_expansion(data, i, start) != SUCCESS)
 		return (FAIL);
-	*start = *i;
 	return (SUCCESS);
 }
 
@@ -59,7 +64,8 @@ int	handle_double_quote(t_data *data, size_t *i, int *start)
 		}
 		else if (str[*i] == '$')
 		{
-			handle_dollar_in_dquote(data, i, start);
+			if (handle_dollar_in_dquote(data, i, start) != SUCCESS)
+				return (FAIL);
 			continue ;
 		}
 		(*i)++;

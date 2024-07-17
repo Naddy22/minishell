@@ -39,17 +39,19 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 	tmp = ft_substr(str, *start, *i - *start);
 	if (tmp == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (FAIL);
 	}
 	data->last_token->brut_cmd = ft_strjoin(token, tmp);
 	ft_free_verif((void *)&token);
-	ft_free_verif((void *)&tmp);
+	ft_free_verif((void *)&tmp); 
 	if (data->last_token->brut_cmd == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (FAIL);
 	}
+	// if (data->last_token->brut_cmd[0] == '$' && !isalnum(data->last_token->brut_cmd[0]))
+	// 	*start = *i; //fait pour eviter que ca fasse $$ quand je met $, car ca passe 2 fois dans cette fonction obligatoirement.
 	return (SUCCESS);
 }
 
@@ -58,6 +60,10 @@ int	process_end_of_token(t_data *data, size_t *i, int *start)
 	char *str;
 
 	str = data->parsing.last_user_cmd;
+	if (data->last_token && data->last_token->previous && \
+		data->last_token->previous->token_type == L2_REDIR \
+		&& str[*i] == '$')
+			return (SUCCESS);
 	if (data->last_token->token_type == WORD)
 	{
 		if (add_str_to_token(data, i, start) != SUCCESS)
@@ -92,7 +98,7 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 			return (FAIL);
 		if (handle_dollar_expansion(data, i, start) != SUCCESS)
 			return (FAIL);
-		*start = *i;
+		// *start = *i; //le soucis vient de là car dans tous les cas on veut que start soit egal a i a ce moment la sauf que pas le cas quand on a un << avant
 	}
 	else if (str[*i] == '\'' || str[*i] == '"')
 	{
@@ -113,7 +119,7 @@ int	parsing(t_data *data)
 	start = 0;
 	brut_cmd = data->parsing.last_user_cmd;
 	data->parsing.i = 0;
-	data->nb_pipes = 0; 
+	data->nb_pipes = 0;
 	if (find_token(data, &data->parsing.i, &start) != SUCCESS)
 		return (FAIL);
 	while (brut_cmd[data->parsing.i] != '\0')

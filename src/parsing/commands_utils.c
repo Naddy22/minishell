@@ -14,7 +14,7 @@ int	get_tab_cmd(t_data *data, t_list **current)
 	data->parsing.parse_cmd = ft_calloc(data->parsing.i + 1, sizeof(char *));
 	if (data->parsing.parse_cmd == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (FAIL);
 	}
 	data->parsing.i = 0;
@@ -64,7 +64,7 @@ t_command	*create_new_lstcmd(t_data *data)
 	new = ft_calloc(1, sizeof(t_command));
 	if (new == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (NULL);
 	}
 	if (data->parsing.parse_cmd != NULL)
@@ -82,7 +82,7 @@ t_redir	*create_new_lstredir(t_list **current)
 	new = ft_calloc(1, sizeof(t_redir));
 	if (new == NULL)
 	{
-		perror("Malloc : ");
+		perror("Malloc");
 		return (NULL);
 	}
 	new->type = (*current)->token_type;

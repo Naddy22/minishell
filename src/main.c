@@ -22,7 +22,12 @@ void	test_print_token_list(t_list *tokens)
 				printf("Token %d: |\n", i);
 		}
 		else
-			printf("Token %d: %s\n", i, current->brut_cmd);
+		{
+			if (current->previous)
+				printf("Token %d: %s (previous: %s)\n", i, current->brut_cmd, current->previous->brut_cmd);
+			else
+				printf("Token %d: %s (previous: (null)\n", i, current->brut_cmd);
+		}
 		current = current->next;
 		i++;
 	}
