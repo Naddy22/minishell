@@ -50,8 +50,9 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 		perror("Malloc");
 		return (FAIL);
 	}
-	if (data->last_token->brut_cmd[0] == '$' && !isalnum(data->last_token->brut_cmd[0]))
-		*start = *i; //fait pour eviter que ca fasse $$ quand je met $, car ca passe 2 fois dans cette fonction obligatoirement.
+	*start = *i; //essaie de le mettre systematiquement
+	// if (data->last_token->brut_cmd[0] == '$' && !isalnum(data->last_token->brut_cmd[0]))
+	// 	*start = *i; //fait pour eviter que ca fasse $$ quand je met $, car ca passe 2 fois dans cette fonction obligatoirement.
 	return (SUCCESS);
 }
 
@@ -71,7 +72,7 @@ int	process_end_of_token(t_data *data, size_t *i, int *start)
 		if (add_str_to_token(data, i, start) != SUCCESS)
 			return (FAIL);
 	}
-	if (ft_isspace(str[*i]) == TRUE) //TODO check what happens with only tabs... it segfaults
+	if (ft_isspace(str[*i]) == TRUE)
 		(*i)++;
 	else if (str[*i] == '\0')
 		return (SUCCESS);

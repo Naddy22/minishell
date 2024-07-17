@@ -84,9 +84,11 @@ char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
 	char *var_name;
 	char *result;
 
+	// *start = *i; //Ne pas enlever: fait pour remettre start sur la premiere lettre du nom de variable d'environnement
 	while((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
 		(*i)++;
-	if (str[*i] == '$')
+	if (str[*i] == '$') //&& str[*i + 1] == '$') || (str[*i] == '$' && str[*i] == '\0'))
+		 //quand j'ajoute les conditions en commentaire au dessus ca marche pour $USER$USER (sans ca ecrit juste $USER) mais pas pour $$ qui se fait remplacer par rien
 	{
 		result = ft_strdup("$"); //mis pour avoir un $ si $$ ecrit
 		(*i)++;
@@ -102,6 +104,7 @@ char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
 	if (result == NULL)
 		result = "";
 	ft_free_verif((void **)&var_name);
+	// *start = *i; //dernier ajout 
 	return (result);
 }
 
@@ -118,8 +121,10 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	}
 	str = data->parsing.last_user_cmd;
 	(*i)++;
-	if(ft_isspace(str[*i]) == TRUE || (str[*i] == '\0'))
-		return (add_str_to_token(data, i, start));
+	if (ft_isalpha(str[*i]) == FALSE && str[*i] != '_' && str[*i] != '$') //ajout de isalnum de base pour que rien ne soit interpreté si ce n'est pas une lettre
+		return (add_str_to_token(data, i, start)); //mais m'ecrit $$ si je met $$, $$$ si je met $$$, etc. Essaie d'ajouter && str[*i] != '$' mais m'ecrit rien quand $$ alors que je veux un $
+	if(ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
+		return (add_str_to_token(data, i, start)); // probleme vient de la: mais si j'ajoute && str[*i - 1] != '$' ca ecrit que h 
 	if(str[*i] == '?')
 		return (add_exit_status_to_token(data, i, start));
 	*start = *i; //Ne pas enlever: fait pour remettre start sur la premiere lettre du nom de variable d'environnement
@@ -132,3 +137,6 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 		return (ft_reset_1token(data, &data->last_token));
 	return (add_dollar_value_to_str(data, result));
 }
+
+
+//next step: regler a la ligne 90, le probleme de $$ qui ne doit pas etre remplacé par rien et $USER$USER qui doit affichedr namoisannanoisan
