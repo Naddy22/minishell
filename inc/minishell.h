@@ -187,6 +187,9 @@ void		set_signal(t_sig_type type);
 //heredoc.c
 void		make_here_docs(t_data *mini);
 
+//heredoc_parsing.c
+char		*parsing_heredoc(char *str);
+
 //child.c
 void		ft_execve(t_data *mini, t_command *cmd);
 void		execution(t_data *mini);

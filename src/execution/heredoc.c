@@ -23,9 +23,8 @@ int	check_here_docs(t_data *mini)
 void	readline_here_doc(int fd, char *delim)
 {
 	char	*rl_buffer;
-	// char	*to_print;
+	char	*to_print;
 	size_t	len;
-	// char	*to_print;
 
 	len = ft_strlen(delim);
 	while (42)
@@ -36,10 +35,13 @@ void	readline_here_doc(int fd, char *delim)
 			ft_free_verif((void *)&rl_buffer);
 			return ;
 		}
-		// to_print = parsing_heredoc(rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
-		ft_putstr_fd(rl_buffer, fd);
+		to_print = parsing_heredoc(rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
+		if (to_print == NULL)
+			printf("Je suis null\n");
+		ft_putstr_fd(to_print, fd);
 		ft_putstr_fd("\n", fd); //tant qu'il y a des quotes ' ou " tu passes et tu change si c'Est un $ avec la variable env si existant, passé le reste des ' et "
 		ft_free_verif((void *)&rl_buffer);
+		ft_free_verif((void *)&to_print);
 	}
 }
 

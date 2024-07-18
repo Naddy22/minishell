@@ -38,6 +38,7 @@ SRC			=	main.c \
 				signals.c \
 				redirections.c \
 				heredoc.c \
+				heredoc_parsing.c \
 				utils.c \
 				exec_utils.c \
 				child.c \
@@ -140,6 +141,6 @@ rlclean: fclean
 	cd inc/readline && make distclean
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --suppressions=supp_copy.txt ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --suppressions=supp.txt ./minishell
 
 re:	fclean all
