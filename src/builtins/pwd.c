@@ -4,6 +4,7 @@ int	ft_pwd(void)
 {
 	char	buf[1024];
 
+	ft_bzero(buf, 1024);
 	getcwd(buf, 1024);
 	if (!(*buf))
 	{

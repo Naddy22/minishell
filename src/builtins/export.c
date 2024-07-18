@@ -49,9 +49,9 @@ void	print_equal(char *envext)
 
 	split = ft_split(envext, '=');
 	if (get_size(split) == 1)
-		printf("declare -x %s=\"\"\n", split[0]);
+		ft_printf("declare -x %s=\"\"\n", split[0]);
 	else if (get_size(split) == 2)
-		printf("declare -x %s=\"%s\"\n", split[0], split[1]);
+		ft_printf("declare -x %s=\"%s\"\n", split[0], split[1]);
 	else
 	{
 		j = 2;
@@ -61,7 +61,7 @@ void	print_equal(char *envext)
 			split[1] = ft_strjoin_dup(split[1], split[j]);
 			j++;
 		}
-		printf("declare -x %s=\"%s\"\n", split[0], split[1]);
+		ft_printf("declare -x %s=\"%s\"\n", split[0], split[1]);
 	}
 	ft_free_table(split);
 }
@@ -80,7 +80,7 @@ void	print_export(t_data *mini)
 			if (ft_strchr(envext[i], '='))
 				print_equal(envext[i]);
 			else
-				printf("declare -x %s\n", envext[i]);
+				ft_printf("declare -x %s\n", envext[i]);
 			i++;
 		}
 		ft_free_table(envext);

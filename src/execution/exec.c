@@ -35,14 +35,14 @@ void	ft_pipe(t_data *mini)
 			perror("Fork ");
 			close(mini->fd[0]);
 		}
-		if (pid == 0)
+		else if (pid == 0)
 		{
 			set_signal(CHILD);
 			child(mini, pid);
 		}
 		else
 			parent(mini);
-		// close(mini->fd[1]);
+		close(mini->fd[1]);
 		mini->pnb += 1;
 	}
 }
