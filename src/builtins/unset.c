@@ -13,7 +13,7 @@ int	verif_name(char *str)
 			i++;
 		else if (i != 0 && (ft_isalnum(str[i]) || str[i] == '_'))
 			i++;
-		else if (str[i] == '=')
+		else if (i != 0 && str[i] == '=')
 			return (TRUE);
 		else
 			return (FALSE);

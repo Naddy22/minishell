@@ -15,7 +15,7 @@ int	get_err_code(int exit_code)
 void	free_error(t_data *data, char *error)
 {
 	free_all(data);
-	printf("%s\n", error);
+	ft_printf("%s\n", error);
 }
 
 

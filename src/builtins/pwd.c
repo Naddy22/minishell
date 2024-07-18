@@ -12,6 +12,6 @@ int	ft_pwd(void)
 		return (1);
 	}
 	else
-		printf("%s\n", buf);
+		ft_printf("%s\n", buf);
 	return (0);
 }

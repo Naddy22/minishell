@@ -10,7 +10,7 @@ void	ft_env(char **envp)
 	while (envp[i])
 	{
 		if (ft_strchr(envp[i], '='))
-			printf("%s\n", envp[i]);
+			ft_printf("%s\n", envp[i]);
 		i++;
 	}
 }
