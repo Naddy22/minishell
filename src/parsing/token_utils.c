@@ -62,3 +62,26 @@ int ft_isspace(char c)
 		return (TRUE);
 	return (FALSE);
 }
+
+int	ft_reset_1token(t_data *data, t_list **token)
+{
+	t_list *current;
+
+	if (data->last_token->previous)
+		data->last_token->previous->next = NULL;
+	if (token && *token)
+	{
+		if (*token == data->tokens)
+			data->tokens = NULL;
+		ft_free_verif((void **)token);
+	}
+	else
+		return (FAIL);
+	current = data->tokens;
+	while (current && current->next)
+	{
+		current = current->next;
+	}
+	data->last_token = current;
+	return (SUCCESS);
+}

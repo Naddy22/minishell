@@ -2,31 +2,32 @@
 
 void	test_print_token_list(t_list *tokens)
 {
-	t_list	*current = tokens;
+	t_list	*current;
 	int		i;
 
 	i = 0;
+	current = tokens;
 	while (current != NULL)
 	{
 		if (current->brut_cmd == NULL)
 		{
 			if (current->token_type == L1_REDIR)
-				printf("Token %d: <\n", i);
+				ft_printf("Token %d: <\n", i);
 			else if (current->token_type == L2_REDIR)
-				printf("Token %d: <<\n", i);
+				ft_printf("Token %d: <<\n", i);
 			else if (current->token_type == R1_REDIR)
-				printf("Token %d: >\n", i);
+				ft_printf("Token %d: >\n", i);
 			else if (current->token_type == R2_REDIR)
-				printf("Token %d: >>\n", i);
+				ft_printf("Token %d: >>\n", i);
 			else if (current->token_type == PIPE)
-				printf("Token %d: |\n", i);
+				ft_printf("Token %d: |\n", i);
 		}
 		else
 		{
 			if (current->previous)
-				printf("Token %d: %s (previous: %s)\n", i, current->brut_cmd, current->previous->brut_cmd);
+				ft_printf("Token %d: %s (previous: %s)\n", i, current->brut_cmd, current->previous->brut_cmd);
 			else
-				printf("Token %d: %s (previous: (null)\n", i, current->brut_cmd);
+				ft_printf("Token %d: %s (previous: (null)\n", i, current->brut_cmd);
 		}
 		current = current->next;
 		i++;
@@ -37,8 +38,9 @@ void	test_print_cmd(t_data *data)
 {
 	t_command *current_cmd;
 	int i;
-	int j = 1;
+	int j;
 
+	j = 1;
 	current_cmd = data->commands;
 	while (current_cmd != NULL)
 	{
@@ -47,12 +49,12 @@ void	test_print_cmd(t_data *data)
 		{
 			while (current_cmd->cmd[i] != NULL)
 			{
-				printf("Cmd %d: %s\n", j, current_cmd->cmd[i]);
+				ft_printf("Cmd %d: %s\n", j, current_cmd->cmd[i]);
 				i++;
 			}
 		}
 		if (current_cmd->redir && current_cmd->redir->file_name)
-			printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
+			ft_printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
 		current_cmd = current_cmd->next;
 		j++;
 	}
@@ -63,8 +65,9 @@ void	test_print_redir(t_data *data)
 	t_command	*current_cmd;
 	t_redir		*redir;
 	int			i;
-	int			j = 1;
-
+	int			j;
+	
+	j = 1;
 	current_cmd = data->commands;
 	while (current_cmd != NULL)
 	{
@@ -72,12 +75,12 @@ void	test_print_redir(t_data *data)
 		i = 0;
 		while (redir != NULL)
 		{
-			printf("cmd: %s, redir %d: %s, %d\n", current_cmd->cmd[0], i, redir->file_name, redir->type);
+			ft_printf("cmd: %s, redir %d: %s, %d\n", current_cmd->cmd[0], i, redir->file_name, redir->type);
 			i++;
 			redir= redir->next;
 		}
 		if (current_cmd->redir && current_cmd->redir->file_name)
-			printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
+			ft_printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
 		current_cmd = current_cmd->next;
 		j++;
 	}
@@ -90,7 +93,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc != 1)
 	{
-		printf("Error: too many arguments. Number accepted: 0.");
+		ft_printf("Error: too many arguments. Number accepted: 0.");
 		return (FAIL);
 	}
 	ft_memset(&data, 0, sizeof(t_data));
@@ -116,8 +119,9 @@ int main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
+		test_print_cmd(&data);
 		data.pnb = 0;
-		to_execute(&data);
+		// to_execute(&data);
 		free_all(&data);
 	}
 }

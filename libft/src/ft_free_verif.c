@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_verif.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: nadege <nadege@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 15:11:47 by namoisan          #+#    #+#             */
-/*   Updated: 2024/05/02 11:43:44 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:55:28 by nadege           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_verif(void **ptr)
 {
-	if (*ptr != NULL)
+	if (ptr && *ptr != NULL)
 	{
 		free(*ptr);
 		*ptr = NULL;

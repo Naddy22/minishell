@@ -97,6 +97,7 @@ int			add_str_to_token(t_data *data, size_t *i, int *start);
 int			create_token(t_data *data, size_t *i, int *start, int id);
 int			create_token_pipe_redir(t_data *data, size_t *i, int *start);
 int			ft_isspace(char c);
+int			ft_reset_1token(t_data *data, t_list **token);
 
 //error_utils
 void		free_error(t_data *data, char *error);
