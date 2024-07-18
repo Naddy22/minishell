@@ -87,31 +87,32 @@ void	print_export(t_data *mini)
 	}
 }
 
+ //TODO '' (\0) should be verified as valid identifier
 int	ft_export(char **cmd, t_data *mini)
 {
-	int		length;
+	int		return_code;
 	int		i;
 
 	i = 0;
-	length = get_size(cmd);
-	if (length == 1)
+	return_code = 0;
+	if (get_size(cmd) == 1)
 		print_export(mini);
-	else if (length >= 2)
+	else if (get_size(cmd) >= 2)
 	{
-		while (++i < length)
+		while (++i < get_size(cmd))
 		{
 			if (verif_name(cmd[i]) && ft_strlen(cmd[i]) != 0)
 				add_elem(cmd[i], mini);
-			else if (ft_strlen(cmd[i]) == 0)
-				print_export(mini);
+			// else if (ft_strlen(cmd[i]) == 0)
+			// 	print_export(mini);
 			else
 			{
 				ft_putstr_fd("minishell: export: `", 2);
 				ft_putstr_fd(cmd[i], 2);
 				ft_putendl_fd("': not a valid identifier", 2);
-				return (1);
+				return_code =1;
 			}
 		}
 	}
-	return (0);
+	return (return_code);
 }

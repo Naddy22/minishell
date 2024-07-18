@@ -10,6 +10,8 @@ int	check_n_flag(char *arg)
 
 	ok = 1;
 	i = 0;
+	if (!arg[i])
+		return (0);
 	while (arg[i] && ok)
 	{
 		if (i == 0 && arg[i] != '-')
@@ -21,18 +23,18 @@ int	check_n_flag(char *arg)
 	return (ok);
 }
 
-void	print_args(char *cmd, int *add_next_line, int *ok_n_flag)
+void	print_args(char *cmd, int *add_next_line, int *print_space)
 {
 	if (check_n_flag(cmd))
 	{
-		if (!(*ok_n_flag))
+		if (!(*print_space))
 			*add_next_line = 0;
 		else
 			printf("%s", cmd);
 	}
 	else
 	{
-		*ok_n_flag = 1;
+		*print_space = 1;
 		printf("%s", cmd); //TODO: lis 32bit trop loin
 	}
 }
@@ -41,9 +43,9 @@ void	ft_echo(char **cmd)
 {
 	int	l;
 	int	add_next_line;
-	int	ok_n_flag;
+	int	print_space;
 
-	ok_n_flag = 0;
+	print_space = 0;
 	add_next_line = 1;
 	if (get_size(cmd) == 1)
 		printf("\n");
@@ -52,9 +54,9 @@ void	ft_echo(char **cmd)
 		l = 1;
 		while (cmd[l])
 		{
-			print_args(cmd[l], &add_next_line, &ok_n_flag);
+			print_args(cmd[l], &add_next_line, &print_space);
 			l++;
-			if (cmd[l] && ok_n_flag)
+			if ((cmd[l]&& print_space) || (cmd[l] && cmd[l][0] == '\0' && print_space))
 				printf(" ");
 		}
 		if (add_next_line)

@@ -42,7 +42,7 @@ void	ft_pipe(t_data *mini)
 		}
 		else
 			parent(mini);
-		close(mini->fd[1]);
+		// close(mini->fd[1]);
 		mini->pnb += 1;
 	}
 }

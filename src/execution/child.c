@@ -44,6 +44,9 @@ void	execution(t_data *mini)
 	if (isbuiltins(cmd) != 0)
 	{
 		builtin_exec(mini, cmd);
+		free_data(mini);
+		close(mini->fdin_origin);
+		close(mini->fdout_origin);
 		exit(mini->exit_status);
 	}
 	else
