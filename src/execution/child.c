@@ -22,7 +22,7 @@ void	ft_execve(t_data *mini, t_command *cmd)
 	close(mini->fdin_origin);
 	close(mini->fdout_origin);
 	execve(path, cmd_table, env);
-	perror("Execve "); //TODO check error message
+	perror("minishell "); //TODO check error message
 	ft_free_table(env);
 	ft_free_table(cmd_table);
 	ft_free_verif((void **)&path);
