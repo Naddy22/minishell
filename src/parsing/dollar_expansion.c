@@ -84,11 +84,10 @@ char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
 	char *var_name;
 	char *result;
 
-	// *start = *i; //Ne pas enlever: fait pour remettre start sur la premiere lettre du nom de variable d'environnement
+	*start = *i; //fait pour remettre start sur la premiere lettre du nom de variable d'environnement
 	while((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
 		(*i)++;
-	if (str[*i] == '$') //&& str[*i + 1] == '$') || (str[*i] == '$' && str[*i] == '\0'))
-		 //quand j'ajoute les conditions en commentaire au dessus ca marche pour $USER$USER (sans ca ecrit juste $USER) mais pas pour $$ qui se fait remplacer par rien
+	if (str[*i] == '$' && !ft_isalnum(str[*i - 1])) //!ft_isalnum ajouté pour pas que ca entre si $USER$USER
 	{
 		result = ft_strdup("$"); //mis pour avoir un $ si $$ ecrit
 		(*i)++;
@@ -104,7 +103,6 @@ char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
 	if (result == NULL)
 		result = "";
 	ft_free_verif((void **)&var_name);
-	// *start = *i; //dernier ajout 
 	return (result);
 }
 
@@ -121,22 +119,18 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	}
 	str = data->parsing.last_user_cmd;
 	(*i)++;
-	if (ft_isalpha(str[*i]) == FALSE && str[*i] != '_' && str[*i] != '$') //ajout de isalnum de base pour que rien ne soit interpreté si ce n'est pas une lettre
-		return (add_str_to_token(data, i, start)); //mais m'ecrit $$ si je met $$, $$$ si je met $$$, etc. Essaie d'ajouter && str[*i] != '$' mais m'ecrit rien quand $$ alors que je veux un $
+	if (ft_isalnum(str[*i]) == FALSE && str[*i] != '_' && str[*i] != '$') //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
+		return (add_str_to_token(data, i, start));
 	if(ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
-		return (add_str_to_token(data, i, start)); // probleme vient de la: mais si j'ajoute && str[*i - 1] != '$' ca ecrit que h 
+		return (add_str_to_token(data, i, start));
 	if(str[*i] == '?')
 		return (add_exit_status_to_token(data, i, start));
-	*start = *i; //Ne pas enlever: fait pour remettre start sur la premiere lettre du nom de variable d'environnement
 	result = process_variable_name(data, i, start, str);
 	if (result == NULL)
 		return (FAIL);
 	*start = *i;
 	if (result[0] == '\0' && (!data->last_token->brut_cmd || \
-		data->last_token->brut_cmd[0] == '\0')) //Condition pour pas que ca aille dedans si ma commande a deja commencé a etre rempli (ex: coucou$A), ajout de \0 car mon brut est forcement créer
+		data->last_token->brut_cmd[0] == '\0') && str[*i] == '\0') //Condition pour pas que ca aille dedans si ma commande a deja commencé a etre rempli (ex: coucou$A), ajout de \0 car mon brut est forcement créer
 		return (ft_reset_1token(data, &data->last_token));
 	return (add_dollar_value_to_str(data, result));
 }
-
-
-//next step: regler a la ligne 90, le probleme de $$ qui ne doit pas etre remplacé par rien et $USER$USER qui doit affichedr namoisannanoisan
