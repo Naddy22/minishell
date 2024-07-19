@@ -113,7 +113,7 @@ int main(int argc, char **argv, char **envp)
 			free_all(&data);
 			continue ;
 		}
-		// test_print_token_list(data.tokens);
+		test_print_token_list(data.tokens);
 		if (make_cmds(&data) != SUCCESS)
 		{
 			free_all(&data);

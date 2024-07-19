@@ -66,6 +66,7 @@ typedef struct s_parsing
 	size_t		i;
 	char		**parse_cmd;
 	t_command	*last_lstcmd;
+	char		*hered_print;
 }			t_parsing;
 
 typedef struct s_data
@@ -111,6 +112,7 @@ void		free_data(t_data *data);
 //dollar_expansion
 char		*get_env_value(char **env_cpy, const char *var_name);
 int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
+char		*process_variable_name(t_data *data, size_t *i, int *start, char *str);
 
 //quotes
 int			handle_quotes(t_data *data, size_t *i, int *start);
@@ -186,6 +188,9 @@ void		set_signal(t_sig_type type);
 
 //heredoc.c
 void		make_here_docs(t_data *mini);
+
+//heredoc_parsing.c
+char		*parsing_heredoc(t_data *data, char *str);
 
 //child.c
 void		ft_execve(t_data *mini, t_command *cmd);
