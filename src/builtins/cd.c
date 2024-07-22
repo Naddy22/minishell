@@ -35,8 +35,6 @@ int	cd_home(t_data *mini)
 	}
 	else
 		change_env(buf, mini);
-	if (path_home)
-		ft_free_verif((void **)&path_home);
 	return (0);
 }
 

@@ -20,12 +20,11 @@ int	check_here_docs(t_data *mini)
 	return (FALSE);
 }
 
-void	readline_here_doc(int fd, char *delim)
+void	readline_here_doc(t_data *data, int fd, char *delim)
 {
 	char	*rl_buffer;
-	// char	*to_print;
+	char	*to_print;
 	size_t	len;
-	// char	*to_print;
 
 	len = ft_strlen(delim);
 	while (42)
@@ -36,14 +35,17 @@ void	readline_here_doc(int fd, char *delim)
 			ft_free_verif((void *)&rl_buffer);
 			return ;
 		}
-		// to_print = parsing_heredoc(rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
-		ft_putstr_fd(rl_buffer, fd);
+		to_print = parsing_heredoc(data, rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
+		if (to_print == NULL)
+			printf("Je suis null\n");
+		ft_putstr_fd(to_print, fd);
 		ft_putstr_fd("\n", fd); //tant qu'il y a des quotes ' ou " tu passes et tu change si c'Est un $ avec la variable env si existant, passé le reste des ' et "
 		ft_free_verif((void *)&rl_buffer);
+		ft_free_verif((void *)&to_print);
 	}
 }
 
-void	create_file_n_exec_heredoc(t_redir *redir, int *n)
+void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 {
 	int		fd;
 	char	*name;
@@ -54,7 +56,7 @@ void	create_file_n_exec_heredoc(t_redir *redir, int *n)
 	redir->delim = redir->file_name;
 	redir->file_name = name;
 	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	readline_here_doc(fd, redir->delim);
+	readline_here_doc(mini, fd, redir->delim);
 	(*n)++;
 	close (fd);
 	free(asciin);
@@ -76,7 +78,7 @@ void	make_here_docs(t_data *mini)
 			while (redir)
 			{
 				if (redir->type == L2_REDIR)
-					create_file_n_exec_heredoc(redir, &n);
+					create_file_n_exec_heredoc(mini, redir, &n);
 				redir = redir->next;
 			}
 			command = command->next;

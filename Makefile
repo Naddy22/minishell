@@ -38,6 +38,7 @@ SRC			=	main.c \
 				signals.c \
 				redirections.c \
 				heredoc.c \
+				heredoc_parsing.c \
 				utils.c \
 				exec_utils.c \
 				child.c \

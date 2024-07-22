@@ -86,7 +86,7 @@ int	process_end_of_token(t_data *data, size_t *i, int *start)
 
 int	get_char(t_data *data, char *str, size_t *i, int *start)
 {
-	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || ft_isspace(str[*i]))
+	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || ft_isspace(str[*i])) 
 	{
 		if (process_end_of_token(data, i, start) != SUCCESS)
 			return (FAIL);
@@ -95,7 +95,7 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 		if (find_token(data, i, start) != SUCCESS)
 			return (FAIL);
 	}
-	else if (str[*i] == '$')
+	else if (str[*i] == '$')//TODO voir pour repasser le token dans le parsing si espace apres substitution des $ ex: l$a où a="s -la"
 	{
 		if (process_end_of_token(data, i, start) != SUCCESS)
 			return (FAIL);

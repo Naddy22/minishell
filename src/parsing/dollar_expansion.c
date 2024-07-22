@@ -119,7 +119,7 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	}
 	str = data->parsing.last_user_cmd;
 	(*i)++;
-	if (ft_isalnum(str[*i]) == FALSE && str[*i] != '_' && str[*i] != '$') //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
+	if (!ft_isalnum(str[*i]) && str[*i] != '_' && str[*i] != '$' && str[*i] != '?') //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
 		return (add_str_to_token(data, i, start));
 	if(ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
 		return (add_str_to_token(data, i, start));
