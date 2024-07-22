@@ -103,8 +103,6 @@ int	ft_export(char **cmd, t_data *mini)
 		{
 			if (verif_name(cmd[i]) && ft_strlen(cmd[i]) != 0)
 				add_elem(cmd[i], mini);
-			// else if (ft_strlen(cmd[i]) == 0)
-			// 	print_export(mini);
 			else
 			{
 				ft_putstr_fd("minishell: export: `", 2);
