@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	verif_name(char *str)
+int	verif_name(char *str, char c)
 {
 	int	i;
 
@@ -13,32 +13,13 @@ int	verif_name(char *str)
 			i++;
 		else if (i != 0 && (ft_isalnum(str[i]) || str[i] == '_'))
 			i++;
-		else if (i != 0 && str[i] == '=')
+		else if (i != 0 && str[i] == '=' && c == 'e')
 			return (TRUE);
 		else
 			return (FALSE);
 	}
-	return (TRUE);
-}
-
-int	verif_name_unset(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (FALSE);
-	while (str[i])
-	{
-		if (i == 0 && (ft_isalpha(str[i]) || str[i] == '_'))
-			i++;
-		else if (i != 0 && (ft_isalnum(str[i]) || str[i] == '_'))
-			i++;
-		else if (str[i] == '=')
-			return (TRUE);
-		else
-			return (FALSE);
-	}
+	if (i == 0 && str[i] == '\0')
+		return(FALSE);
 	return (TRUE);
 }
 
@@ -82,7 +63,7 @@ int	ft_unset(char **cmd, t_data *mini)
 		i = 1;
 		while (i < length)
 		{
-			if (verif_name_unset(cmd[i]) == TRUE)
+			if (verif_name(cmd[i], 'u') == TRUE)
 				remove_elem(cmd[i], mini);
 			else
 			{

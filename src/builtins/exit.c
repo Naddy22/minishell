@@ -4,17 +4,21 @@ int	check_all_digit(char **cmd, int i)
 {
 	int	c;
 
-	c = 0;
-	while (cmd[i][c])
+	c = -1;
+	while (cmd[i][++c])
 	{
 		if (!ft_isdigit(cmd[i][c]))
 		{
-			ft_putstr_fd("exit\nminishell: exit ", 2);
-			ft_putstr_fd(cmd[i], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			return (1);
+			if (c == 0 && (cmd[i][c] == '-' || cmd[i][c] == '+'))
+				continue ;
+			else
+			{
+				ft_putstr_fd("exit\nminishell: exit ", 2);
+				ft_putstr_fd(cmd[i], 2);
+				ft_putendl_fd(": numeric argument required", 2);
+				return (1);
+			}
 		}
-		c++;
 	}
 	return (0);
 }

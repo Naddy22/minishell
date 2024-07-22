@@ -177,7 +177,7 @@ int			ft_pwd(void);
 //unset.c
 void		remove_elem(char *elem, t_data *mini);
 int			ft_unset(char **cmd, t_data *mini);
-int			verif_name(char *str);
+int			verif_name(char *str, char c);
 
 //export.c
 int			ft_export(char **cmd, t_data *mini);

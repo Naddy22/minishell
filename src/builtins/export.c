@@ -101,7 +101,7 @@ int	ft_export(char **cmd, t_data *mini)
 	{
 		while (++i < get_size(cmd))
 		{
-			if (verif_name(cmd[i]) && ft_strlen(cmd[i]) != 0)
+			if (verif_name(cmd[i], 'e') && ft_strlen(cmd[i]) != 0)
 				add_elem(cmd[i], mini);
 			else
 			{

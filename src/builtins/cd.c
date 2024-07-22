@@ -1,5 +1,34 @@
 #include "../../inc/minishell.h"
 
+int	check_variable_present(char **env_cpy, const char *var_name)
+{
+	size_t i;
+	size_t len;
+
+	i = 0;
+	len = ft_strlen(var_name);
+	while (env_cpy[i] != 0)
+	{
+		if (ft_strnstr(env_cpy[i], var_name, len) && env_cpy[i][len] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	cd_error_message(char *path_to_go, int mode)
+{
+	if (mode == 0)
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
+	else
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(path_to_go, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	return (1);
+}
+
 void	change_env(char *old, t_data *mini)
 {
 	char	str[1024];
@@ -30,7 +59,8 @@ int	cd_home(t_data *mini)
 	path_home = get_env_value(mini->cpy_env, "HOME");
 	if (!path_home || chdir(path_home) != 0)
 	{
-		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		if (!check_variable_present(mini->cpy_env, "HOME"))
+			ft_putendl_fd("minishell: cd: HOME not set", 2);
 		return (1);
 	}
 	else
@@ -44,20 +74,20 @@ int	ft_cd(char **cmd, t_data *mini)
 	char	buf[1024];
 
 	getcwd(buf, 1024);
-	if (!cmd[1])
-		return (cd_home(mini));
-	else if (cmd[1])
+	if (get_size(cmd) <= 2)
 	{
-		path_to_go = cmd[1];
-		if (chdir(path_to_go) != 0)
+		if (!cmd[1])
+			return (cd_home(mini));
+		else if (cmd[1])
 		{
-			ft_putstr_fd("minishell: cd: ", 2);
-			ft_putstr_fd(path_to_go, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			return (1);
+			path_to_go = cmd[1];
+			if (chdir(path_to_go) != 0)
+				return (cd_error_message(path_to_go, 1));
+			else
+				change_env(buf, mini);
 		}
-		else
-			change_env(buf, mini);
+		return (0);
 	}
-	return (0);
+	else
+		return (cd_error_message("", 0));
 }
