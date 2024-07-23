@@ -67,7 +67,11 @@ void	child(t_data *mini, pid_t pid)
 	}
 	cmd->pid = pid;
 	if (set_redir(mini, mini->pnb) == 1)
+	{
+		close(mini->fd[0]);
+		close(mini->fd[1]);
 		exit_with_status(mini);
+	}
 	close(mini->fd[0]);
 	close(mini->fd[1]);
 	execution(mini);
