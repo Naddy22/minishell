@@ -8,7 +8,7 @@ int	ft_pwd(void)
 	getcwd(buf, 1024);
 	if (!(*buf))
 	{
-		perror("minishell: getcwd"); //TODO check message to print...
+		perror("minishell: getcwd ");
 		return (1);
 	}
 	else

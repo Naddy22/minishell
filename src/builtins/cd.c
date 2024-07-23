@@ -2,8 +2,8 @@
 
 int	check_variable_present(char **env_cpy, const char *var_name)
 {
-	size_t i;
-	size_t len;
+	size_t	i;
+	size_t	len;
 
 	i = 0;
 	len = ft_strlen(var_name);
@@ -37,7 +37,7 @@ void	change_env(char *old, t_data *mini)
 	ft_bzero(str, 1024);
 	export = ft_calloc(4, sizeof(char *));
 	if (!export)
-		perror("malloc "); //check if error ok
+		perror("minishell: malloc ");
 	getcwd(str, 1024);
 	export[0] = "export";
 	export[1] = ft_strjoin("PWD=", str);

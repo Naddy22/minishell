@@ -1,8 +1,5 @@
 #include "../../inc/minishell.h"
 
-//TODO echo "" $HOME imprime comme avec -n
-//TODO echo "" hola doit imprimer espace entre "" et hola
-
 int	check_n_flag(char *arg)
 {
 	int	i;
@@ -35,7 +32,7 @@ void	print_args(char *cmd, int *add_next_line, int *print_space)
 	else
 	{
 		*print_space = 1;
-		ft_printf("%s", cmd); //TODO: lis 32bit trop loin
+		ft_printf("%s", cmd);
 	}
 }
 
@@ -56,7 +53,8 @@ void	ft_echo(char **cmd)
 		{
 			print_args(cmd[l], &add_next_line, &print_space);
 			l++;
-			if ((cmd[l] && print_space) || (cmd[l] && cmd[l][0] == '\0' && print_space))
+			if ((cmd[l] && print_space)
+				|| (cmd[l] && cmd[l][0] == '\0' && print_space))
 				ft_printf(" ");
 		}
 		if (add_next_line)

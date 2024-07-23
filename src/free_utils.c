@@ -67,8 +67,6 @@ void	free_all(t_data *data)
 */
 void	free_data(t_data *data)
 {
-	// close(data->fdin_origin);
-	// close(data->fdout_origin);
 	free_all(data);
 	ft_free_table(data->cpy_env);
 	ft_free_table(data->cpy_env_orig);

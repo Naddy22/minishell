@@ -40,7 +40,7 @@ void	parent(t_data *mini)
 void	change_parent_back(t_data *mini)
 {
 	if (dup2(mini->fdin_origin, STDIN_FILENO) == -1)
-		perror("Dup2, impossible to restore stdin "); //TODO change error messages
+		perror("Dup2, impossible to restore stdin ");
 	if (dup2(mini->fdout_origin, STDOUT_FILENO) == -1)
 		perror("Dup2, impossible to restore stdout ");
 }

@@ -79,5 +79,10 @@ int	to_execute(t_data *mini)
 			change_parent_back(mini);
 		}
 	}
+	else
+	{
+		set_redir(mini, 0);
+		change_parent_back(mini);
+	}
 	return (0);
 }

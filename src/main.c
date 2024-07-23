@@ -86,7 +86,33 @@ void	test_print_redir(t_data *data)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+int	main_loop(t_data data)
+{
+	while (42)
+	{
+		set_signal(MAIN);
+		if (read_user_cmd(&data) != SUCCESS)
+			continue ;
+		set_signal(PARENT);
+		if (parsing(&data) != SUCCESS)
+		{
+			free_all(&data);
+			continue ;
+		}
+		// test_print_token_list(data.tokens);
+		if (make_cmds(&data) != SUCCESS)
+		{
+			free_all(&data);
+			continue ;
+		}
+		// test_print_cmd(&data);
+		data.pnb = 0;
+		to_execute(&data);
+		free_all(&data);
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
@@ -102,26 +128,5 @@ int main(int argc, char **argv, char **envp)
 		free_data(&data);
 		return (FAIL);
 	}
-	while (42)
-	{
-		set_signal(MAIN);
-		if (read_user_cmd(&data) != SUCCESS)
-			continue ;
-		set_signal(PARENT);
-		if (parsing(&data) != SUCCESS)
-		{
-			free_all(&data);
-			continue ;
-		}
-		test_print_token_list(data.tokens);
-		if (make_cmds(&data) != SUCCESS)
-		{
-			free_all(&data);
-			continue ;
-		}
-		test_print_cmd(&data);
-		data.pnb = 0;
-		to_execute(&data);
-		free_all(&data);
-	}
+	main_loop(data);
 }

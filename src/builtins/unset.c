@@ -19,7 +19,7 @@ int	verif_name(char *str, char c)
 			return (FALSE);
 	}
 	if (i == 0 && str[i] == '\0')
-		return(FALSE);
+		return (FALSE);
 	return (TRUE);
 }
 

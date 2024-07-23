@@ -87,7 +87,6 @@ void	print_export(t_data *mini)
 	}
 }
 
- //TODO '' (\0) should be verified as valid identifier
 int	ft_export(char **cmd, t_data *mini)
 {
 	int		return_code;
@@ -108,7 +107,7 @@ int	ft_export(char **cmd, t_data *mini)
 				ft_putstr_fd("minishell: export: `", 2);
 				ft_putstr_fd(cmd[i], 2);
 				ft_putendl_fd("': not a valid identifier", 2);
-				return_code =1;
+				return_code = 1;
 			}
 		}
 	}
