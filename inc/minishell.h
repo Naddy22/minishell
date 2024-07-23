@@ -143,7 +143,7 @@ char		*test_path(char **paths, char *str);
 char		*get_path(t_data *mini, char *str);
 
 //redirection.c
-void		set_redir(t_data *mini, int pnb);
+int			set_redir(t_data *mini, int pnb);
 
 //execution
 //exec.c

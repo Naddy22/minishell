@@ -66,7 +66,8 @@ void	child(t_data *mini, pid_t pid)
 		pnb--;
 	}
 	cmd->pid = pid;
-	set_redir(mini, mini->pnb); //TODO check if open failed (if fd == -1)
+	if (set_redir(mini, mini->pnb) == 1)
+		exit_with_status(mini);
 	close(mini->fd[0]);
 	close(mini->fd[1]);
 	execution(mini);

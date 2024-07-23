@@ -67,8 +67,8 @@ int	to_execute(t_data *mini)
 	{
 		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0)
 		{
-			set_redir(mini, 0);
-			builtin_exec(mini, mini->commands);
+			if (set_redir(mini, 0) == 0)
+				builtin_exec(mini, mini->commands);
 			change_parent_back(mini);
 			return (mini->exit_status);
 		}
