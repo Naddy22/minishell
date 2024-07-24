@@ -4,13 +4,14 @@
 
 -Identifier si quote simple ou double
 -lire jusqu'a rencontrer la prochaine meme quotes
--si $USER envelopper de " on remplace pas la valeur d'env, sinon on lit le tout et à 
+-si $USER envelopper de " on remplace pas la valeur d'env, 
+	sinon on lit le tout et à 
 la fin on stocke/joint le tout dans le même token word actuel
 -si quotes pas fermer c'est erreur de syntaxe
 
 */
 
-int	handle_simple_quote(t_data *data, size_t *i, int *start)
+static int	handle_simple_quote(t_data *data, size_t *i, int *start)
 {
 	char	*str;
 
@@ -32,7 +33,7 @@ int	handle_simple_quote(t_data *data, size_t *i, int *start)
 	return (SUCCESS);
 }
 
-int	handle_dollar_in_dquote(t_data *data, size_t *i, int *start)
+static int	handle_dollar_in_dquote(t_data *data, size_t *i, int *start)
 {
 	if (data->last_token && data->last_token->previous && \
 	data->last_token->previous->token_type == L2_REDIR)
@@ -47,7 +48,7 @@ int	handle_dollar_in_dquote(t_data *data, size_t *i, int *start)
 	return (SUCCESS);
 }
 
-int	handle_double_quote(t_data *data, size_t *i, int *start)
+static int	handle_double_quote(t_data *data, size_t *i, int *start)
 {
 	char	*str;
 

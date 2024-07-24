@@ -62,7 +62,7 @@ void	waiting_for_all_childs(t_data *mini)
 
 int	to_execute(t_data *mini)
 {
-	make_here_docs(mini); //TODO return value if error?
+	mini->exit_status = make_here_docs(mini);
 	if (mini->commands->cmd)
 	{
 		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0)

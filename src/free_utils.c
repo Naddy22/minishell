@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-void	free_redirlist(t_redir **redir)
+static void	free_redirlist(t_redir **redir)
 {
 	t_redir	*current;
 	t_redir	*next;
@@ -20,7 +20,7 @@ void	free_redirlist(t_redir **redir)
 	*redir = NULL;
 }
 
-void	free_tokenlist(t_list **list)
+static void	free_tokenlist(t_list **list)
 {
 	t_list	*current;
 	t_list	*next;
@@ -36,7 +36,7 @@ void	free_tokenlist(t_list **list)
 	*list = NULL;
 }
 
-void	free_cmdlist(t_command **list)
+static void	free_cmdlist(t_command **list)
 {
 	t_command	*current;
 	t_command	*next;

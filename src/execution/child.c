@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-void	ft_execve(t_data *mini, t_command *cmd)
+static void	ft_execve(t_data *mini, t_command *cmd)
 {
 	char	*path;
 	char	**env;
@@ -29,7 +29,7 @@ void	ft_execve(t_data *mini, t_command *cmd)
 	exit(EXIT_FAILURE);
 }
 
-void	execution(t_data *mini)
+static void	execution(t_data *mini)
 {
 	int			i;
 	t_command	*cmd;

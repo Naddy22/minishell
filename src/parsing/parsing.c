@@ -1,12 +1,11 @@
 #include "../../inc/minishell.h"
 
-int	find_token(t_data *data, size_t *i, int *start_token)
+static int	find_token(t_data *data, size_t *i, int *start_token)
 {
 	char	*cmd;
 
 	cmd = data->parsing.last_user_cmd;
-	while (cmd[*i] == '<' || cmd[*i] == '>' || cmd[*i] == '|' \
-		|| ft_isspace(cmd[*i]))
+	while (ft_isspecial(cmd[*i], 2) || ft_isspace(cmd[*i]))
 	{
 		if (ft_isspace(cmd[*i]) == TRUE)
 			(*i)++;
@@ -57,7 +56,7 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 	return (SUCCESS);
 }
 
-int	process_end_of_token(t_data *data, size_t *i, int *start)
+static int	process_end_of_token(t_data *data, size_t *i, int *start)
 {
 	char	*str;
 
@@ -85,10 +84,9 @@ int	process_end_of_token(t_data *data, size_t *i, int *start)
 	return (SUCCESS);
 }
 
-int	get_char(t_data *data, char *str, size_t *i, int *start)
+static int	get_char(t_data *data, char *str, size_t *i, int *start)
 {
-	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' \
-		|| ft_isspace(str[*i]))
+	if (ft_isspecial(str[*i], 2) || ft_isspace(str[*i]))
 	{
 		if (process_end_of_token(data, i, start) != SUCCESS)
 			return (FAIL);
@@ -138,4 +136,5 @@ int	parsing(t_data *data)
 		return (FAIL);
 	return (SUCCESS);
 }
-//voir probleme quand j'ecris ex: h$ ca m'ecrit hh$h$ dans mon token. Je pense que c'est encore du au start que je set mal
+//voir probleme quand j'ecris ex: h$ ca m'ecrit hh$h$ dans mon token. 
+// Je pense que c'est encore du au start que je set mal

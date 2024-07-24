@@ -34,8 +34,7 @@ char	*dollars_parse(t_data *data, char *str, size_t *start, size_t *i)
 	char	*result;
 
 	(*i)++;
-	if (!ft_isalnum(str[*i]) && str[*i] != '_' && str[*i] != '$' \
-		&& str[*i] != '?')
+	if (!ft_isalnum(str[*i]) && !ft_isspecial(str[*i], 1))
 		return (get_str(str, start, i));
 	if (ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
 		return (get_str(str, start, i));
@@ -59,7 +58,7 @@ char	*parsing_heredoc(t_data *data, char *str)
 	i = 0;
 	start = i;
 	result = NULL;
-	while (str[i] != '\0')
+	while (i<ft_strlen(str))
 	{
 		if (str[i] == '$')
 		{

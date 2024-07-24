@@ -11,9 +11,3 @@ int	get_err_code(int exit_code)
 		r_val = (128 + WTERMSIG(exit_code));
 	return (r_val);
 }
-
-void	free_error(t_data *data, char *error)
-{
-	free_all(data);
-	ft_printf("%s\n", error);
-}

@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	check_n_flag(char *arg)
+static int	check_n_flag(char *arg)
 {
 	int	i;
 	int	ok;
@@ -20,7 +20,7 @@ int	check_n_flag(char *arg)
 	return (ok);
 }
 
-void	print_args(char *cmd, int *add_next_line, int *print_space)
+static void	print_args(char *cmd, int *add_next_line, int *print_space)
 {
 	if (check_n_flag(cmd))
 	{

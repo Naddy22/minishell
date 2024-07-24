@@ -1,7 +1,5 @@
 #include "../../inc/minishell.h"
 
-//Gestion des codes d'erreur ok
-
 void	ft_env(char **envp)
 {
 	int	i;

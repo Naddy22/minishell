@@ -73,10 +73,10 @@ typedef struct s_data
 {
 	char		**cpy_env;
 	char		**cpy_env_orig;
-	t_parsing	parsing;//
-	t_list		*tokens;//
-	t_list		*last_token;//
-	t_command	*commands;//
+	t_parsing	parsing;
+	t_list		*tokens;
+	t_list		*last_token;
+	t_command	*commands;
 	int			nb_pipes;
 	int			tmp_status;
 	int			exit_status;
@@ -87,70 +87,96 @@ typedef struct s_data
 	int			fdout_origin;
 }				t_data;
 
+//init.c
+int			get_env(t_data *data, char **envp);
 int			init(t_data *data, char **envp);
 
-//parsing
-int			parsing(t_data *data);
-int			read_user_cmd(t_data *data);
+//parsing.c
 int			add_str_to_token(t_data *data, size_t *i, int *start);
+int			parsing(t_data *data);
 
-//token_utils
+//reading_input.c
+int			read_user_cmd(t_data *data);
+
+//token_utils.c
 int			create_token(t_data *data, size_t *i, int *start, int id);
 int			create_token_pipe_redir(t_data *data, size_t *i, int *start);
 int			ft_isspace(char c);
 int			ft_reset_1token(t_data *data, t_list **token);
 
-//error_utils
-void		free_error(t_data *data, char *error);
+//error_utils.c
 int			get_err_code(int exit_code);
 
-//free_utils
+//free_utils.c
 void		free_all(t_data *data);
-void		free_tokenlist(t_list **list);
 void		free_data(t_data *data);
 
-//dollar_expansion
+//dollar_expansion.c
 char		*get_env_value(char **env_cpy, const char *var_name);
-int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
 char		*process_variable_name(t_data *data, size_t *i,
 				int *start, char *str);
+int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
-//quotes
+//quotes.c
 int			handle_quotes(t_data *data, size_t *i, int *start);
 
-//commands
+//commands.c
 int			make_cmds(t_data *data);
 
-//command_utils
-t_command	*create_new_lstcmd(t_data *data);
+//command_utils.c
 int			get_tab_cmd(t_data *data, t_list **current);
 int			alloc_new_cmd(t_data *data, size_t len_new);
+t_command	*create_new_lstcmd(t_data *data);
 t_redir		*create_new_lstredir(t_list **current);
+int			ft_isspecial(char c, int group);
 
-//linked_list_utils
+//linked_list_utils.c
 void		cmd_add_back(t_command **lst, t_command *new);
 void		redir_add_back(t_redir **lst, t_redir *new);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 
-//file_handling.c
-int			to_open(t_redir *redir);
-void		change_input(int fd);
-void		change_output(int fd);
-void		parent(t_data *mini);
-void		change_parent_back(t_data *mini);
-
-//path.c
-char		*test_path(char **paths, char *str);
-char		*get_path(t_data *mini, char *str);
-
+//execution
 //redirection.c
 int			set_redir(t_data *mini, int pnb);
 
-//execution
+//path.c
+char		*get_path(t_data *mini, char *str);
+
+//file_handling.c
+int			to_open(t_redir *redir);
+void		change_output(int fd);
+void		change_input(int fd);
+void		parent(t_data *mini);
+void		change_parent_back(t_data *mini);
+
 //exec.c
 void		builtin_exec(t_data *mini, t_command *cmd);
 int			to_execute(t_data *mini);
-void		ft_pipe(t_data *mini);
+
+//export.c
+int			check_env(char *elem, t_data *mini);
+int			ft_export(char **cmd, t_data *mini);
+
+//signals.c
+void		set_signal(t_sig_type type);
+
+//heredoc.c //TODO check static fct in heredoc and here_doc_parsing
+int			make_here_docs(t_data *mini);
+
+//heredoc_parsing.c
+char		*parsing_heredoc(t_data *data, char *str);
+
+//child.c
+void		child(t_data *mini, pid_t pid);
+
+//exec_utils.c
+char		**dup_table(char **strs);
+void		path_error_message(char **cmd);
+int			isbuiltins(t_command *cmd);
+
+//utils.c
+int			get_size(char **strs);
+t_command	*get_cmd(t_data *mini, int pnb);
 
 //builtins
 //cd.c
@@ -169,42 +195,15 @@ void		add_elem(char *elem, t_data *mini);
 void		ft_env(char **envp);
 
 //exit.c
-int			ft_exit(char **cmd, t_data *mini);
 void		exit_with_status(t_data *mini);
+int			ft_exit(char **cmd, t_data *mini);
 
 //pwd.c
 int			ft_pwd(void);
 
 //unset.c
+int			verif_name(char *str, char c);
 void		remove_elem(char *elem, t_data *mini);
 int			ft_unset(char **cmd, t_data *mini);
-int			verif_name(char *str, char c);
-
-//export.c
-int			ft_export(char **cmd, t_data *mini);
-int			check_env(char *elem, t_data *mini);
-
-//signals.c
-void		set_signal(t_sig_type type);
-
-//heredoc.c
-void		make_here_docs(t_data *mini);
-
-//heredoc_parsing.c
-char		*parsing_heredoc(t_data *data, char *str);
-
-//child.c
-void		ft_execve(t_data *mini, t_command *cmd);
-void		execution(t_data *mini);
-void		child(t_data *mini, pid_t pid);
-
-//exec_utils.c
-char		**dup_table(char **strs);
-void		path_error_message(char **cmd);
-int			isbuiltins(t_command *cmd);
-
-//utils.c
-int			get_size(char **strs);
-t_command	*get_cmd(t_data *mini, int pnb);
 
 #endif 

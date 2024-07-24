@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	check_all_digit(char **cmd, int i)
+static int	check_all_digit(char **cmd, int i)
 {
 	int	c;
 

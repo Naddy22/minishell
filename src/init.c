@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-int	get_env_dup(t_data *data, char **envp)
+static int	get_env_dup(t_data *data, char **envp)
 {
 	int	i;
 

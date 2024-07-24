@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/20 16:40:48 by vboulang          #+#    #+#             */
-/*   Updated: 2024/07/23 14:53:09 by vboulang         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
-char	*test_path(char **paths, char *str)
+static char	*test_path(char **paths, char *str)
 {
 	int		i;
 	char	*correct_path;

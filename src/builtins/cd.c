@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	check_variable_present(char **env_cpy, const char *var_name)
+static int	check_variable_present(char **env_cpy, const char *var_name)
 {
 	size_t	i;
 	size_t	len;
@@ -16,7 +16,7 @@ int	check_variable_present(char **env_cpy, const char *var_name)
 	return (0);
 }
 
-int	cd_error_message(char *path_to_go, int mode)
+static int	cd_error_message(char *path_to_go, int mode)
 {
 	if (mode == 0)
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
@@ -29,7 +29,7 @@ int	cd_error_message(char *path_to_go, int mode)
 	return (1);
 }
 
-void	change_env(char *old, t_data *mini)
+static void	change_env(char *old, t_data *mini)
 {
 	char	str[1024];
 	char	**export;
@@ -49,7 +49,7 @@ void	change_env(char *old, t_data *mini)
 	export = NULL;
 }
 
-int	cd_home(t_data *mini)
+static int	cd_home(t_data *mini)
 {
 	char	*path_home;
 	char	buf[1024];

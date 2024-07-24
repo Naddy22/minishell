@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-t_list	*calloc_new_token(void)
+static t_list	*calloc_new_token(void)
 {
 	t_list	*new_token;
 

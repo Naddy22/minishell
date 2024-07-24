@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-char	**deep_cpy(t_data *mini)
+static char	**deep_cpy(t_data *mini)
 {
 	int		i;
 	char	**envext;
@@ -42,7 +42,7 @@ int	check_env(char *elem, t_data *mini)
 	return (found);
 }
 
-void	print_equal(char *envext)
+static void	print_equal(char *envext)
 {
 	int		j;
 	char	**split;
@@ -66,7 +66,7 @@ void	print_equal(char *envext)
 	ft_free_table(split);
 }
 
-void	print_export(t_data *mini)
+static void	print_export(t_data *mini)
 {
 	int		i;
 	char	**envext;

@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	fill_redir_cmd(t_data *data, t_list **current)
+static int	fill_redir_cmd(t_data *data, t_list **current)
 {
 	t_redir		*new_redir;
 	t_command	*new_cmd;
@@ -29,7 +29,7 @@ int	fill_redir_cmd(t_data *data, t_list **current)
 	return (SUCCESS);
 }
 
-int	fill_pipe_cmd(t_data *data, t_list *current)
+static int	fill_pipe_cmd(t_data *data, t_list *current)
 {
 	t_command	*new_cmd;
 
@@ -44,18 +44,18 @@ int	fill_pipe_cmd(t_data *data, t_list *current)
 	else
 	{
 		if (!current->next)
-			ft_putstr_fd("Syntax error: unexpected end of input after '|'\n", 2);
+			ft_putendl_fd("Syntax error: expected command after '|'", 2);
 		else if (current->next->token_type == PIPE)
-			ft_putstr_fd("Syntax error: unexpected '|' after '|'\n", 2);
+			ft_putendl_fd("Syntax error: unexpected '|' after '|'", 2);
 		else if (data->commands == NULL)
-			ft_putstr_fd("Syntax error: expected command before '|'\n", 2);
+			ft_putendl_fd("Syntax error: expected command before '|'", 2);
 		data->exit_status = 2;
 		return (FAIL);
 	}
 	return (SUCCESS);
 }
 
-int	fill_word_cmd(t_data *data, t_list **current)
+static int	fill_word_cmd(t_data *data, t_list **current)
 {
 	t_command	*new_cmd;
 	size_t		len;
@@ -80,7 +80,7 @@ int	fill_word_cmd(t_data *data, t_list **current)
 	return (SUCCESS);
 }
 
-int	get_args(t_data *data, t_list **current)
+static int	get_args(t_data *data, t_list **current)
 {
 	if ((*current)->token_type == WORD)
 	{

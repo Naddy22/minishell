@@ -18,7 +18,7 @@ int	to_open(t_redir *redir)
 void	change_output(int fd)
 {
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		perror("Dup2 ");
+		perror("minishell ");
 	if (fd != 1 && fd != 2)
 		close(fd);
 }
@@ -26,7 +26,7 @@ void	change_output(int fd)
 void	change_input(int fd)
 {
 	if (dup2(fd, STDIN_FILENO) == -1)
-		perror("Dup2 ");
+		perror("minishell ");
 	if (fd != 0)
 		close(fd);
 }
@@ -40,7 +40,7 @@ void	parent(t_data *mini)
 void	change_parent_back(t_data *mini)
 {
 	if (dup2(mini->fdin_origin, STDIN_FILENO) == -1)
-		perror("Dup2, impossible to restore stdin ");
+		perror("minishell ");
 	if (dup2(mini->fdout_origin, STDOUT_FILENO) == -1)
-		perror("Dup2, impossible to restore stdout ");
+		perror("minishell ");
 }

@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
+static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 {
 	if (access(redir->file_name, R_OK) == 0)
 	{
@@ -18,7 +18,7 @@ int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 	}
 }
 
-void	set_r_redir(t_redir	*redir, t_command *cmd)
+static void	set_r_redir(t_redir	*redir, t_command *cmd)
 {
 	if (redir->type == R1_REDIR)
 	{

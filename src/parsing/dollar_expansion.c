@@ -1,12 +1,5 @@
 #include "../../inc/minishell.h"
 
-// next step: gerer les $ en remplacant ce qu'il y a apres le $ si celui ci
-// correspond à une variable d'environnement par ce qu'il y a apres le =
-// faire attention a bien comparer en regardant si la str (ex: USER) fini
-// par un = car parfois le debut peut être pareil.
-// strjoin par la suite au texte deja commencé afin de remplacer tout en allouant
-// la bonne taille (si le env n'existe pas, ca join juste rien avec rien)
-
 char	*get_env_value(char **env_cpy, const char *var_name)
 {
 	size_t	i;
@@ -23,7 +16,7 @@ char	*get_env_value(char **env_cpy, const char *var_name)
 	return (NULL);
 }
 
-int	add_dollar_value_to_str(t_data *data, const char *value)
+static int	add_dollar_value_to_str(t_data *data, const char *value)
 {
 	char	*current;
 	char	*new;
@@ -52,7 +45,7 @@ int	add_dollar_value_to_str(t_data *data, const char *value)
 	return (SUCCESS);
 }
 
-int	add_exit_status_to_token(t_data *data, size_t *i, int *start)
+static int	add_exit_status_to_token(t_data *data, size_t *i, int *start)
 {
 	char	*status_char;
 	char	*current;
@@ -119,8 +112,7 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	}
 	str = data->parsing.last_user_cmd;
 	(*i)++;
-	if (!ft_isalnum(str[*i]) && str[*i] != '_' && str[*i] != '$' \
-		&& str[*i] != '?') //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
+	if (!ft_isalnum(str[*i]) && !ft_isspecial(str[*i], 1)) //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
 		return (add_str_to_token(data, i, start));
 	if (ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
 		return (add_str_to_token(data, i, start));

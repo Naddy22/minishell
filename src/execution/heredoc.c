@@ -62,7 +62,7 @@ void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 	free(asciin);
 }
 
-void	make_here_docs(t_data *mini)
+int	make_here_docs(t_data *mini) //TODO Ctrl + C retourne 1
 {
 	t_redir		*redir;
 	t_command	*command;
@@ -84,4 +84,5 @@ void	make_here_docs(t_data *mini)
 			command = command->next;
 		}
 	}
+	return (0);
 }
