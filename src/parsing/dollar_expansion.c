@@ -7,10 +7,10 @@
 // strjoin par la suite au texte deja commencé afin de remplacer tout en allouant
 // la bonne taille (si le env n'existe pas, ca join juste rien avec rien)
 
-char *get_env_value(char **env_cpy, const char *var_name) //TODO \$HOME a gerer? ne doit pas remplacer $HOME
+char	*get_env_value(char **env_cpy, const char *var_name)
 {
-	size_t i;
-	size_t len;
+	size_t	i;
+	size_t	len;
 
 	i = 0;
 	len = ft_strlen(var_name);
@@ -25,8 +25,8 @@ char *get_env_value(char **env_cpy, const char *var_name) //TODO \$HOME a gerer?
 
 int	add_dollar_value_to_str(t_data *data, const char *value)
 {
-	char *current;
-	char *new;
+	char	*current;
+	char	*new;
 
 	if (data->last_token->brut_cmd == NULL)
 	{
@@ -63,7 +63,7 @@ int	add_exit_status_to_token(t_data *data, size_t *i, int *start)
 	if (status_char == NULL)
 	{
 		perror("Malloc");
-		return (FAIL);	
+		return (FAIL);
 	}
 	new = ft_strjoin(current, status_char);
 	if (new == NULL)
@@ -79,13 +79,13 @@ int	add_exit_status_to_token(t_data *data, size_t *i, int *start)
 	return (SUCCESS);
 }
 
-char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
+char	*process_variable_name(t_data *data, size_t *i, int *start, char *str)
 {
-	char *var_name;
-	char *result;
+	char	*var_name;
+	char	*result;
 
 	*start = *i; //fait pour remettre start sur la premiere lettre du nom de variable d'environnement
-	while((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
+	while ((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
 		(*i)++;
 	if (str[*i] == '$' && !ft_isalnum(str[*i - 1])) //!ft_isalnum ajouté pour pas que ca entre si $USER$USER
 	{
@@ -108,8 +108,8 @@ char *process_variable_name(t_data *data, size_t *i, int *start, char *str)
 
 int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 {
-	char *result;
-	char *str;
+	char	*result;
+	char	*str;
 
 	if (data->last_token && data->last_token->previous && \
 	data->last_token->previous->token_type == L2_REDIR)
@@ -119,11 +119,12 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	}
 	str = data->parsing.last_user_cmd;
 	(*i)++;
-	if (!ft_isalnum(str[*i]) && str[*i] != '_' && str[*i] != '$' && str[*i] != '?') //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
+	if (!ft_isalnum(str[*i]) && str[*i] != '_' && str[*i] != '$' \
+		&& str[*i] != '?') //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
 		return (add_str_to_token(data, i, start));
-	if(ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
+	if (ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
 		return (add_str_to_token(data, i, start));
-	if(str[*i] == '?')
+	if (str[*i] == '?')
 		return (add_exit_status_to_token(data, i, start));
 	result = process_variable_name(data, i, start, str);
 	if (result == NULL)

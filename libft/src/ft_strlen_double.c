@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen_double.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:42:31 by namoisan          #+#    #+#             */
-/*   Updated: 2024/06/06 12:21:59 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/07/24 08:58:19 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

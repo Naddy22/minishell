@@ -1,12 +1,12 @@
-#ifndef LIBFT_H //TODO PLACE HEADER HERE
+#ifndef LIBFT_H
 # define LIBFT_H
 
 # include <fcntl.h>
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
-// # include "../inc/minishell.h"
 
+//For the bonus part
 //typedef struct s_list
 //{
 //	void			*content;

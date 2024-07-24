@@ -2,10 +2,11 @@
 
 int	find_token(t_data *data, size_t *i, int *start_token)
 {
-	char *cmd;
+	char	*cmd;
 
 	cmd = data->parsing.last_user_cmd;
-	while (cmd[*i] == '<' || cmd[*i] == '>' || cmd[*i] == '|' || ft_isspace(cmd[*i]))
+	while (cmd[*i] == '<' || cmd[*i] == '>' || cmd[*i] == '|' \
+		|| ft_isspace(cmd[*i]))
 	{
 		if (ft_isspace(cmd[*i]) == TRUE)
 			(*i)++;
@@ -30,9 +31,9 @@ int	find_token(t_data *data, size_t *i, int *start_token)
 
 int	add_str_to_token(t_data *data, size_t *i, int *start)
 {
-	char *token;
-	char *tmp;
-	char *str;
+	char	*token;
+	char	*tmp;
+	char	*str;
 
 	str = data->parsing.last_user_cmd;
 	token = data->last_token->brut_cmd;
@@ -44,7 +45,7 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 	}
 	data->last_token->brut_cmd = ft_strjoin(token, tmp);
 	ft_free_verif((void *)&token);
-	ft_free_verif((void *)&tmp); 
+	ft_free_verif((void *)&tmp);
 	if (data->last_token->brut_cmd == NULL)
 	{
 		perror("Malloc");
@@ -58,13 +59,13 @@ int	add_str_to_token(t_data *data, size_t *i, int *start)
 
 int	process_end_of_token(t_data *data, size_t *i, int *start)
 {
-	char *str;
+	char	*str;
 
 	str = data->parsing.last_user_cmd;
 	if (data->last_token && data->last_token->previous && \
 		data->last_token->previous->token_type == L2_REDIR \
 		&& str[*i] == '$')
-			return (SUCCESS);
+		return (SUCCESS);
 	if (!data->tokens) //mis car si juste exemple $A dans la ligne de commande, le seul node n'existe plus
 		return (FAIL);
 	if (data->last_token->token_type == WORD)
@@ -86,7 +87,8 @@ int	process_end_of_token(t_data *data, size_t *i, int *start)
 
 int	get_char(t_data *data, char *str, size_t *i, int *start)
 {
-	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' || ft_isspace(str[*i])) 
+	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>' \
+		|| ft_isspace(str[*i]))
 	{
 		if (process_end_of_token(data, i, start) != SUCCESS)
 			return (FAIL);
@@ -95,7 +97,7 @@ int	get_char(t_data *data, char *str, size_t *i, int *start)
 		if (find_token(data, i, start) != SUCCESS)
 			return (FAIL);
 	}
-	else if (str[*i] == '$')//TODO voir pour repasser le token dans le parsing si espace apres substitution des $ ex: l$a où a="s -la"
+	else if (str[*i] == '$') //TODO voir pour repasser le token dans le parsing si espace apres substitution des $ ex: l$a où a="s -la"
 	{
 		if (process_end_of_token(data, i, start) != SUCCESS)
 			return (FAIL);

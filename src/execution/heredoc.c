@@ -35,7 +35,7 @@ void	readline_here_doc(t_data *data, int fd, char *delim)
 			ft_free_verif((void *)&rl_buffer);
 			return ;
 		}
-		to_print = parsing_heredoc(data, rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
+		to_print = parsing_heredoc(data, rl_buffer);
 		if (to_print == NULL)
 			printf("Je suis null\n");
 		ft_putstr_fd(to_print, fd);

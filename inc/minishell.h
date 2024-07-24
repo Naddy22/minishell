@@ -112,7 +112,8 @@ void		free_data(t_data *data);
 //dollar_expansion
 char		*get_env_value(char **env_cpy, const char *var_name);
 int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
-char		*process_variable_name(t_data *data, size_t *i, int *start, char *str);
+char		*process_variable_name(t_data *data, size_t *i,
+				int *start, char *str);
 
 //quotes
 int			handle_quotes(t_data *data, size_t *i, int *start);

@@ -12,7 +12,7 @@ la fin on stocke/joint le tout dans le même token word actuel
 
 int	handle_simple_quote(t_data *data, size_t *i, int *start)
 {
-	char *str;
+	char	*str;
 
 	str = data->parsing.last_user_cmd;
 	(*i)++;
@@ -49,7 +49,7 @@ int	handle_dollar_in_dquote(t_data *data, size_t *i, int *start)
 
 int	handle_double_quote(t_data *data, size_t *i, int *start)
 {
-	char *str;
+	char	*str;
 
 	str = data->parsing.last_user_cmd;
 	(*i)++;
@@ -77,7 +77,7 @@ int	handle_double_quote(t_data *data, size_t *i, int *start)
 
 int	handle_quotes(t_data *data, size_t *i, int *start)
 {
-	char *str;
+	char	*str;
 
 	str = data->parsing.last_user_cmd;
 	if (add_str_to_token(data, i, start) != SUCCESS)

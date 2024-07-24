@@ -57,8 +57,8 @@ int	fill_pipe_cmd(t_data *data, t_list *current)
 
 int	fill_word_cmd(t_data *data, t_list **current)
 {
-	t_command *new_cmd;
-	size_t len;
+	t_command	*new_cmd;
+	size_t		len;
 
 	if (get_tab_cmd(data, current) == FAIL)
 		return (FAIL);
@@ -87,7 +87,8 @@ int	get_args(t_data *data, t_list **current)
 		if (fill_word_cmd(data, current) != SUCCESS)
 			return (FAIL);
 	}
-	else if ((*current)->token_type >= L1_REDIR && (*current)->token_type < PIPE)
+	else if ((*current)->token_type >= L1_REDIR && \
+		(*current)->token_type < PIPE)
 	{
 		if (fill_redir_cmd(data, current) != SUCCESS)
 			return (FAIL);
@@ -102,7 +103,7 @@ int	get_args(t_data *data, t_list **current)
 
 int	make_cmds(t_data *data)
 {
-	t_list *current;
+	t_list	*current;
 
 	current = data->tokens;
 	data->parsing.parse_cmd = NULL;

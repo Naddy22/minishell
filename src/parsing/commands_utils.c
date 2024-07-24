@@ -2,7 +2,7 @@
 
 int	get_tab_cmd(t_data *data, t_list **current)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *current;
 	data->parsing.i = 0;
@@ -20,7 +20,8 @@ int	get_tab_cmd(t_data *data, t_list **current)
 	data->parsing.i = 0;
 	while (*current && (*current)->token_type == WORD)
 	{
-		data->parsing.parse_cmd[data->parsing.i] = ft_strdup((*current)->brut_cmd);
+		data->parsing.parse_cmd[data->parsing.i] = \
+			ft_strdup((*current)->brut_cmd);
 		*current = (*current)->next;
 		data->parsing.i++;
 	}
@@ -59,7 +60,7 @@ int	alloc_new_cmd(t_data *data, size_t len_new)
 
 t_command	*create_new_lstcmd(t_data *data)
 {
-	t_command *new;
+	t_command	*new;
 
 	new = ft_calloc(1, sizeof(t_command));
 	if (new == NULL)
@@ -77,7 +78,7 @@ t_command	*create_new_lstcmd(t_data *data)
 
 t_redir	*create_new_lstredir(t_list **current)
 {
-	t_redir *new;
+	t_redir	*new;
 
 	new = ft_calloc(1, sizeof(t_redir));
 	if (new == NULL)

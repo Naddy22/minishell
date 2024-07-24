@@ -2,7 +2,7 @@
 
 t_list	*calloc_new_token(void)
 {
-	t_list *new_token;
+	t_list	*new_token;
 
 	new_token = (t_list *)ft_calloc(1, sizeof(t_list));
 	return (new_token);
@@ -10,13 +10,13 @@ t_list	*calloc_new_token(void)
 
 int	create_token(t_data *data, size_t *i, int *start, int id)
 {
-	t_list *new;
+	t_list	*new;
 
 	new = calloc_new_token(); //calloc nouveau token
 	if (new == NULL)
 	{
 		perror("Malloc : ");
-		return(FAIL);
+		return (FAIL);
 	}
 	new->token_type = id;
 	if (data->last_token)
@@ -36,12 +36,12 @@ int	create_token(t_data *data, size_t *i, int *start, int id)
 
 int	create_token_pipe_redir(t_data *data, size_t *i, int *start)
 {
-	char *str;
+	char	*str;
 
 	str = data->parsing.last_user_cmd;
 	if (str[*i] == '|')
 	{
-		data->nb_pipes++; 
+		data->nb_pipes++;
 		return (create_token(data, i, start, PIPE));
 	}
 	if (str[*i] == '>' && str[*i + 1] == '>')
@@ -55,7 +55,7 @@ int	create_token_pipe_redir(t_data *data, size_t *i, int *start)
 	return (SUCCESS);
 }
 
-int ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || \
 		c == '\r')
@@ -65,7 +65,7 @@ int ft_isspace(char c)
 
 int	ft_reset_1token(t_data *data, t_list **token)
 {
-	t_list *current;
+	t_list	*current;
 
 	if (data->last_token->previous)
 		data->last_token->previous->next = NULL;
