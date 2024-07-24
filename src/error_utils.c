@@ -11,3 +11,9 @@ int	get_err_code(int exit_code)
 		r_val = (128 + WTERMSIG(exit_code));
 	return (r_val);
 }
+
+int error_fail(char *err_msg)
+{
+	perror(err_msg);
+	return (FAIL);
+}

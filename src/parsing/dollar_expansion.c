@@ -18,29 +18,34 @@ char	*get_env_value(char **env_cpy, const char *var_name)
 
 static int	add_dollar_value_to_str(t_data *data, const char *value)
 {
-	char	*current;
-	char	*new;
+	size_t	i;
+	int		start;
+	char	**split;
 
-	if (data->last_token->brut_cmd == NULL)
+	if (ft_strchr(value, ' ')) //faire fonction qui va faire un split, remplir le token en court par le premier mot et creer un nouveau token pour chaque mot suivant
 	{
-		data->last_token->brut_cmd = ft_strdup(value);
-		if (data->last_token->brut_cmd == NULL)
-		{
-			perror("Malloc");
+		i = 1;
+		start = 0;
+		split = ft_split(value, ' ');
+		if (split == NULL)
+			return (error_fail("Malloc"));
+		if (add_value_to_brut_cmd(data, split[0]) == FAIL)
 			return (FAIL);
+		while (split[i])
+		{
+			if (create_token(data, &i, &start, WORD) != SUCCESS)
+				return (error_fail("Malloc"));
+			data->last_token->brut_cmd = ft_strdup(split[i]);
+			if (data->last_token->brut_cmd == NULL)
+				return (error_fail("Malloc"));
+			i++;
 		}
+		ft_free_table(split);
 	}
 	else
 	{
-		current = data->last_token->brut_cmd;
-		new = ft_strjoin(current, value);
-		if (new == NULL)
-		{
-			perror("Malloc");
+		if (add_value_to_brut_cmd(data, value) == FAIL)
 			return (FAIL);
-		}
-		ft_free_verif((void **)&data->last_token->brut_cmd);
-		data->last_token->brut_cmd = new;
 	}
 	return (SUCCESS);
 }
@@ -127,3 +132,5 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 		return (ft_reset_1token(data, &data->last_token));
 	return (add_dollar_value_to_str(data, result));
 }
+
+//next step: splitter la fonction add_dollar_value_to_str

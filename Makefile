@@ -21,6 +21,7 @@ SRC			=	main.c \
 				error_utils.c \
 				free_utils.c \
 				dollar_expansion.c \
+				utils_dollar_expansion.c \
 				quotes.c \
 				exec.c \
 				file_handling.c \

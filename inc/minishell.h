@@ -106,6 +106,7 @@ int			ft_reset_1token(t_data *data, t_list **token);
 
 //error_utils.c
 int			get_err_code(int exit_code);
+int			error_fail(char *err_msg);
 
 //free_utils.c
 void		free_all(t_data *data);
@@ -116,6 +117,9 @@ char		*get_env_value(char **env_cpy, const char *var_name);
 char		*process_variable_name(t_data *data, size_t *i,
 				int *start, char *str);
 int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
+
+//utils_dollar_expansion.c
+int	add_value_to_brut_cmd(t_data *data, const char *value);
 
 //quotes.c
 int			handle_quotes(t_data *data, size_t *i, int *start);
