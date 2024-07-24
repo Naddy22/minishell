@@ -164,7 +164,7 @@ void		set_signal(t_sig_type type);
 int			make_here_docs(t_data *mini);
 
 //heredoc_parsing.c
-char		*parsing_heredoc(t_data *data, char *str);
+void		parsing_heredoc(t_data *data, char *str);
 
 //child.c
 void		child(t_data *mini, pid_t pid);
@@ -205,7 +205,6 @@ int			ft_pwd(void);
 int			verif_name(char *str, char c);
 void		remove_elem(char *elem, t_data *mini);
 int			ft_unset(char **cmd, t_data *mini);
-int			verif_name(char *str);
 
 //export.c
 int			ft_export(char **cmd, t_data *mini);
@@ -214,9 +213,6 @@ int			check_env(char *elem, t_data *mini);
 //signals.c
 void		set_signal(t_sig_type type);
 
-//heredoc.c
-void		make_here_docs(t_data *mini);
-
 //heredoc_parsing.c
 char		*get_str(char *str, size_t *start, size_t *i);
 char		*dollars_parse(t_data *data, char *str, size_t *start, size_t *i);
@@ -224,8 +220,6 @@ char		*join_str(char *result, char *tmp, char *dollar_exp);
 void		check_result(t_data *data, char *result, char *tmp);
 
 //child.c
-void		ft_execve(t_data *mini, t_command *cmd);
-void		execution(t_data *mini);
 void		child(t_data *mini, pid_t pid);
 
 //exec_utils.c
