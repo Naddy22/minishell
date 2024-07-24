@@ -66,7 +66,9 @@ char	*parsing_heredoc(t_data *data, char *str)
 			tmp = get_str(str, &start, &i);
 			dollar_exp = dollars_parse(data, str, &start, &i);
 			result = ft_strjoin(tmp, dollar_exp);
-		}
+			if (str[i] == '$') //essaie d'ajouter ca mais pour le moment ecrit toujours juste nadege quand $USER$USER au lieu de nadegenadege
+				continue ;
+		} //si else marche plus pour $USER$USER, sans le else marche pas pour $U$USER
 		i++;
 	}
 	tmp = get_str(str, &start, &i);
@@ -76,30 +78,3 @@ char	*parsing_heredoc(t_data *data, char *str)
 		data->parsing.hered_print = tmp;
 	return (data->parsing.hered_print);
 }
-
-// char	*parsing_heredoc(char *str)
-// {
-// 	char *result;
-// 	size_t i;
-// 	size_t start;
-// 	char *tmp;
-
-// 	i = 0;
-// 	start = i;
-// 	result = NULL;
-// 	while (str[i] != '\0' && str[i] != '$')
-// 		i++;
-// 	tmp = ft_substr(str, start, i - start);
-// 	if (tmp == NULL)
-// 	{
-// 		perror("Malloc");
-// 		return (NULL);
-// 	}
-// 	if (str[i] == '\0')
-// 		result = tmp;
-// 	if (str[i] == '$')
-// 	{
-// 		result = dollar_parse(str, &start, &i);
-// 	}
-// 	return (result);
-// }
