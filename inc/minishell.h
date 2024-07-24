@@ -190,7 +190,10 @@ void		set_signal(t_sig_type type);
 void		make_here_docs(t_data *mini);
 
 //heredoc_parsing.c
-char		*parsing_heredoc(t_data *data, char *str);
+char		*get_str(char *str, size_t *start, size_t *i);
+char		*dollars_parse(t_data *data, char *str, size_t *start, size_t *i);
+char		*join_str(char *result, char *tmp, char *dollar_exp);
+void		check_result(t_data *data, char *result, char *tmp);
 
 //child.c
 void		ft_execve(t_data *mini, t_command *cmd);

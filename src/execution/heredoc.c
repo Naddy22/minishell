@@ -1,5 +1,31 @@
 #include "../../inc/minishell.h"
 
+void	parsing_heredoc(t_data *data, char *str)
+{
+	char *result;
+	size_t start;
+	char *tmp;
+	char *dollar_exp;
+
+	data->parsing.i = 0;
+	start = 0;
+	result = NULL;
+	while (data->parsing.i < ft_strlen(str))
+	{
+		if (str[data->parsing.i] == '$')
+		{
+			tmp = get_str(str, &start, &data->parsing.i);
+			dollar_exp = dollars_parse(data, str, &start, &data->parsing.i);
+			result = join_str(result, tmp, dollar_exp);
+			if (str[data->parsing.i] == '$')
+				continue ;
+		}
+		data->parsing.i++;
+	}
+	tmp = get_str(str, &start, &data->parsing.i);
+	check_result(data, result, tmp);
+}
+
 int	check_here_docs(t_data *mini)
 {
 	t_redir		*redir;
@@ -23,7 +49,6 @@ int	check_here_docs(t_data *mini)
 void	readline_here_doc(t_data *data, int fd, char *delim)
 {
 	char	*rl_buffer;
-	char	*to_print;
 	size_t	len;
 
 	len = ft_strlen(delim);
@@ -35,16 +60,14 @@ void	readline_here_doc(t_data *data, int fd, char *delim)
 			ft_free_verif((void *)&rl_buffer);
 			return ;
 		}
-		to_print = parsing_heredoc(data, rl_buffer);//NEED TO ADD PARSING BEFORE WRITE
-		if (to_print == NULL)
-			printf("Je suis null\n");
-		ft_putstr_fd(to_print, fd);
-		ft_putstr_fd("\n", fd); //tant qu'il y a des quotes ' ou " tu passes et tu change si c'Est un $ avec la variable env si existant, passé le reste des ' et "
+		parsing_heredoc(data, rl_buffer);
+		if (data->parsing.hered_print == NULL)
+			printf("Je suis null\n"); //TODO voir pour mettre un message et code d'erreur
+		ft_putendl_fd(data->parsing.hered_print, fd);
 		ft_free_verif((void *)&rl_buffer);
-		ft_free_verif((void *)&to_print);
+		ft_free_verif((void *)&data->parsing.hered_print);
 	}
 }
-
 void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 {
 	int		fd;
