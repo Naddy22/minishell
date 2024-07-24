@@ -31,7 +31,8 @@ char	*get_str(char *str, size_t *start, size_t *i)
 
 char	*dollars_parse(t_data *data, char *str, size_t *start, size_t *i)
 {
-	char	*result;
+	char *env_var;
+	char *result;
 
 	(*i)++;
 	if (!ft_isalnum(str[*i]) && !ft_isspecial(str[*i], 1))
@@ -40,40 +41,41 @@ char	*dollars_parse(t_data *data, char *str, size_t *start, size_t *i)
 		return (get_str(str, start, i));
 	if (str[*i] == '?')
 		return (get_exit_status(data, start, i));
-	result = process_variable_name(data, i, (int *)start, str);
-	if (result == NULL)
+	env_var = process_variable_name(data, i, (int *)start, str);
+	if (env_var == NULL)
 		return (NULL);
+	result = ft_strdup(env_var);
 	*start = *i;
 	return (result);
 }
 
-char	*parsing_heredoc(t_data *data, char *str)
+char *join_str(char *result, char *tmp, char *dollar_exp)
 {
-	char	*result;
-	size_t	i;
-	size_t	start;
-	char	*tmp;
-	char	*dollar_exp;
+	char *join_result;
 
-	i = 0;
-	start = i;
-	result = NULL;
-	while (i<ft_strlen(str))
+	if (result == NULL)
+		result = ft_strjoin(tmp, dollar_exp);
+	else
 	{
-		if (str[i] == '$')
-		{
-			tmp = get_str(str, &start, &i);
-			dollar_exp = dollars_parse(data, str, &start, &i);
-			result = ft_strjoin(tmp, dollar_exp);
-			if (str[i] == '$') //essaie d'ajouter ca mais pour le moment ecrit toujours juste nadege quand $USER$USER au lieu de nadegenadege
-				continue ;
-		} //si else marche plus pour $USER$USER, sans le else marche pas pour $U$USER
-		i++;
+		join_result = ft_strjoin(result, tmp);
+		ft_free_verif((void **)&result);
+		result = ft_strjoin(join_result, dollar_exp);
+		ft_free_verif((void **)&join_result);
 	}
-	tmp = get_str(str, &start, &i);
+	ft_free_verif((void **)&tmp);
+	ft_free_verif((void **)&dollar_exp);
+	return (result);
+}
+
+void	check_result(t_data *data, char *result, char *tmp)
+{
 	if (result)
+	{
 		data->parsing.hered_print = ft_strjoin(result, tmp);
+		ft_free_verif((void **)&result);
+		ft_free_verif((void **)&tmp);
+	}
 	else
 		data->parsing.hered_print = tmp;
-	return (data->parsing.hered_print);
 }
+//a free:dollar_ex
