@@ -27,6 +27,7 @@ void	exit_with_status(t_data *mini)
 {
 	close(mini->fdout_origin);
 	close(mini->fdin_origin);
+	rl_clear_history();
 	free_data(mini);
 	exit((unsigned char)mini->exit_status);
 }
