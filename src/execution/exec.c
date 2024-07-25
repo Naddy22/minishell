@@ -59,11 +59,10 @@ void	waiting_for_all_childs(t_data *mini)
 		cmd = cmd->next;
 	}
 }
-
 int	to_execute(t_data *mini)
 {
 	mini->exit_status = make_here_docs(mini);
-	if (mini->commands->cmd)
+	if (mini->commands)
 	{
 		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0)
 		{

@@ -6,26 +6,37 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 	char	**env;
 	char	**cmd_table;
 
-	if (access(cmd->cmd[0], X_OK) == 0)
-		path = ft_strdup(cmd->cmd[0]);
-	else
-		path = get_path(mini, cmd->cmd[0]);
-	if (!path)
+	if (cmd->cmd)
 	{
-		path_error_message(cmd->cmd);
-		mini->exit_status = 127;
-		exit_with_status(mini);
+		if (access(cmd->cmd[0], X_OK) == 0)
+			path = ft_strdup(cmd->cmd[0]);
+		else
+			path = get_path(mini, cmd->cmd[0]);
+		if (!path)
+		{
+			path_error_message(cmd->cmd);
+			mini->exit_status = 127;
+			exit_with_status(mini);
+		}
+		env = dup_table(mini->cpy_env);
+		cmd_table = dup_table(cmd->cmd);
+		free_data(mini);
+		close(mini->fdin_origin);
+		close(mini->fdout_origin);
+		rl_clear_history();
+		execve(path, cmd_table, env);
+		perror("minishell ");
+		ft_free_table(env);
+		ft_free_table(cmd_table);
+		ft_free_verif((void **)&path);
 	}
-	env = dup_table(mini->cpy_env);
-	cmd_table = dup_table(cmd->cmd);
-	free_data(mini);
-	close(mini->fdin_origin);
-	close(mini->fdout_origin);
-	execve(path, cmd_table, env);
-	perror("minishell ");
-	ft_free_table(env);
-	ft_free_table(cmd_table);
-	ft_free_verif((void **)&path);
+	else
+	{
+		close(mini->fdin_origin);
+		close(mini->fdout_origin);
+		rl_clear_history();
+		free_data(mini);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -41,7 +52,7 @@ static void	execution(t_data *mini)
 		cmd = cmd->next;
 		i--;
 	}
-	if (isbuiltins(cmd) != 0)
+	if (cmd->cmd && isbuiltins(cmd) != 0)
 	{
 		builtin_exec(mini, cmd);
 		free_data(mini);

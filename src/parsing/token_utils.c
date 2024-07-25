@@ -73,6 +73,7 @@ int	ft_reset_1token(t_data *data, t_list **token)
 	{
 		if (*token == data->tokens)
 			data->tokens = NULL;
+		ft_free_verif((void **)&(*token)->brut_cmd);
 		ft_free_verif((void **)token);
 	}
 	else

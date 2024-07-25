@@ -141,7 +141,10 @@ fclean: clean
 rlclean: fclean
 	cd inc/readline && make distclean
 
-val: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --suppressions=supp.txt ./minishell
+supp:
+	test -f /tmp/supp.txt || cp supp.txt /tmp
+
+val: all supp
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --trace-children=yes --suppressions=/tmp/supp.txt ./minishell
 
 re:	fclean all
