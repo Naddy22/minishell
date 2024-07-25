@@ -61,7 +61,10 @@ static void	execution(t_data *mini)
 		exit(mini->exit_status);
 	}
 	else
+	{
+		rl_clear_history();
 		ft_execve(mini, cmd);
+	}
 }
 
 void	child(t_data *mini, pid_t pid)
