@@ -61,8 +61,8 @@ void	readline_here_doc(t_data *data, int fd, char *delim)
 			return ;
 		}
 		parsing_heredoc(data, rl_buffer);
-		if (data->parsing.hered_print == NULL)
-			printf("Je suis null\n"); //TODO voir pour mettre un message et code d'erreur
+		// if (data->parsing.hered_print == NULL)
+		// 	printf("Je suis null\n"); //TODO voir pour mettre un message et code d'erreur
 		ft_putendl_fd(data->parsing.hered_print, fd);
 		ft_free_verif((void *)&rl_buffer);
 		ft_free_verif((void *)&data->parsing.hered_print);

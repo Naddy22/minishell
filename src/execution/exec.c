@@ -54,6 +54,7 @@ void	waiting_for_all_childs(t_data *mini)
 	cmd = mini->commands;
 	while (cmd)
 	{
+		set_signal(PARENT);
 		waitpid(cmd->pid, &mini->tmp_status, 0);
 		mini->exit_status = get_err_code(mini->tmp_status);
 		cmd = cmd->next;
@@ -64,7 +65,7 @@ int	to_execute(t_data *mini)
 	mini->exit_status = make_here_docs(mini);
 	if (mini->commands)
 	{
-		if (mini->nb_pipes == 0 && isbuiltins(mini->commands) != 0)
+		if (mini->nb_pipes == 0 && mini->commands->cmd && isbuiltins(mini->commands) != 0)
 		{
 			if (set_redir(mini, 0) == 0)
 				builtin_exec(mini, mini->commands);
