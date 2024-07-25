@@ -119,7 +119,8 @@ char		*process_variable_name(t_data *data, size_t *i,
 int			handle_dollar_expansion(t_data *data, size_t *i, int *start);
 
 //utils_dollar_expansion.c
-int	add_value_to_brut_cmd(t_data *data, const char *value);
+int			add_value_to_brut_cmd(t_data *data, const char *value);
+int			split_expanded_value(t_data *data, const char *value);
 
 //quotes.c
 int			handle_quotes(t_data *data, size_t *i, int *start);

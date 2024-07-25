@@ -22,3 +22,29 @@ int	add_value_to_brut_cmd(t_data *data, const char *value)
 	}
 	return (SUCCESS);
 }
+
+int	split_expanded_value(t_data *data, const char *value)
+{
+	size_t i;
+	int start;
+	char **split;
+
+	i = 1;
+	start = 0;
+	split = ft_split(value, ' ');
+	if (split == NULL)
+		return (error_fail("Malloc"));
+	if (add_value_to_brut_cmd(data, split[0]) == FAIL)
+		return (FAIL);
+	while (split[i])
+	{
+		if (create_token(data, &i, &start, WORD) != SUCCESS)
+			return (error_fail("Malloc"));
+		data->last_token->brut_cmd = ft_strdup(split[i]);
+		if (data->last_token->brut_cmd == NULL)
+			return (error_fail("Malloc"));
+		i++;
+	}
+	ft_free_table(split);
+	return (SUCCESS);
+}

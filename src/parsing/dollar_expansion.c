@@ -18,35 +18,14 @@ char	*get_env_value(char **env_cpy, const char *var_name)
 
 static int	add_dollar_value_to_str(t_data *data, const char *value)
 {
-	size_t	i;
-	int		start;
-	char	**split;
-
 	if (ft_strchr(value, ' ')) //faire fonction qui va faire un split, remplir le token en court par le premier mot et creer un nouveau token pour chaque mot suivant
 	{
-		i = 1;
-		start = 0;
-		split = ft_split(value, ' ');
-		if (split == NULL)
-			return (error_fail("Malloc"));
-		if (add_value_to_brut_cmd(data, split[0]) == FAIL)
+		if (split_expanded_value(data, value) == FAIL)
 			return (FAIL);
-		while (split[i])
-		{
-			if (create_token(data, &i, &start, WORD) != SUCCESS)
-				return (error_fail("Malloc"));
-			data->last_token->brut_cmd = ft_strdup(split[i]);
-			if (data->last_token->brut_cmd == NULL)
-				return (error_fail("Malloc"));
-			i++;
-		}
-		ft_free_table(split);
 	}
 	else
-	{
 		if (add_value_to_brut_cmd(data, value) == FAIL)
 			return (FAIL);
-	}
 	return (SUCCESS);
 }
 
@@ -87,7 +66,7 @@ char	*process_variable_name(t_data *data, size_t *i, int *start, char *str)
 		(*i)++;
 	if (str[*i] == '$' && !ft_isalnum(str[*i - 1])) //!ft_isalnum ajouté pour pas que ca entre si $USER$USER
 	{
-		result = ft_strdup("$"); //mis pour avoir un $ si $$ ecrit
+		result = "$"; //mis pour avoir un $ si $$ ecrit
 		(*i)++;
 		return (result);
 	}
