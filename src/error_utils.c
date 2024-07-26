@@ -4,6 +4,8 @@ int	get_err_code(int exit_code)
 {
 	unsigned char	r_val;
 
+	if (exit_code == 256)
+		return (1);
 	r_val = exit_code;
 	if (WIFEXITED(exit_code))
 		r_val = WEXITSTATUS(exit_code);

@@ -6,15 +6,6 @@ static void	sig_handler_parent(int signum)
 	(void)signum;
 }
 
-// static void	sig_handler_hd(int signum)
-// {
-// 	(void)signum;
-// 	rl_on_new_line();
-// 	ft_putchar_fd('\n', 1);
-// 	rl_replace_line("\0", 0);
-// 	rl_redisplay();
-// }
-
 static void	sig_handler_main(int signum)
 {
 	(void)signum;
@@ -22,6 +13,12 @@ static void	sig_handler_main(int signum)
 	ft_putchar_fd('\n', 1);
 	rl_replace_line("\0", 0);
 	rl_redisplay();
+}
+
+static void sig_handler_hd(int signum)
+{
+	(void)signum;
+	exit(1);
 }
 /*
 	SIG_IGN = ignore signal
@@ -41,7 +38,7 @@ void	set_signal(t_sig_type type)
 	}
 	else if (type == HERE_DOC)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, &sig_handler_hd);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (type == PARENT)
@@ -50,3 +47,6 @@ void	set_signal(t_sig_type type)
 		signal(SIGQUIT, SIG_IGN);
 	}
 }
+//next step: voir pourquoi dans les heredoc ca retourne toujours 0, je pense que
+// meme si c'est bien seter apres le heredoc, la suite de l'execution remet le
+// exit status a 0

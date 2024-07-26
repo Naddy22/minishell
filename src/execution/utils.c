@@ -24,3 +24,12 @@ t_command	*get_cmd(t_data *mini, int pnb)
 	}
 	return (cmd);
 }
+
+int	set_value(int value)
+{
+	static int	result;
+
+	if (value >= 0)
+		result = value;
+	return (result);
+}

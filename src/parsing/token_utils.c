@@ -12,7 +12,7 @@ int	create_token(t_data *data, size_t *i, int *start, int id)
 {
 	t_list	*new;
 
-	new = calloc_new_token(); //calloc nouveau token
+	new = calloc_new_token();
 	if (new == NULL)
 	{
 		perror("Malloc : ");

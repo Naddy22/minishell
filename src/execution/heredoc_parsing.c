@@ -78,4 +78,3 @@ void	check_result(t_data *data, char *result, char *tmp)
 	else
 		data->parsing.hered_print = tmp;
 }
-//a free:dollar_ex

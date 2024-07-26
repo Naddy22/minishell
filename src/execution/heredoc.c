@@ -80,19 +80,19 @@ void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 	name = ft_strjoin("/tmp/.heredoc", asciin);
 	redir->delim = redir->file_name;
 	redir->file_name = name;
-	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	pid = fork();
 	if (pid == -1)
 		perror("fork");
 	if (pid == 0)
 	{
+		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		set_signal(HERE_DOC);
 		readline_here_doc(mini, fd, redir->delim);
 		close (fd);
 		exit_with_status(mini, HERE_DOC);
 	}
-	close (fd);
 	waitpid(pid, &mini->tmp_status, 0);
+	printf("status = %d\n", mini->tmp_status); //met toujours 0 alors que je set a 1
 	mini->exit_status = get_err_code(mini->tmp_status);
 	mini->parsing.flag_hdq = 0;
 	(*n)++;

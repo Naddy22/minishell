@@ -186,6 +186,7 @@ int			isbuiltins(t_command *cmd);
 //utils.c
 int			get_size(char **strs);
 t_command	*get_cmd(t_data *mini, int pnb);
+int			set_value(int value);
 
 //builtins
 //cd.c
