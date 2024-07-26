@@ -14,11 +14,11 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 	{
 		path_error_message(cmd->cmd);
 		mini->exit_status = 127;
-		exit_with_status(mini);
+		exit_with_status(mini, MAIN);
 	}
 	env = dup_table(mini->cpy_env);
 	cmd_table = dup_table(cmd->cmd);
-	free_data(mini);
+	free_data(mini, MAIN);
 	close(mini->fdin_origin);
 	close(mini->fdout_origin);
 	execve(path, cmd_table, env);
@@ -44,7 +44,7 @@ static void	execution(t_data *mini)
 	if (isbuiltins(cmd) != 0)
 	{
 		builtin_exec(mini, cmd);
-		free_data(mini);
+		free_data(mini, MAIN);
 		close(mini->fdin_origin);
 		close(mini->fdout_origin);
 		exit(mini->exit_status);
@@ -73,7 +73,7 @@ void	child(t_data *mini, pid_t pid)
 	{
 		close(mini->fd[0]);
 		close(mini->fd[1]);
-		exit_with_status(mini);
+		exit_with_status(mini, MAIN);
 	}
 	close(mini->fd[0]);
 	close(mini->fd[1]);

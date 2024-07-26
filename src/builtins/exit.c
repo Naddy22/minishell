@@ -23,13 +23,12 @@ static int	check_all_digit(char **cmd, int i)
 	return (0);
 }
 
-void	exit_with_status(t_data *mini)
+void	exit_with_status(t_data *mini, int mode)
 {
 	close(mini->fdout_origin);
 	close(mini->fdin_origin);
 	rl_clear_history();
-	ft_putendl_fd("ici", 2);
-	free_data(mini);
+	free_data(mini, mode);
 	exit((unsigned char)mini->exit_status);
 }
 
@@ -40,7 +39,7 @@ int	ft_exit(char **cmd, t_data *mini)
 		if (check_all_digit(cmd, 1) == 1)
 		{
 			mini->exit_status = 255;
-			exit_with_status(mini);
+			exit_with_status(mini, MAIN);
 		}
 		if (cmd[2])
 		{
@@ -51,13 +50,13 @@ int	ft_exit(char **cmd, t_data *mini)
 		{
 			mini->exit_status = ft_atoi(cmd[1]);
 			ft_putstr_fd("exit\n", 2);
-			exit_with_status(mini);
+			exit_with_status(mini, MAIN);
 		}
 	}
 	else
 	{
 		ft_putstr_fd("exit\n", 2);
-		exit_with_status(mini);
+		exit_with_status(mini, MAIN);
 	}
 	return (0);
 }

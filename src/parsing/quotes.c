@@ -23,6 +23,7 @@ static int	handle_simple_quote(t_data *data, size_t *i, int *start)
 		if (str[*i] == '\0')
 		{
 			ft_putstr_fd("Error: quote is not close\n", 2);
+			data->parsing.flag_hdq = 0;
 			data->exit_status = 258;
 			return (FAIL);
 		}
@@ -60,6 +61,7 @@ static int	handle_double_quote(t_data *data, size_t *i, int *start)
 		if (str[*i] == '\0')
 		{
 			ft_putstr_fd("Error: quote is not close\n", 2);
+			data->parsing.flag_hdq = 0;
 			data->exit_status = 258;
 			return (FAIL);
 		}

@@ -68,21 +68,34 @@ void	readline_here_doc(t_data *data, int fd, char *delim)
 		ft_free_verif((void *)&data->parsing.hered_print);
 	}
 }
+
 void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 {
 	int		fd;
 	char	*name;
 	char	*asciin;
+	pid_t	pid;
 
 	asciin = ft_itoa(*n);
 	name = ft_strjoin("/tmp/.heredoc", asciin);
 	redir->delim = redir->file_name;
 	redir->file_name = name;
 	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	readline_here_doc(mini, fd, redir->delim);
+	pid = fork();
+	if (pid == -1)
+		perror("fork");
+	if (pid == 0)
+	{
+		set_signal(HERE_DOC);
+		readline_here_doc(mini, fd, redir->delim);
+		close (fd);
+		exit_with_status(mini, HERE_DOC);
+	}
+	close (fd);
+	waitpid(pid, &mini->tmp_status, 0);
+	mini->exit_status = get_err_code(mini->tmp_status);
 	mini->parsing.flag_hdq = 0;
 	(*n)++;
-	close (fd);
 	free(asciin);
 }
 

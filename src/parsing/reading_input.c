@@ -39,9 +39,7 @@ int	read_user_cmd(t_data *data)
 	{
 		ft_printf("exit\n");
 		rl_clear_history();
-		exit_with_status(data);
-		// free_data(data);
-		// exit(data->exit_status);
+		exit_with_status(data, MAIN);
 	}
 	else
 	{

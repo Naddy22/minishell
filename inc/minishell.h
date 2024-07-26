@@ -12,6 +12,7 @@
 # include "readline/readline.h"
 # include "readline/history.h"
 # include <errno.h>
+# include <term.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -68,6 +69,7 @@ typedef struct s_parsing
 	t_command	*last_lstcmd;
 	char		*hered_print;
 	int			flag_hdq;
+	int			*interrupt_hd;
 }			t_parsing;
 
 typedef struct s_data
@@ -110,8 +112,8 @@ int			get_err_code(int exit_code);
 int			error_fail(char *err_msg);
 
 //free_utils.c
-void		free_all(t_data *data);
-void		free_data(t_data *data);
+void		free_all(t_data *data, int mode);
+void		free_data(t_data *data, int mode);
 
 //dollar_expansion.c
 char		*get_env_value(char **env_cpy, const char *var_name);
@@ -165,6 +167,7 @@ int			ft_export(char **cmd, t_data *mini);
 
 //signals.c
 void		set_signal(t_sig_type type);
+int			set_value(int value);
 
 //heredoc.c //TODO check static fct in heredoc and here_doc_parsing
 int			make_here_docs(t_data *mini);
@@ -201,7 +204,7 @@ void		add_elem(char *elem, t_data *mini);
 void		ft_env(char **envp);
 
 //exit.c
-void		exit_with_status(t_data *mini);
+void		exit_with_status(t_data *mini, int mode);
 int			ft_exit(char **cmd, t_data *mini);
 
 //pwd.c
@@ -215,9 +218,6 @@ int			ft_unset(char **cmd, t_data *mini);
 //export.c
 int			ft_export(char **cmd, t_data *mini);
 int			check_env(char *elem, t_data *mini);
-
-//signals.c
-void		set_signal(t_sig_type type);
 
 //heredoc_parsing.c
 char		*get_str(char *str, size_t *start, size_t *i);

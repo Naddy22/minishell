@@ -6,10 +6,14 @@ static void	sig_handler_parent(int signum)
 	(void)signum;
 }
 
-static void	sig_handler_hd(int signum)
-{
-	(void)signum;
-}
+// static void	sig_handler_hd(int signum)
+// {
+// 	(void)signum;
+// 	rl_on_new_line();
+// 	ft_putchar_fd('\n', 1);
+// 	rl_replace_line("\0", 0);
+// 	rl_redisplay();
+// }
 
 static void	sig_handler_main(int signum)
 {
@@ -19,7 +23,6 @@ static void	sig_handler_main(int signum)
 	rl_replace_line("\0", 0);
 	rl_redisplay();
 }
-
 /*
 	SIG_IGN = ignore signal
 	SIG_DFL = default signal handler
@@ -38,7 +41,7 @@ void	set_signal(t_sig_type type)
 	}
 	else if (type == HERE_DOC)
 	{
-		signal(SIGINT, &sig_handler_hd);
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (type == PARENT)

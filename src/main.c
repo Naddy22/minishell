@@ -96,19 +96,19 @@ int	main_loop(t_data data)
 		set_signal(PARENT);
 		if (parsing(&data) != SUCCESS)
 		{
-			free_all(&data);
+			free_all(&data, MAIN);
 			continue ;
 		}
 		test_print_token_list(data.tokens);
 		if (make_cmds(&data) != SUCCESS)
 		{
-			free_all(&data);
+			free_all(&data, MAIN);
 			continue ;
 		}
 		test_print_cmd(&data);
 		data.pnb = 0;
 		to_execute(&data);
-		free_all(&data);
+		free_all(&data, MAIN);
 	}
 }
 
@@ -125,7 +125,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_memset(&data, 0, sizeof(t_data));
 	if (init(&data, envp) == FAIL)
 	{
-		free_data(&data);
+		free_data(&data, MAIN);
 		return (FAIL);
 	}
 	main_loop(data);

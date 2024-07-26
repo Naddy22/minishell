@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-static void	free_redirlist(t_redir **redir)
+static void	free_redirlist(t_redir **redir, int mode)
 {
 	t_redir	*current;
 	t_redir	*next;
@@ -11,7 +11,8 @@ static void	free_redirlist(t_redir **redir)
 		next = current->next;
 		if (current->type == L2_REDIR)
 		{
-			unlink(current->file_name);
+			if (mode != HERE_DOC)
+				unlink(current->file_name);
 			ft_free_verif((void **)&current->file_name);
 		}
 		ft_free_verif((void **)&current);
@@ -36,7 +37,7 @@ static void	free_tokenlist(t_list **list)
 	*list = NULL;
 }
 
-static void	free_cmdlist(t_command **list)
+static void	free_cmdlist(t_command **list, int mode)
 {
 	t_command	*current;
 	t_command	*next;
@@ -46,7 +47,7 @@ static void	free_cmdlist(t_command **list)
 	{
 		next = current->next;
 		if (current->redir)
-			free_redirlist(&current->redir);
+			free_redirlist(&current->redir, mode);
 		ft_free_table(current->cmd);
 		ft_free_verif((void **)&current);
 		current = next;
@@ -54,10 +55,10 @@ static void	free_cmdlist(t_command **list)
 	*list = NULL;
 }
 
-void	free_all(t_data *data)
+void	free_all(t_data *data, int mode)
 {
 	ft_free_verif((void *)&data->parsing.last_user_cmd);
-	free_cmdlist(&data->commands);
+	free_cmdlist(&data->commands, mode);
 	free_tokenlist(&data->tokens);
 	data->last_token = NULL;
 }
@@ -65,9 +66,9 @@ void	free_all(t_data *data)
 /*
 	To free at end or when child exit
 */
-void	free_data(t_data *data)
+void	free_data(t_data *data, int mode)
 {
-	free_all(data);
+	free_all(data, mode);
 	ft_free_table(data->cpy_env);
 	ft_free_table(data->cpy_env_orig);
 	data = NULL;
