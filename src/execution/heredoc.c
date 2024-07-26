@@ -12,7 +12,7 @@ void	parsing_heredoc(t_data *data, char *str)
 	result = NULL;
 	while (data->parsing.i < ft_strlen(str))
 	{
-		if (str[data->parsing.i] == '$')
+		if (str[data->parsing.i] == '$' && data->parsing.flag_hdq == 0)
 		{
 			tmp = get_str(str, &start, &data->parsing.i);
 			dollar_exp = dollars_parse(data, str, &start, &data->parsing.i);
@@ -80,6 +80,7 @@ void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 	redir->file_name = name;
 	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	readline_here_doc(mini, fd, redir->delim);
+	mini->parsing.flag_hdq = 0;
 	(*n)++;
 	close (fd);
 	free(asciin);

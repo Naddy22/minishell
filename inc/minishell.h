@@ -67,6 +67,7 @@ typedef struct s_parsing
 	char		**parse_cmd;
 	t_command	*last_lstcmd;
 	char		*hered_print;
+	int			flag_hdq;
 }			t_parsing;
 
 typedef struct s_data

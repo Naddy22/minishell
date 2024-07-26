@@ -83,6 +83,9 @@ int	handle_quotes(t_data *data, size_t *i, int *start)
 	str = data->parsing.last_user_cmd;
 	if (add_str_to_token(data, i, start) != SUCCESS)
 		return (FAIL);
+	if (data->last_token && data->last_token->previous && \
+	data->last_token->previous->token_type == L2_REDIR)
+		data->parsing.flag_hdq = 1;
 	if (str[*i] == '\'')
 	{
 		if (handle_simple_quote(data, i, start) != SUCCESS)
