@@ -205,7 +205,7 @@ void		add_elem(char *elem, t_data *mini);
 void		ft_env(char **envp);
 
 //exit.c
-void		exit_with_status(t_data *mini, int mode);
+void		exit_with_status(t_data *mini, int mode, int exit_status);
 int			ft_exit(char **cmd, t_data *mini);
 
 //pwd.c

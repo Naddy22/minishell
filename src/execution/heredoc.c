@@ -89,10 +89,9 @@ void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 		set_signal(HERE_DOC);
 		readline_here_doc(mini, fd, redir->delim);
 		close (fd);
-		exit_with_status(mini, HERE_DOC);
+		exit_with_status(mini, HERE_DOC, 0);
 	}
 	waitpid(pid, &mini->tmp_status, 0);
-	printf("status = %d\n", mini->tmp_status); //met toujours 0 alors que je set a 1
 	mini->exit_status = get_err_code(mini->tmp_status);
 	mini->parsing.flag_hdq = 0;
 	(*n)++;
@@ -121,5 +120,5 @@ int	make_here_docs(t_data *mini) //TODO Ctrl + C retourne 1
 			command = command->next;
 		}
 	}
-	return (0);
+	return (mini->exit_status);
 }
