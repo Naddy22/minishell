@@ -6,11 +6,6 @@ static void	sig_handler_parent(int signum)
 	(void)signum;
 }
 
-static void	sig_handler_hd(int signum)
-{
-	(void)signum;
-}
-
 static void	sig_handler_main(int signum)
 {
 	(void)signum;
@@ -20,6 +15,11 @@ static void	sig_handler_main(int signum)
 	rl_redisplay();
 }
 
+static void sig_handler_hd(int signum)
+{
+	(void)signum;
+	exit(1);
+}
 /*
 	SIG_IGN = ignore signal
 	SIG_DFL = default signal handler
@@ -47,3 +47,6 @@ void	set_signal(t_sig_type type)
 		signal(SIGQUIT, SIG_IGN);
 	}
 }
+//next step: voir pourquoi dans les heredoc ca retourne toujours 0, je pense que
+// meme si c'est bien seter apres le heredoc, la suite de l'execution remet le
+// exit status a 0
