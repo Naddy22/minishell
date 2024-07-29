@@ -53,9 +53,12 @@ void	replace_env(char *elem, t_data *mini)
 		split_envi = ft_split(mini->cpy_env[i], '=');
 		if (ft_strncmp(split_envi[0], split_elem[0], ft_strlen(elem) + 1) == 0)
 		{
-			free(mini->cpy_env[i]);
-			mini->cpy_env[i] = NULL;
-			mini->cpy_env[i] = ft_strdup(elem);
+			if (ft_strchr(elem, '='))
+			{
+				free(mini->cpy_env[i]);
+				mini->cpy_env[i] = NULL;
+				mini->cpy_env[i] = ft_strdup(elem);
+			}
 		}
 		ft_free_table(split_envi);
 		i++;

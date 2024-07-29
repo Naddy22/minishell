@@ -25,10 +25,13 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 		close(mini->fdout_origin);
 		rl_clear_history();
 		execve(path, cmd_table, env);
-		perror("minishell ");
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd_table[0], 2);
+		perror(" ");
 		ft_free_table(env);
 		ft_free_table(cmd_table);
 		ft_free_verif((void **)&path);
+		exit(126);
 	}
 	else
 	{
@@ -37,7 +40,7 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 		rl_clear_history();
 		free_data(mini);
 	}
-	exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE); //126 on some cases and 127 on others and 1 on some... how to know which one to use?
 }
 
 static void	execution(t_data *mini)

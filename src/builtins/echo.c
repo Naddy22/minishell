@@ -17,6 +17,8 @@ static int	check_n_flag(char *arg)
 			ok = 0;
 		i++;
 	}
+	if (arg[i] == '\0' && i == 1)
+		ok = 0;
 	return (ok);
 }
 

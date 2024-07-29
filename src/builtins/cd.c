@@ -18,14 +18,15 @@ static int	check_variable_present(char **env_cpy, const char *var_name)
 
 static int	cd_error_message(char *path_to_go, int mode)
 {
-	if (mode == 0)
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
-	else
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(path_to_go, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-	}
+	(void)mode;
+	// if (mode == 0)
+	// 	ft_putendl_fd("minishell: cd: too many arguments", 2);
+	// else
+	// {
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(path_to_go, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	// }
 	return (1);
 }
 
@@ -86,8 +87,8 @@ int	ft_cd(char **cmd, t_data *mini)
 			else
 				change_env(buf, mini);
 		}
-		return (0);
 	}
-	else
-		return (cd_error_message("", 0));
+	return (0);
+	// else
+	// 	return (cd_error_message("", 0));
 }
