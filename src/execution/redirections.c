@@ -5,6 +5,11 @@ static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 	if (access(redir->file_name, R_OK) == 0)
 	{
 		cmd->fdin = to_open(redir);
+		if (cmd->fdin == -1)
+		{
+			mini->exit_status = 1;
+			return (1);
+		}
 		change_input(cmd->fdin);
 		return (0);
 	}

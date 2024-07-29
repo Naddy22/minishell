@@ -47,6 +47,3 @@ void	set_signal(t_sig_type type)
 		signal(SIGQUIT, SIG_IGN);
 	}
 }
-//next step: voir pourquoi dans les heredoc ca retourne toujours 0, je pense que
-// meme si c'est bien seter apres le heredoc, la suite de l'execution remet le
-// exit status a 0

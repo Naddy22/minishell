@@ -75,7 +75,9 @@ int	to_execute(t_data *mini)
 		else
 		{
 			ft_pipe(mini);
+			// printf("exit status: %d\n", mini->exit_status);
 			waiting_for_all_childs(mini);
+			// printf("exit status apres child: %d\n", mini->exit_status);
 			change_parent_back(mini);
 		}
 	}

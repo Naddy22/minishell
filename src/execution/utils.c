@@ -25,11 +25,14 @@ t_command	*get_cmd(t_data *mini, int pnb)
 	return (cmd);
 }
 
-int	set_value(int value)
+void	execute_heredoc(t_data *mini, t_redir *redir, char *name, char *asciin)
 {
-	static int	result;
+	int fd;
 
-	if (value >= 0)
-		result = value;
-	return (result);
+	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	set_signal(HERE_DOC);
+	readline_here_doc(mini, fd, redir->delim);
+	close (fd);
+	ft_free_verif((void *)&asciin);
+	exit_with_status(mini, HERE_DOC, 0);
 }

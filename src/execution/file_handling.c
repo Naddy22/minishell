@@ -4,14 +4,13 @@ int	to_open(t_redir *redir)
 {
 	int	fd;
 
+	fd = -1;
 	if (redir->type == L1_REDIR || redir->type == L2_REDIR)
 		fd = open(redir->file_name, O_RDONLY);
 	else if (redir->type == R1_REDIR)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (redir->type == R2_REDIR)
 		fd = open(redir->file_name, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	else
-		fd = -1;
 	return (fd);
 }
 
