@@ -18,7 +18,7 @@ char	**dup_table(char **strs)
 	return (new_tab);
 }
 
-void	path_error_message(t_data *mini, char **cmd)
+void	path_error_message(char **cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd[0], 2);

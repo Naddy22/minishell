@@ -182,7 +182,6 @@ void		child(t_data *mini, pid_t pid);
 
 //exec_utils.c
 char		**dup_table(char **strs);
-void		path_error_message(t_data *mini, char **cmd);
 int			isbuiltins(t_command *cmd);
 int			check_folder(char *path);
 int			check_access(t_data *mini, char *path, int mode);
@@ -235,7 +234,7 @@ void		child(t_data *mini, pid_t pid);
 
 //exec_utils.c
 char		**dup_table(char **strs);
-void		path_error_message(t_data *mini, char **cmd);
+void		path_error_message(char **cmd);
 int			isbuiltins(t_command *cmd);
 
 //utils.c

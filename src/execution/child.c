@@ -50,7 +50,7 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 			path = get_path(mini, cmd->cmd[0]);
 		if (!path)
 		{
-			path_error_message(mini, cmd->cmd);
+			path_error_message(cmd->cmd);
 			exit_with_status(mini, MAIN, mini->exit_status);
 		}
 		// printf("----I am here in ft_execve path: %s\n",path);
