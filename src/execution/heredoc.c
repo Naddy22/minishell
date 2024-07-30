@@ -71,10 +71,10 @@ void	readline_here_doc(t_data *data, int fd, char *delim)
 
 void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 {
-	int		fd;
 	char	*name;
 	char	*asciin;
 	pid_t	pid;
+	int fd;
 
 	asciin = ft_itoa(*n);
 	name = ft_strjoin("/tmp/.heredoc", asciin);
@@ -89,6 +89,7 @@ void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 		set_signal(HERE_DOC);
 		readline_here_doc(mini, fd, redir->delim);
 		close (fd);
+		free(asciin);
 		exit_with_status(mini, HERE_DOC, 0);
 	}
 	waitpid(pid, &mini->tmp_status, 0);

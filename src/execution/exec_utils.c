@@ -22,15 +22,14 @@ void	path_error_message(t_data *mini, char **cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd[0], 2);
-	if (mini->path_error_code != 0)
-	{
-		if (mini->path_error_code == 2)
-			ft_putendl_fd(": is a directory", 2);
-		else if (mini->path_error_code == 1)
-			ft_putendl_fd(": Permission denied", 2);
-		else
-			ft_putendl_fd(": command not found", 2);
-	}
+	if (check_directory(cmd[0]) == 1 && (cmd[0][0] == '/' || cmd[0][0] == '.'))
+		ft_putstr_fd(": is a directory\n", 2);
+	else if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) != 0 && check_directory(cmd[0]))
+		ft_putstr_fd(": Permission denied\n", 2);
+	else if (ft_strchr(cmd[0], '/') != 0)
+		ft_putstr_fd(": No such file or directory\n", 2);
+	else
+		ft_putstr_fd(": command not found\n", 2);
 }
 
 int	isbuiltins(t_command *cmd)

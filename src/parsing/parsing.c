@@ -88,7 +88,7 @@ static int	get_char(t_data *data, char *str, size_t *i, int *start)
 {
 	if (ft_isspecial(str[*i], 2) || ft_isspace(str[*i]))
 	{
-		if (process_end_of_token(data, i, start) != SUCCESS)
+		if (data->last_token && process_end_of_token(data, i, start) != SUCCESS)
 			return (FAIL);
 		if (str[*i] == '\0')
 			return (STOP);

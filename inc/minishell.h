@@ -172,6 +172,7 @@ int			set_value(int value);
 
 //heredoc.c //TODO check static fct in heredoc and here_doc_parsing
 int			make_here_docs(t_data *mini);
+void		readline_here_doc(t_data *data, int fd, char *delim);
 
 //heredoc_parsing.c
 void		parsing_heredoc(t_data *data, char *str);
@@ -240,5 +241,7 @@ int			isbuiltins(t_command *cmd);
 //utils.c
 int			get_size(char **strs);
 t_command	*get_cmd(t_data *mini, int pnb);
+void		execute_heredoc(t_data *mini, t_redir *redir, char *name, char *asciin);
 
+int	check_directory(char *cmd);
 #endif 

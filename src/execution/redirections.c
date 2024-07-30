@@ -2,9 +2,22 @@
 
 static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 {
-	if (check_access(mini, redir->file_name, 3) == 0)
+	if (access(redir->file_name, F_OK) == 0)
 	{
+		if (access(redir->file_name, R_OK) != 0)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(redir->file_name, 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			mini->exit_status = 1;
+			return (1);
+		}
 		cmd->fdin = to_open(redir);
+		if (cmd->fdin == -1)
+		{
+			mini->exit_status = 1;
+			return (1);
+		}
 		change_input(cmd->fdin);
 		return (0);
 	}
@@ -12,24 +25,23 @@ static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(redir->file_name, 2);
-		ft_putendl_fd(": No such file or directory", 2);
-		mini->exit_status = 126;
+		ft_putstr_fd(": No such file or directory\n", 2);
+		mini->exit_status = 1;
 		return (1);
 	}
 }
 
-static void	set_r_redir(t_redir	*redir, t_command *cmd)
+static int	set_r_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 {
-	if (redir->type == R1_REDIR)
+
+	cmd->fdout = to_open(redir);
+	if (cmd->fdout == -1)
 	{
-		cmd->fdout = to_open(redir);
-		change_output(cmd->fdout);
+		mini->exit_status = 1;
+		return (1);
 	}
-	else if (redir->type == R2_REDIR)
-	{
-		cmd->fdout = to_open(redir);
-		change_output(cmd->fdout);
-	}
+	change_output(cmd->fdout);
+	return (0);
 }
 
 int	set_redir(t_data *mini, int pnb)
@@ -51,8 +63,23 @@ int	set_redir(t_data *mini, int pnb)
 				return (1);
 		}
 		else if (redir->type == R1_REDIR || redir->type == R2_REDIR)
-			set_r_redir(redir, cmd);
+		{
+			if (set_r_redir(mini, redir, cmd) == 1)
+				return (1);
+		}
 		redir = redir->next;
 	}
 	return (0);
 }
+
+	// if (redir->type == R2_REDIR)
+	// {
+	// 	if (access(redir->file_name, F_OK) && access(redir->file_name, W_OK) != 0)
+	// 	{
+	// 		ft_putstr_fd("minishell: ", 2);
+	// 		ft_putstr_fd(redir->file_name, 2);
+	// 		ft_putstr_fd(": Permission denied\n", 2);
+	// 		mini->exit_status = 1;
+	// 		return (1);
+	// 	}
+	// }

@@ -88,7 +88,7 @@ t_redir	*create_new_lstredir(t_list **current)
 	}
 	new->type = (*current)->token_type;
 	*current = (*current)->next;
-	new->file_name = (*current)->brut_cmd;
+	new->file_name = ft_strdup((*current)->brut_cmd);
 	return (new);
 }
 

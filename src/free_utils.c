@@ -12,8 +12,11 @@ static void	free_redirlist(t_redir **redir, int mode)
 		if (current->type == L2_REDIR)
 		{
 			if (mode != HERE_DOC)
+			{
 				unlink(current->file_name);
+			}
 			ft_free_verif((void **)&current->file_name);
+			ft_free_verif((void **)&current->delim);
 		}
 		ft_free_verif((void **)&current);
 		current = next;
@@ -57,7 +60,6 @@ static void	free_cmdlist(t_command **list, int mode)
 
 void	free_all(t_data *data, int mode)
 {
-	data->tmp_status = 0;
 	ft_free_verif((void *)&data->parsing.last_user_cmd);
 	free_cmdlist(&data->commands, mode);
 	free_tokenlist(&data->tokens);
@@ -69,6 +71,7 @@ void	free_all(t_data *data, int mode)
 */
 void	free_data(t_data *data, int mode)
 {
+	data->tmp_status = 0;
 	free_all(data, mode);
 	ft_free_table(data->cpy_env);
 	ft_free_table(data->cpy_env_orig);

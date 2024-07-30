@@ -86,29 +86,29 @@ void	test_print_redir(t_data *data)
 	}
 }
 
-int	main_loop(t_data data)
+void	main_loop(t_data *data)
 {
 	while (42)
 	{
 		set_signal(MAIN);
-		if (read_user_cmd(&data) != SUCCESS)
+		if (read_user_cmd(data) != SUCCESS)
 			continue ;
 		set_signal(PARENT);
-		if (parsing(&data) != SUCCESS)
+		if (parsing(data) != SUCCESS)
 		{
-			free_all(&data, MAIN);
+			free_all(data, MAIN);
 			continue ;
 		}
-		// test_print_token_list(data.tokens);
-		if (make_cmds(&data) != SUCCESS)
+		// test_print_token_list(data->tokens);
+		if (make_cmds(data) != SUCCESS)
 		{
-			free_all(&data, MAIN);
+			free_all(data, MAIN);
 			continue ;
 		}
-		// test_print_cmd(&data);
-		data.pnb = 0;
-		to_execute(&data);
-		free_all(&data, MAIN);
+		// test_print_cmd(data);
+		data->pnb = 0;
+		to_execute(data);
+		free_all(data, MAIN);
 	}
 }
 
@@ -128,5 +128,5 @@ int	main(int argc, char **argv, char **envp)
 		free_data(&data, MAIN);
 		return (FAIL);
 	}
-	main_loop(data);
+	main_loop(&data);
 }
