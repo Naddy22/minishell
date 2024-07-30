@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:16:27 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 12:17:08 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
-// fix pour ne pas avoir 2 fois le prompts
 static void	sig_handler_parent(int signum)
 {
 	(void)signum;
@@ -15,15 +26,12 @@ static void	sig_handler_main(int signum)
 	rl_redisplay();
 }
 
-static void sig_handler_hd(int signum)
+static void	sig_handler_hd(int signum)
 {
 	(void)signum;
 	exit(1);
 }
-/*
-	SIG_IGN = ignore signal
-	SIG_DFL = default signal handler
-*/
+
 void	set_signal(t_sig_type type)
 {
 	if (type == MAIN)

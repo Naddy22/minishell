@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:15:04 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 12:15:36 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 int	get_err_code(int exit_code)
@@ -12,13 +24,13 @@ int	get_err_code(int exit_code)
 	return (r_val);
 }
 
-int perror_fail(char *perr_msg)
+int	perror_fail(char *perr_msg)
 {
 	perror(perr_msg);
 	return (FAIL);
 }
 
-int error_fail(char *err_msg)
+int	error_fail(char *err_msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(err_msg, 2);
