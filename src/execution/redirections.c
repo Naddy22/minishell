@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 14:10:39 by vboulang          #+#    #+#             */
+/*   Updated: 2024/07/30 14:10:40 by vboulang         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
@@ -7,8 +19,7 @@ static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 		if (access(redir->file_name, R_OK) != 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(redir->file_name, 2);
-			ft_putstr_fd(": Permission denied\n", 2);
+			perror(redir->file_name);
 			mini->exit_status = 1;
 			return (1);
 		}
@@ -24,8 +35,7 @@ static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 	else
 	{
 		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(redir->file_name, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		perror(redir->file_name);
 		mini->exit_status = 1;
 		return (1);
 	}
@@ -71,15 +81,3 @@ int	set_redir(t_data *mini, int pnb)
 	}
 	return (0);
 }
-
-	// if (redir->type == R2_REDIR)
-	// {
-	// 	if (access(redir->file_name, F_OK) && access(redir->file_name, W_OK) != 0)
-	// 	{
-	// 		ft_putstr_fd("minishell: ", 2);
-	// 		ft_putstr_fd(redir->file_name, 2);
-	// 		ft_putstr_fd(": Permission denied\n", 2);
-	// 		mini->exit_status = 1;
-	// 		return (1);
-	// 	}
-	// }

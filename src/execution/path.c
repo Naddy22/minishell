@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 15:48:35 by namoisan          #+#    #+#             */
-/*   Updated: 2024/07/30 15:48:36 by namoisan         ###   ########.fr       */
+/*   Created: 2024/07/30 14:11:44 by vboulang          #+#    #+#             */
+/*   Updated: 2024/07/30 15:54:49 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*test_path(t_data *mini, char **paths, char *str)
 	{
 		correct_path = ft_strjoin(paths[i], "/");
 		correct_path = ft_strjoin_dup(correct_path, str);
-		if (check_access(mini, correct_path, 2) == 0)
+		if (check_access(mini, correct_path) == 0)
 			return (correct_path);
 		else
 			free(correct_path);
@@ -32,7 +32,7 @@ static char	*test_path(t_data *mini, char **paths, char *str)
 	return (NULL);
 }
 
-char	*get_path(t_data *mini, char *str)
+char	*fetch_path(t_data *mini, char *str)
 {
 	char	*paths_to_split;
 	char	**paths;
@@ -52,4 +52,25 @@ char	*get_path(t_data *mini, char *str)
 	}
 	else
 		return (NULL);
+}
+
+char	*get_path(t_data *mini, t_command *cmd)
+{
+	char	*path;
+
+	if (access(cmd->cmd[0], F_OK) == 0 && access(cmd->cmd[0], X_OK) == 0)
+		path = ft_strdup(cmd->cmd[0]);
+	else if (access(cmd->cmd[0], F_OK) == 0
+		&& access(cmd->cmd[0], X_OK) != 0)
+	{
+		path = NULL;
+		if (check_directory(cmd->cmd[0]) == 1 || cmd->cmd[0][0] == '.')
+			mini->exit_status = 126;
+		else if (check_directory(cmd->cmd[0]) == 0)
+			mini->exit_status = 127;
+		path_error_message_n_exit(mini, cmd->cmd);
+	}
+	else
+		path = fetch_path(mini, cmd->cmd[0]);
+	return (path);
 }
