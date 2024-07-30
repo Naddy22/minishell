@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:11:44 by vboulang          #+#    #+#             */
-/*   Updated: 2024/07/30 15:54:49 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:49:11 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ static char	*test_path(t_data *mini, char **paths, char *str)
 {
 	int		i;
 	char	*correct_path;
+	char	*tmp;
 
 	i = 0;
 	correct_path = NULL;
 	while (paths[i])
 	{
-		correct_path = ft_strjoin(paths[i], "/");
-		correct_path = ft_strjoin_dup(correct_path, str);
+		tmp = ft_strjoin(paths[i], "/");
+		correct_path = ft_strjoin_dup(tmp, str);
 		if (check_access(mini, correct_path) == 0)
 			return (correct_path);
 		else
@@ -58,10 +59,13 @@ char	*get_path(t_data *mini, t_command *cmd)
 {
 	char	*path;
 
-	if (access(cmd->cmd[0], F_OK) == 0 && access(cmd->cmd[0], X_OK) == 0)
+	if (access(cmd->cmd[0], F_OK) == 0 && access(cmd->cmd[0], X_OK) == 0 && \
+		ft_strchr(cmd->cmd[0], '/') != 0)
+	{
 		path = ft_strdup(cmd->cmd[0]);
+	}
 	else if (access(cmd->cmd[0], F_OK) == 0
-		&& access(cmd->cmd[0], X_OK) != 0)
+		&& access(cmd->cmd[0], X_OK) != 0 && ft_strchr(cmd->cmd[0], '/') != 0)
 	{
 		path = NULL;
 		if (check_directory(cmd->cmd[0]) == 1 || cmd->cmd[0][0] == '.')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:10:44 by vboulang          #+#    #+#             */
-/*   Updated: 2024/07/30 14:10:45 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:48:42 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

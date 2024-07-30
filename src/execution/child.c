@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:11:25 by vboulang          #+#    #+#             */
-/*   Updated: 2024/07/30 14:11:26 by vboulang         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:48:47 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 	{
 		check_error_directory(mini, cmd->cmd);
 		path = get_path(mini, cmd);
-		if (!path)
+		if (!path || cmd->cmd[0][0] == '\0')
+		{
+			free(path);
 			path_error_message_n_exit(mini, cmd->cmd);
+		}
 		prep_execve(mini, cmd, &env, &cmd_table);
 		execve(path, cmd_table, env);
 		error_execve(cmd_table, path, env);
