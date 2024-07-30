@@ -2,7 +2,7 @@
 
 static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 {
-	if (access(redir->file_name, R_OK) == 0)
+	if (check_access(mini, redir->file_name, 3) == 0)
 	{
 		cmd->fdin = to_open(redir);
 		change_input(cmd->fdin);
@@ -12,7 +12,7 @@ static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(redir->file_name, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		mini->exit_status = 126;
 		return (1);
 	}

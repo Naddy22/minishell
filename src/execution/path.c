@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-static char	*test_path(char **paths, char *str)
+static char	*test_path(t_data *mini, char **paths, char *str)
 {
 	int		i;
 	char	*correct_path;
@@ -11,7 +11,7 @@ static char	*test_path(char **paths, char *str)
 	{
 		correct_path = ft_strjoin(paths[i], "/");
 		correct_path = ft_strjoin_dup(correct_path, str);
-		if (access(correct_path, X_OK) == 0)
+		if (check_access(mini, correct_path, 2) == 0)
 			return (correct_path);
 		else
 			free(correct_path);
@@ -31,7 +31,7 @@ char	*get_path(t_data *mini, char *str)
 	if (paths_to_split)
 	{
 		paths = ft_split(paths_to_split, ':');
-		correct_path = test_path(paths, str);
+		correct_path = test_path(mini, paths, str);
 		ft_free_table(paths);
 		if (!correct_path)
 			return (NULL);

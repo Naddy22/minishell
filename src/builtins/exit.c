@@ -13,7 +13,8 @@ static int	check_all_digit(char **cmd, int i)
 				continue ;
 			else
 			{
-				ft_putstr_fd("exit\nminishell: exit ", 2);
+				ft_putendl_fd("exit", STDOUT_FILENO);
+				ft_putstr_fd("minishell: exit ", 2);
 				ft_putstr_fd(cmd[i], 2);
 				ft_putendl_fd(": numeric argument required", 2);
 				return (1);
@@ -43,19 +44,20 @@ int	ft_exit(char **cmd, t_data *mini)
 		}
 		if (cmd[2])
 		{
-			ft_putstr_fd("exit\nminishell: exit: Too many arguments\n", 2);
+			ft_putendl_fd("exit", STDOUT_FILENO);
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			return (1);
 		}
 		else
 		{
 			mini->exit_status = ft_atoi(cmd[1]);
-			ft_putstr_fd("exit\n", 2);
+			ft_putendl_fd("exit", STDOUT_FILENO);
 			exit_with_status(mini, MAIN, mini->exit_status);
 		}
 	}
 	else
 	{
-		ft_putstr_fd("exit\n", 2);
+		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit_with_status(mini, MAIN, mini->exit_status);
 	}
 	return (0);

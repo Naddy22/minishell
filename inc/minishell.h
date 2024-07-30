@@ -83,6 +83,7 @@ typedef struct s_data
 	int			nb_pipes;
 	int			tmp_status;
 	int			exit_status;
+	int			path_error_code;
 	//exec variables
 	int			pnb;
 	int			fd[2];
@@ -180,8 +181,10 @@ void		child(t_data *mini, pid_t pid);
 
 //exec_utils.c
 char		**dup_table(char **strs);
-void		path_error_message(char **cmd);
+void		path_error_message(t_data *mini, char **cmd);
 int			isbuiltins(t_command *cmd);
+int			check_folder(char *path);
+int			check_access(t_data *mini, char *path, int mode);
 
 //utils.c
 int			get_size(char **strs);
@@ -231,7 +234,7 @@ void		child(t_data *mini, pid_t pid);
 
 //exec_utils.c
 char		**dup_table(char **strs);
-void		path_error_message(char **cmd);
+void		path_error_message(t_data *mini, char **cmd);
 int			isbuiltins(t_command *cmd);
 
 //utils.c
