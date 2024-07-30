@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reading_input.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:13:58 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 12:13:59 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static int	not_empty(t_data *data, char *current_cmd, char *rl_buffer)
 {
-	if (rl_buffer[0] == '\0') //=si juste fait 'entrée'
+	if (rl_buffer[0] == '\0')
 	{
 		ft_free_verif((void *)&rl_buffer);
 		ft_free_verif((void *)&data->parsing.last_user_cmd);
@@ -35,7 +47,7 @@ int	read_user_cmd(t_data *data)
 
 	rl_buffer = readline("minishell>");
 	current_cmd = NULL;
-	if (rl_buffer == NULL) //càd que ctrl+D à été fait = quitte tout
+	if (rl_buffer == NULL)
 	{
 		ft_printf("exit\n");
 		rl_clear_history();

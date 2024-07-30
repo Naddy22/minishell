@@ -1,15 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:13:31 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 12:13:32 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
-
-/*
-
--Identifier si quote simple ou double
--lire jusqu'a rencontrer la prochaine meme quotes
--si $USER envelopper de " on remplace pas la valeur d'env, 
-	sinon on lit le tout et à 
-la fin on stocke/joint le tout dans le même token word actuel
--si quotes pas fermer c'est erreur de syntaxe
-
-*/
 
 static int	handle_simple_quote(t_data *data, size_t *i, int *start)
 {

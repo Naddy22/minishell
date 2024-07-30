@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollar_expansion.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:13:03 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 12:13:04 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 char	*get_env_value(char **env_cpy, const char *var_name)
@@ -18,7 +30,7 @@ char	*get_env_value(char **env_cpy, const char *var_name)
 
 static int	add_dollar_value_to_str(t_data *data, const char *value)
 {
-	if (ft_strchr(value, ' ')) //faire fonction qui va faire un split, remplir le token en court par le premier mot et creer un nouveau token pour chaque mot suivant
+	if (ft_strchr(value, ' '))
 	{
 		if (split_expanded_value(data, value) == FAIL)
 			return (FAIL);
@@ -61,12 +73,12 @@ char	*process_variable_name(t_data *data, size_t *i, int *start, char *str)
 	char	*var_name;
 	char	*result;
 
-	*start = *i; //fait pour remettre start sur la premiere lettre du nom de variable d'environnement
+	*start = *i;
 	while ((str[*i] && ft_isalnum(str[*i])) || str[*i] == '_')
 		(*i)++;
-	if (str[*i] == '$' && !ft_isalnum(str[*i - 1])) //!ft_isalnum ajouté pour pas que ca entre si $USER$USER
+	if (str[*i] == '$' && !ft_isalnum(str[*i - 1]))
 	{
-		result = "$"; //mis pour avoir un $ si $$ ecrit
+		result = "$";
 		(*i)++;
 		*start = *i;
 		return (result);
@@ -98,7 +110,7 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 	}
 	str = data->parsing.last_user_cmd;
 	(*i)++;
-	if (!ft_isalnum(str[*i]) && !ft_isspecial(str[*i], 1)) //ajout de isalnum pour que rien ne soit interpreté si ce n'est pas une lettre ou chiffre
+	if (!ft_isalnum(str[*i]) && !ft_isspecial(str[*i], 1))
 		return (add_str_to_token(data, i, start));
 	if (ft_isspace(str[*i]) == TRUE || str[*i] == '\0')
 		return (add_str_to_token(data, i, start));
@@ -109,7 +121,7 @@ int	handle_dollar_expansion(t_data *data, size_t *i, int *start)
 		return (FAIL);
 	if (result[0] == '\0' && (!data->last_token->brut_cmd || \
 		data->last_token->brut_cmd[0] == '\0') && (str[*i] == '\0' || \
-	 	ft_isspace(str[*i])))
-			return (ft_reset_1token(data, &data->last_token));
+		ft_isspace(str[*i])))
+		return (ft_reset_1token(data, &data->last_token));
 	return (add_dollar_value_to_str(data, result));
 }

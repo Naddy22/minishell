@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_dollar_expansion.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:14:10 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 12:14:11 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	add_value_to_brut_cmd(t_data *data, const char *value)
 {
-	char *new;
-	char *current_tmp;
+	char	*new;
+	char	*current_tmp;
 
 	if (data->last_token->brut_cmd == NULL)
 	{
@@ -25,9 +37,9 @@ int	add_value_to_brut_cmd(t_data *data, const char *value)
 
 int	split_expanded_value(t_data *data, const char *value)
 {
-	size_t i;
-	int start;
-	char **split;
+	size_t	i;
+	int		start;
+	char	**split;
 
 	i = 1;
 	start = 0;
