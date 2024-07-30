@@ -21,7 +21,11 @@ void	path_error_message(char **cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd[0], 2);
-	if (ft_strchr(cmd[0], '/') != 0)
+	if (check_directory(cmd[0]) == 1 && (cmd[0][0] == '/' || cmd[0][0] == '.'))
+		ft_putstr_fd(": is a directory\n", 2);
+	else if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) != 0 && check_directory(cmd[0]))
+		ft_putstr_fd(": Permission denied\n", 2);
+	else if (ft_strchr(cmd[0], '/') != 0)
 		ft_putstr_fd(": No such file or directory\n", 2);
 	else
 		ft_putstr_fd(": command not found\n", 2);

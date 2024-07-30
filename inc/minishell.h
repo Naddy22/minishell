@@ -240,4 +240,5 @@ int			get_size(char **strs);
 t_command	*get_cmd(t_data *mini, int pnb);
 void		execute_heredoc(t_data *mini, t_redir *redir, char *name, char *asciin);
 
+int	check_directory(char *cmd);
 #endif 
