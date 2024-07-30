@@ -43,7 +43,8 @@ SRC			=	main.c \
 				utils.c \
 				exec_utils.c \
 				child.c \
-				environment_utils.c
+				environment_utils.c \
+				execve_utils.c
 
 # -- COLORS -- #
 BLACK=\033[0;30m# Black

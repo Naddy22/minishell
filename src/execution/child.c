@@ -1,17 +1,4 @@
 #include "../../inc/minishell.h"
-#include <sys/stat.h>
-
-int	check_directory(char *cmd)
-{
-	struct stat	buf;
-
-	if (stat(cmd, &buf) == 0)
-	{
-		if (S_ISDIR(buf.st_mode))
-			return (1);
-	}
-	return (0);
-}
 
 static void	ft_execve(t_data *mini, t_command *cmd)
 {
@@ -21,49 +8,13 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 
 	if (cmd->cmd)
 	{
-		if (check_directory(cmd->cmd[0]) == 1 && ft_strrchr(cmd->cmd[0], '/') != 0)
-		{
-			path_error_message(cmd->cmd);
-			mini->exit_status = 126;
-			exit_with_status(mini, MAIN, mini->exit_status);
-		}
-		else if (check_directory(cmd->cmd[0]) == 1)
-		{
-			path_error_message(cmd->cmd);
-			mini->exit_status = 127;
-			exit_with_status(mini, MAIN, mini->exit_status);
-		}
-		if (access(cmd->cmd[0], F_OK) == 0 && access(cmd->cmd[0], X_OK) == 0)
-			path = ft_strdup(cmd->cmd[0]);
-		else if (access(cmd->cmd[0], F_OK) == 0 && access(cmd->cmd[0], X_OK) != 0)
-		{
-			if (check_directory(cmd->cmd[0]) == 1 || cmd->cmd[0][0] == '.')
-				mini->exit_status = 126;
-			else if (check_directory(cmd->cmd[0]) == 0)
-				mini->exit_status = 127;
-			path = NULL;
-			path_error_message(cmd->cmd);
-			exit_with_status(mini, MAIN, mini->exit_status);
-		}
-		else
-			path = get_path(mini, cmd->cmd[0]);
+		check_error_directory(mini, cmd->cmd);
+		path = get_path(mini, cmd);
 		if (!path)
-		{
-			path_error_message(cmd->cmd);
-			exit_with_status(mini, MAIN, mini->exit_status);
-		}
-		env = dup_table(mini->cpy_env);
-		cmd_table = dup_table(cmd->cmd);
-		free_data(mini, MAIN);
-		close(mini->fdin_origin);
-		close(mini->fdout_origin);
+			path_error_message_n_exit(mini, cmd->cmd);
+		prep_execve(mini, cmd, &env, &cmd_table);
 		execve(path, cmd_table, env);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd_table[0], 2);
-		perror(" ");
-		ft_free_table(env);
-		ft_free_table(cmd_table);
-		ft_free_verif((void **)&path);
+		error_execve(cmd_table, path, env);
 	}
 	exit_with_status(mini, MAIN, mini->exit_status);
 }

@@ -4,7 +4,7 @@
 # include <unistd.h>
 # include <stdio.h> //obligatoire pour readline.h(FILE)
 // # include <sys/types.h>
-// # include <sys/stat.h>
+# include <sys/stat.h>
 # include <string.h>
 # include <fcntl.h>
 # include <sys/wait.h>
@@ -149,7 +149,8 @@ void		ft_lstadd_back(t_list **lst, t_list *new);
 int			set_redir(t_data *mini, int pnb);
 
 //path.c
-char		*get_path(t_data *mini, char *str);
+char		*fetch_path(t_data *mini, char *str);
+char		*get_path(t_data *mini, t_command *cmd);
 
 //file_handling.c
 int			to_open(t_redir *redir);
@@ -184,7 +185,7 @@ void		child(t_data *mini, pid_t pid);
 char		**dup_table(char **strs);
 int			isbuiltins(t_command *cmd);
 int			check_folder(char *path);
-int			check_access(t_data *mini, char *path, int mode);
+int			check_access(t_data *mini, char *path);
 
 //utils.c
 int			get_size(char **strs);
@@ -234,13 +235,20 @@ void		child(t_data *mini, pid_t pid);
 
 //exec_utils.c
 char		**dup_table(char **strs);
-void		path_error_message(char **cmd);
+void		path_error_message_n_exit(t_data *mini, char **cmd);
 int			isbuiltins(t_command *cmd);
 
 //utils.c
 int			get_size(char **strs);
 t_command	*get_cmd(t_data *mini, int pnb);
-void		execute_heredoc(t_data *mini, t_redir *redir, char *name, char *asciin);
+void		execute_heredoc(t_data *mini, t_redir *redir, char *name,
+				char *asciin);
 
-int	check_directory(char *cmd);
+//execve_utils.c
+void		check_error_directory(t_data *mini, char **cmd);
+void		prep_execve(t_data *mini, t_command *cmd, char ***env,
+				char ***cmd_table);
+void		error_execve(char **cmd_table, char *path, char **env);
+int			check_directory(char *cmd);
+
 #endif 
