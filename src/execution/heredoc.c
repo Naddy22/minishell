@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:51:06 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 15:25:17 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	parsing_heredoc(t_data *data, char *str)
 {
-	char *result;
-	size_t start;
-	char *tmp;
-	char *dollar_exp;
+	char	*result;
+	size_t	start;
+	char	*tmp;
+	char	*dollar_exp;
 
 	data->parsing.i = 0;
 	start = 0;
@@ -61,21 +73,22 @@ void	readline_here_doc(t_data *data, int fd, char *delim)
 			return ;
 		}
 		parsing_heredoc(data, rl_buffer);
-		// if (data->parsing.hered_print == NULL)
-		// 	printf("Je suis null\n"); //TODO voir pour mettre un message et code d'erreur
+		if (data->parsing.hered_print == NULL)
+			ft_printf("null\n");
 		ft_putendl_fd(data->parsing.hered_print, fd);
 		ft_free_verif((void *)&rl_buffer);
 		ft_free_verif((void *)&data->parsing.hered_print);
 	}
 }
 
-void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
+int	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 {
 	char	*name;
 	char	*asciin;
 	pid_t	pid;
-	int fd;
+	int		status;
 
+	status = 0;
 	asciin = ft_itoa(*n);
 	name = ft_strjoin("/tmp/.heredoc", asciin);
 	redir->delim = redir->file_name;
@@ -84,27 +97,26 @@ void	create_file_n_exec_heredoc(t_data *mini, t_redir *redir, int *n)
 	if (pid == -1)
 		perror("fork");
 	if (pid == 0)
-	{
-		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		set_signal(HERE_DOC);
-		readline_here_doc(mini, fd, redir->delim);
-		close (fd);
-		free(asciin);
-		exit_with_status(mini, HERE_DOC, 0);
-	}
-	waitpid(pid, &mini->tmp_status, 0);
-	mini->exit_status = get_err_code(mini->tmp_status);
+		execute_heredoc(mini, redir, name, asciin);
+	waitpid(pid, &status, 0);
+	if (status != 0)
+		mini->exit_status = 1;
+	else
+		mini->exit_status = 0;
 	mini->parsing.flag_hdq = 0;
 	(*n)++;
 	free(asciin);
+	return (status);
 }
 
-int	make_here_docs(t_data *mini) //TODO Ctrl + C retourne 1
+int	make_here_docs(t_data *mini)
 {
 	t_redir		*redir;
 	t_command	*command;
 	int			n;
+	int			status;
 
+	status = 0;
 	n = 0;
 	if (check_here_docs(mini))
 	{
@@ -112,14 +124,14 @@ int	make_here_docs(t_data *mini) //TODO Ctrl + C retourne 1
 		while (command)
 		{
 			redir = command->redir;
-			while (redir)
+			while (redir && status != HD_EXIT)
 			{
 				if (redir->type == L2_REDIR)
-					create_file_n_exec_heredoc(mini, redir, &n);
+					status = create_file_n_exec_heredoc(mini, redir, &n);
 				redir = redir->next;
 			}
 			command = command->next;
 		}
 	}
-	return (mini->exit_status);
+	return (status);
 }

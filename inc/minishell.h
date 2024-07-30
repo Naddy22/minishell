@@ -27,6 +27,8 @@
 # define R2_REDIR 24
 # define PIPE 25
 
+#define HD_EXIT 33280
+
 typedef enum sig_type
 {
 	MAIN,
@@ -68,7 +70,9 @@ typedef struct s_parsing
 	char		**parse_cmd;
 	t_command	*last_lstcmd;
 	char		*hered_print;
+	int			heredoc_fd;
 	int			flag_hdq;
+	int			hd_status;
 	int			*interrupt_hd;
 }			t_parsing;
 
@@ -242,6 +246,7 @@ int			isbuiltins(t_command *cmd);
 int			get_size(char **strs);
 t_command	*get_cmd(t_data *mini, int pnb);
 void		execute_heredoc(t_data *mini, t_redir *redir, char *name, char *asciin);
+t_data		*get_data(t_data *data);
 
 int	check_directory(char *cmd);
 #endif 

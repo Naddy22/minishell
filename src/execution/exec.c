@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:46:39 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 15:25:52 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	builtin_exec(t_data *mini, t_command *cmd)
@@ -60,12 +72,14 @@ void	waiting_for_all_childs(t_data *mini)
 		cmd = cmd->next;
 	}
 }
+
 int	to_execute(t_data *mini)
 {
-	mini->exit_status = make_here_docs(mini);
-	if (mini->commands)
+	mini->parsing.hd_status = make_here_docs(mini);
+	if (mini->commands && mini->parsing.hd_status != HD_EXIT)
 	{
-		if (mini->nb_pipes == 0 && mini->commands->cmd && isbuiltins(mini->commands) != 0)
+		if (mini->nb_pipes == 0 && mini->commands->cmd && \
+			isbuiltins(mini->commands) != 0)
 		{
 			if (set_redir(mini, 0) == 0)
 				builtin_exec(mini, mini->commands);
@@ -75,13 +89,11 @@ int	to_execute(t_data *mini)
 		else
 		{
 			ft_pipe(mini);
-			// printf("exit status: %d\n", mini->exit_status);
 			waiting_for_all_childs(mini);
-			// printf("exit status apres child: %d\n", mini->exit_status);
 			change_parent_back(mini);
 		}
 	}
-	else
+	else if (mini->parsing.hd_status != HD_EXIT)
 	{
 		set_redir(mini, 0);
 		change_parent_back(mini);

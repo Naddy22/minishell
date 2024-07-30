@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:16:05 by namoisan          #+#    #+#             */
-/*   Updated: 2024/07/30 12:16:06 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:39:20 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int	init(t_data *data, char **envp)
 		return (FAIL);
 	if (get_env_dup(data, envp) != SUCCESS)
 		return (FAIL);
+	get_data(data);
 	return (SUCCESS);
 }

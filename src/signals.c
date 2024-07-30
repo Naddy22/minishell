@@ -6,7 +6,7 @@
 /*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:16:27 by namoisan          #+#    #+#             */
-/*   Updated: 2024/07/30 12:17:08 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/07/30 15:49:50 by namoisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,17 @@ static void	sig_handler_main(int signum)
 
 static void	sig_handler_hd(int signum)
 {
+	t_data	*data;
+
 	(void)signum;
-	exit(1);
+	data = get_data(NULL);
+	close(data->fdout_origin);
+	close(data->fdin_origin);
+	close(data->parsing.heredoc_fd);
+	free_data(data, HERE_DOC);
+	ft_putchar_fd('\n', 1);
+	rl_replace_line("\0", 0);
+	exit(130);
 }
 
 void	set_signal(t_sig_type type)

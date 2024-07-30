@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_parsing.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:47:13 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 15:47:19 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 char	*get_exit_status(t_data *data, size_t *start, size_t *i)
@@ -31,8 +43,8 @@ char	*get_str(char *str, size_t *start, size_t *i)
 
 char	*dollars_parse(t_data *data, char *str, size_t *start, size_t *i)
 {
-	char *env_var;
-	char *result;
+	char	*env_var;
+	char	*result;
 
 	(*i)++;
 	if (!ft_isalnum(str[*i]) && !ft_isspecial(str[*i], 1))
@@ -49,9 +61,9 @@ char	*dollars_parse(t_data *data, char *str, size_t *start, size_t *i)
 	return (result);
 }
 
-char *join_str(char *result, char *tmp, char *dollar_exp)
+char	*join_str(char *result, char *tmp, char *dollar_exp)
 {
-	char *join_result;
+	char	*join_result;
 
 	if (result == NULL)
 		result = ft_strjoin(tmp, dollar_exp);
