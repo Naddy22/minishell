@@ -33,10 +33,10 @@ static int	set_l_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 
 static int	set_r_redir(t_data *mini, t_redir	*redir, t_command *cmd)
 {
-
 	cmd->fdout = to_open(redir);
 	if (cmd->fdout == -1)
 	{
+		perror("minishell: open");
 		mini->exit_status = 1;
 		return (1);
 	}

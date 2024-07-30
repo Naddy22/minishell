@@ -18,7 +18,6 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 	char	*path;
 	char	**env;
 	char	**cmd_table;
-	// int		status;
 
 	if (cmd->cmd)
 	{
@@ -53,7 +52,6 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 			path_error_message(cmd->cmd);
 			exit_with_status(mini, MAIN, mini->exit_status);
 		}
-		// printf("----I am here in ft_execve path: %s\n",path);
 		env = dup_table(mini->cpy_env);
 		cmd_table = dup_table(cmd->cmd);
 		free_data(mini, MAIN);
@@ -66,9 +64,8 @@ static void	ft_execve(t_data *mini, t_command *cmd)
 		ft_free_table(env);
 		ft_free_table(cmd_table);
 		ft_free_verif((void **)&path);
-		// exit(127);
 	}
-	exit_with_status(mini, MAIN, mini->exit_status); //126 on some cases and 127 on others and 1 on some... how to know which one to use?
+	exit_with_status(mini, MAIN, mini->exit_status);
 }
 
 static void	execution(t_data *mini)
