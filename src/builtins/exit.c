@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 12:04:44 by namoisan          #+#    #+#             */
+/*   Updated: 2024/07/30 12:04:45 by namoisan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static int	check_all_digit(char **cmd, int i)
@@ -45,8 +57,7 @@ int	ft_exit(char **cmd, t_data *mini)
 		if (cmd[2])
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-			return (1);
+			return (error_fail("exit: too many arguments"));
 		}
 		else
 		{

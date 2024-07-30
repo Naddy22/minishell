@@ -110,6 +110,7 @@ int			ft_reset_1token(t_data *data, t_list **token);
 
 //error_utils.c
 int			get_err_code(int exit_code);
+int			perror_fail(char *perr_msg);
 int			error_fail(char *err_msg);
 
 //free_utils.c

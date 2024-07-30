@@ -12,8 +12,16 @@ int	get_err_code(int exit_code)
 	return (r_val);
 }
 
+int perror_fail(char *perr_msg)
+{
+	perror(perr_msg);
+	return (FAIL);
+}
+
 int error_fail(char *err_msg)
 {
-	perror(err_msg);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(err_msg, 2);
+	ft_putstr_fd("\n", 2);
 	return (FAIL);
 }
