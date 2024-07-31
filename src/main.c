@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/31 07:38:17 by vboulang          #+#    #+#             */
+/*   Updated: 2024/07/31 07:41:25 by vboulang         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 void	test_print_token_list(t_list *tokens)
@@ -25,9 +37,11 @@ void	test_print_token_list(t_list *tokens)
 		else
 		{
 			if (current->previous)
-				ft_printf("Token %d: %s (previous: %s)\n", i, current->brut_cmd, current->previous->brut_cmd);
+				ft_printf("Token %d: %s (previous: %s)\n", i,
+					current->brut_cmd, current->previous->brut_cmd);
 			else
-				ft_printf("Token %d: %s (previous: (null)\n", i, current->brut_cmd);
+				ft_printf("Token %d: %s (previous: (null)\n", i,
+					current->brut_cmd);
 		}
 		current = current->next;
 		i++;
@@ -36,9 +50,9 @@ void	test_print_token_list(t_list *tokens)
 
 void	test_print_cmd(t_data *data)
 {
-	t_command *current_cmd;
-	int i;
-	int j;
+	t_command	*current_cmd;
+	int			i;
+	int			j;
 
 	j = 1;
 	current_cmd = data->commands;
@@ -54,7 +68,8 @@ void	test_print_cmd(t_data *data)
 			}
 		}
 		if (current_cmd->redir && current_cmd->redir->file_name)
-			ft_printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
+			ft_printf("Cmd %d: filename = \"%s\"\n", j,
+				current_cmd->redir->file_name);
 		current_cmd = current_cmd->next;
 		j++;
 	}
@@ -66,7 +81,7 @@ void	test_print_redir(t_data *data)
 	t_redir		*redir;
 	int			i;
 	int			j;
-	
+
 	j = 1;
 	current_cmd = data->commands;
 	while (current_cmd != NULL)
@@ -75,12 +90,14 @@ void	test_print_redir(t_data *data)
 		i = 0;
 		while (redir != NULL)
 		{
-			ft_printf("cmd: %s, redir %d: %s, %d\n", current_cmd->cmd[0], i, redir->file_name, redir->type);
+			ft_printf("cmd: %s, redir %d: %s, %d\n", current_cmd->cmd[0], i,
+				redir->file_name, redir->type);
 			i++;
-			redir= redir->next;
+			redir = redir->next;
 		}
 		if (current_cmd->redir && current_cmd->redir->file_name)
-			ft_printf("Cmd %d: filename = \"%s\"\n", j, current_cmd->redir->file_name);
+			ft_printf("Cmd %d: filename = \"%s\"\n", j,
+				current_cmd->redir->file_name);
 		current_cmd = current_cmd->next;
 		j++;
 	}
@@ -99,13 +116,11 @@ void	main_loop(t_data *data)
 			free_all(data, MAIN);
 			continue ;
 		}
-		// test_print_token_list(data->tokens);
 		if (make_cmds(data) != SUCCESS)
 		{
 			free_all(data, MAIN);
 			continue ;
 		}
-		// test_print_cmd(data);
 		data->pnb = 0;
 		to_execute(data);
 		free_all(data, MAIN);

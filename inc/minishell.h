@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/31 07:42:06 by vboulang          #+#    #+#             */
+/*   Updated: 2024/07/31 07:42:25 by vboulang         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -27,7 +39,7 @@
 # define R2_REDIR 24
 # define PIPE 25
 
-#define HD_EXIT 33280
+# define HD_EXIT 33280
 
 typedef enum sig_type
 {
