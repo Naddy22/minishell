@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namoisan <namoisan@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: vboulang <vboulang@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:15:53 by namoisan          #+#    #+#             */
-/*   Updated: 2024/07/30 12:15:54 by namoisan         ###   ########.fr       */
+/*   Updated: 2024/08/01 10:36:45 by vboulang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ static void	free_redirlist(t_redir **redir, int mode)
 		if (current->type == L2_REDIR)
 		{
 			if (mode != HERE_DOC)
-			{
 				unlink(current->file_name);
-			}
-			ft_free_verif((void **)&current->file_name);
 			ft_free_verif((void **)&current->delim);
 		}
+		ft_free_verif((void **)&current->file_name);
 		ft_free_verif((void **)&current);
 		current = next;
 	}
